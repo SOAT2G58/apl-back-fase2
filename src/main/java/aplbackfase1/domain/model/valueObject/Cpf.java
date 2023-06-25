@@ -1,12 +1,16 @@
 package aplbackfase1.domain.model.valueObject;
 
 import aplbackfase1.domain.model.exceptions.CpfInvalidoException;
+import aplbackfase1.domain.model.exceptions.EmailInvalidoException;
 
 import java.util.InputMismatchException;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Cpf {
 
+    public static final Pattern REGEX_CPF_NUMERO_REPETIDO = Pattern.compile("/([0-9])\1{10}/g");
     private String valor;
     Cpf() {}
 
@@ -57,13 +61,8 @@ public class Cpf {
 
     public boolean isValid() {
         // considera-se erro CPF's formados por uma sequencia de numeros iguais
-        if (getValor().equals("00000000000") ||
-                getValor().equals("11111111111") ||
-                getValor().equals("22222222222") || getValor().equals("33333333333") ||
-                getValor().equals("44444444444") || getValor().equals("55555555555") ||
-                getValor().equals("66666666666") || getValor().equals("77777777777") ||
-                getValor().equals("88888888888") || getValor().equals("99999999999") ||
-                (getValor().length() != 11))
+        Matcher matcher = REGEX_CPF_NUMERO_REPETIDO.matcher(getValor());
+        if (matcher.find() || getValor().length() != 11)
             return(false);
 
         char dig10, dig11;

@@ -1,5 +1,6 @@
 package aplbackfase1.domain.model;
 
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@EqualsAndHashCode
 public class Pedido {
 
     @Id

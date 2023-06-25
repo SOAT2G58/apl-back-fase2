@@ -1,9 +1,12 @@
 package aplbackfase1.domain.model;
 
+import lombok.EqualsAndHashCode;
+
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
+@EqualsAndHashCode
 public class Fila {
 
     private UUID idFila;
@@ -48,21 +51,5 @@ public class Fila {
 
     public void setDataInclusaoFila(Date dataInclusaoFila) {
         this.dataInclusaoFila = dataInclusaoFila;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Fila fila = (Fila) o;
-        return numeroNaFila == fila.numeroNaFila &&
-                Objects.equals(idFila, fila.idFila) &&
-                Objects.equals(idPedido, fila.idPedido) &&
-                Objects.equals(dataInclusaoFila, fila.dataInclusaoFila);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idFila, idPedido, numeroNaFila, dataInclusaoFila);
     }
 }
