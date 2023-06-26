@@ -6,9 +6,11 @@ import aplbackfase1.domain.model.TipoProduto;
 import java.util.List;
 import java.util.UUID;
 
-public interface IProdutoRepositorio {
-    List<Produto> listarProdutoPorTipo(TipoProduto tipoProduto);
+public interface IProdutoRepositoryPort {
+    List<Produto> listarProdutosPorTipo(TipoProduto tipoProduto);
     Produto buscarProdutoPorId(UUID idProduto);
 
     Produto criarProduto(Produto produto);
+
+    void deletarProduto(Produto produto);
 }
