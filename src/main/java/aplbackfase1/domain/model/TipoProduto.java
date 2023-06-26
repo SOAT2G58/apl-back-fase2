@@ -18,7 +18,7 @@ public enum TipoProduto {
 
     public static TipoProduto fromCodigo(String codigo) {
         for (TipoProduto tipo : TipoProduto.values()) {
-            if (tipo.getCodigo().equals(codigo)) {
+            if (codigo != null && codigo.equals(tipo.getCodigo())) {
                 return tipo;
             }
         }

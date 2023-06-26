@@ -10,5 +10,5 @@ public interface IProdutoUseCasePort {
     List<Produto> listarProdutosPorTipoProduto(TipoProduto tipoProduto);
     Produto buscarProdutoPorID(UUID idProduto);
     Produto criarProduto(Produto produto);
-    void deletarProduto(Produto produto);
+    void deletarProduto(UUID idProduto);
 }
