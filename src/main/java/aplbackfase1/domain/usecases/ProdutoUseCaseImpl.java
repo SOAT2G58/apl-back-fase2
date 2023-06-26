@@ -37,7 +37,7 @@ public class ProdutoUseCaseImpl implements IProdutoUseCasePort {
     }
 
     @Override
-    public void deletarProduto(Produto produto) {
-        produtoRepositoryPort.deletarProduto(produto);
+    public void deletarProduto(UUID idProduto) {
+        produtoRepositoryPort.deletarProduto(idProduto);
     }
 }

@@ -23,13 +23,14 @@ public class ProdutoEntity {
     @Id
     @GeneratedValue
     private UUID idProduto;
+    @Embedded
     private NomeProduto nomeProduto;
+    @Embedded
     private DescricaoProduto descricaoProduto;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 1)
-    private TipoProduto tipoProduto;
+    private String tipoProduto;
 
+    @Embedded
     private ValorProduto valorProduto;
 
     public Produto to(ProdutoEntity produtoEntity) {
@@ -37,7 +38,7 @@ public class ProdutoEntity {
                 .idProduto(produtoEntity.getIdProduto())
                 .nomeProduto(produtoEntity.getNomeProduto())
                 .descricaoProduto(produtoEntity.getDescricaoProduto())
-                .tipoProduto(produtoEntity.getTipoProduto())
+                .tipoProduto(TipoProduto.fromCodigo(produtoEntity.getTipoProduto()))
                 .valorProduto(produtoEntity.getValorProduto())
                 .build();
     }
@@ -46,7 +47,7 @@ public class ProdutoEntity {
         return ProdutoEntity.builder()
                 .nomeProduto(produto.getNomeProduto())
                 .descricaoProduto(produto.getDescricaoProduto())
-                .tipoProduto(produto.getTipoProduto())
+                .tipoProduto(produto.getTipoProduto().getCodigo())
                 .valorProduto(produto.getValorProduto())
                 .build();
     }

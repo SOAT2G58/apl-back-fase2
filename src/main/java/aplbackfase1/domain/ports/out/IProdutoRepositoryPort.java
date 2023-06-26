@@ -12,5 +12,5 @@ public interface IProdutoRepositoryPort {
 
     Produto criarProduto(Produto produto);
 
-    void deletarProduto(Produto produto);
+    void deletarProduto(UUID idProduto);
 }

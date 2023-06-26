@@ -25,7 +25,7 @@ public class ProdutoRepositoryAdapter implements IProdutoRepositoryPort {
 
         try {
             final List<ProdutoEntity> produtoEntityList = this.produtoRepository
-                    .findAllByTipoProduto(tipoProduto)
+                    .findAllByTipoProduto(tipoProduto.getCodigo())
                     .orElseThrow(() ->
                             new NoSuchElementException("Não foram encontrados produtos do tipo: " + tipoProduto)
                     );
@@ -60,8 +60,7 @@ public class ProdutoRepositoryAdapter implements IProdutoRepositoryPort {
     }
 
     @Override
-    public void deletarProduto(Produto produto) {
-        ProdutoEntity produtoEntity = new ProdutoEntity().from(produto);
-        this.produtoRepository.delete(produtoEntity);
+    public void deletarProduto(UUID idProduto) {
+        this.produtoRepository.deleteById(idProduto);
     }
 }

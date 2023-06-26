@@ -8,33 +8,24 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
+
 @EqualsAndHashCode
 public class Pedido {
 
-    @Id
-    @GeneratedValue
-    @Type(type="uuid-char")
     private UUID idPedido;
 
-    @Type(type="uuid-char")
     private UUID idCliente;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Date dataCriacao;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Date dataAtualizacao;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Date dataFinalizacao;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 1)
     private StatusPedido status;
 
     // a implementar relacao junto a Produtos
-    @OneToMany
+
     private List<Produto> itens;
 
     public void criaPedido(UUID idCliente) {
