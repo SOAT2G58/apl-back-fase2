@@ -2,14 +2,18 @@ package aplbackfase1.domain.model.valueObject;
 
 import aplbackfase1.domain.model.exceptions.NomeInvalidoException;
 
+import javax.persistence.Transient;
 import java.util.Objects;
 
 public class Nome implements Comparable<Nome> {
-    private String valor;
-
+    private String nome;
+    @Transient
     private int tamanhoMinimo;
+    @Transient
     private int tamanhoMaximo;
+    @Transient
     private int minimoCaracter;
+    @Transient
     private int maximoCaracter;
 
     Nome() {}
@@ -19,7 +23,7 @@ public class Nome implements Comparable<Nome> {
     }
 
     public Nome(String valor, int tamanhoMinimo, int minimoCaracter) {
-        this(valor, tamanhoMinimo, minimoCaracter, 255, 6);
+        this(valor, tamanhoMinimo, 255, minimoCaracter, 6);
     }
 
     public Nome (String valor, int tamanhoMinimo, int tamanhoMaximo, int minimoCaracter, int maximoCaracter) {
@@ -28,15 +32,15 @@ public class Nome implements Comparable<Nome> {
         this.tamanhoMaximo = tamanhoMaximo;
         this.maximoCaracter = maximoCaracter;
         if (Objects.nonNull(valor)) {
-            this.valor = valor.trim();
+            this.nome = valor.trim();
         }
         if (isInvalid()) {
             throw new NomeInvalidoException();
         }
     }
 
-    public String getValor() {
-        return this.valor;
+    public String getNome() {
+        return this.nome;
     }
 
     public boolean isValid() {
@@ -44,24 +48,24 @@ public class Nome implements Comparable<Nome> {
     }
 
     public boolean isInvalid() {
-        if (Objects.isNull(valor)) {
+        if (Objects.isNull(nome)) {
             return true;
         }
-        boolean possuiTamanhoMinimo = getValor().length() >= tamanhoMinimo;
-        boolean possuiTamanhoMaximo = getValor().length() >= tamanhoMaximo;
-        boolean possuiMinimoCaracter = getValor().length() >= minimoCaracter;
-        boolean possuiMaximoCaracter = getValor().length() >= maximoCaracter;
+        boolean possuiTamanhoMinimo = getNome().length() >= tamanhoMinimo;
+        boolean possuiTamanhoMaximo = getNome().length() <= tamanhoMaximo;
+        boolean possuiMinimoCaracter = getNome().split(" ").length >= minimoCaracter;
+        boolean possuiMaximoCaracter = getNome().split(" ").length <= maximoCaracter;
 
         return !possuiTamanhoMinimo || !possuiTamanhoMaximo || !possuiMinimoCaracter || !possuiMaximoCaracter;
     }
 
     @Override
     public int compareTo(Nome o) {
-        return getValor().compareTo(o.getValor());
+        return getNome().compareTo(o.getNome());
     }
 
     @Override
     public String toString() {
-        return getValor();
+        return getNome();
     }
 }
