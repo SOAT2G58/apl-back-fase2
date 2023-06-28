@@ -8,20 +8,20 @@ import java.util.regex.Pattern;
 
 public class Email {
     public static final Pattern REGEX_EMAIL_VALIDO = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-    private String valor;
+    private String email;
 
     Email() {}
 
     public Email(String email) {
-        this.valor = Objects.nonNull(email) ? email : "";
+        this.email = Objects.nonNull(email) ? email : "";
         Matcher matcher = REGEX_EMAIL_VALIDO.matcher(email);
         if (!matcher.find()) {
             throw new EmailInvalidoException();
         }
     }
 
-    public String getValor() {
-        return this.valor;
+    public String getEmail() {
+        return this.email;
     };
 
     public boolean isInvalid() {
@@ -29,20 +29,20 @@ public class Email {
     }
 
     public boolean isValid() {
-        Matcher matcher = REGEX_EMAIL_VALIDO.matcher(valor);
+        Matcher matcher = REGEX_EMAIL_VALIDO.matcher(email);
         return matcher.find();
     }
 
     @Override
     public String toString() {
-        return getValor();
+        return getEmail();
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((valor == null) ? 0 : valor.hashCode());
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
         return result;
     }
 
@@ -55,10 +55,10 @@ public class Email {
         if (getClass() != obj.getClass())
             return false;
         Email other = (Email) obj;
-        if (valor == null) {
-            if (other.valor != null)
+        if (email == null) {
+            if (other.email != null)
                 return false;
-        } else if (!valor.equals(other.valor))
+        } else if (!email.equals(other.email))
             return false;
         return true;
     }
