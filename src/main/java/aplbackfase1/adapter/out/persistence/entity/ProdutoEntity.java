@@ -79,17 +79,4 @@ public class ProdutoEntity {
 
         return new Date(calendar.getTime().getTime());
     }
-
-//    public static void main(String[] args) {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        Calendar calendar = Calendar.getInstance();
-//
-//        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE),
-//                calendar.get(Calendar.HOUR),
-//                calendar.get(Calendar.MINUTE),
-//                calendar.get(Calendar.SECOND));
-//        Date date = new Date(calendar.getTime().getTime());
-//        String frmtdDate = dateFormat.format(date);
-//        System.out.println(date);
-//    }
 }
