@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -21,16 +23,21 @@ public class ProdutoControllerAdapter {
 
     @GetMapping("/produtos")
     @ResponseBody
-    public ResponseEntity<?> buscarProdutoPorTipo(@RequestParam @Nullable String tipoProduto, @RequestParam @Nullable String id) {
+    public ResponseEntity<?> buscarProduto(@RequestParam @Nullable String tipoProduto, @RequestParam @Nullable String id) {
         if(null != tipoProduto) {
-            List<Produto> produtos = this.produtoUseCasePort
-                    .listarProdutosPorTipoProduto(TipoProduto.fromCodigo(tipoProduto));
-            return new ResponseEntity<>(produtos, HttpStatus.OK);
+            return new ResponseEntity<>(this.produtoUseCasePort
+                    .listarProdutosPorTipoProduto(
+                            TipoProduto.fromCodigo(tipoProduto)).get(),
+                            HttpStatus.OK
+            );
         } else if(null != id) {
-            Produto produto = this.produtoUseCasePort.buscarProdutoPorID(UUID.fromString(id));
-            return  new ResponseEntity<>(produto, HttpStatus.OK);
+            Optional<Produto> produto = this.produtoUseCasePort.buscarProdutoPorID(UUID.fromString(id));
+            return produto.isEmpty() ?
+                    new ResponseEntity<>(HttpStatus.OK) :
+                    new ResponseEntity<>(produto.get(), HttpStatus.OK);
+
         } else {
-            return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 

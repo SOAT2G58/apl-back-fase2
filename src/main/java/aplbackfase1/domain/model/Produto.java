@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -20,4 +21,6 @@ public class Produto {
     private DescricaoProduto descricaoProduto;
     private TipoProduto tipoProduto;
     private ValorProduto valorProduto;
+    private Date dataAtualizacao;
+    private Date dataCriacao;
 }

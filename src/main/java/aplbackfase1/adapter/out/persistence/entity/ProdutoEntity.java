@@ -11,6 +11,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 import java.util.UUID;
 
 @Entity
@@ -33,6 +37,13 @@ public class ProdutoEntity {
     @Embedded
     private ValorProduto valorProduto;
 
+    //Incluir quando tiver atualização do produto
+    //    @Temporal(TemporalType.TIMESTAMP)
+    //    private Date dataAtualizacao;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataCriacao;
+
     public Produto to(ProdutoEntity produtoEntity) {
         return Produto.builder()
                 .idProduto(produtoEntity.getIdProduto())
@@ -43,12 +54,42 @@ public class ProdutoEntity {
                 .build();
     }
 
-    public ProdutoEntity from(Produto produto) {
-        return ProdutoEntity.builder()
+    public ProdutoEntity from(Produto produto, boolean isCreated) {
+        ProdutoEntityBuilder produtoEntityBuilder = ProdutoEntity.builder()
                 .nomeProduto(produto.getNomeProduto())
                 .descricaoProduto(produto.getDescricaoProduto())
                 .tipoProduto(produto.getTipoProduto().getCodigo())
-                .valorProduto(produto.getValorProduto())
-                .build();
+                .valorProduto(produto.getValorProduto());
+
+        if(isCreated) {
+            produtoEntityBuilder.dataCriacao(this.obterDataHoraAtual());
+        }
+        return produtoEntityBuilder.build();
     }
+
+    private Date obterDataHoraAtual(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DATE),
+                calendar.get(Calendar.HOUR),
+                calendar.get(Calendar.MINUTE),
+                calendar.get(Calendar.SECOND));
+
+        return new Date(calendar.getTime().getTime());
+    }
+
+//    public static void main(String[] args) {
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Calendar calendar = Calendar.getInstance();
+//
+//        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE),
+//                calendar.get(Calendar.HOUR),
+//                calendar.get(Calendar.MINUTE),
+//                calendar.get(Calendar.SECOND));
+//        Date date = new Date(calendar.getTime().getTime());
+//        String frmtdDate = dateFormat.format(date);
+//        System.out.println(date);
+//    }
 }

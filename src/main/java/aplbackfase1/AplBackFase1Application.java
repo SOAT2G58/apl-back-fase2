@@ -17,7 +17,9 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootApplication
@@ -43,9 +45,10 @@ public class AplBackFase1Application {
 		);
 		System.out.println(produto);
 
-		List<Produto> produtos = this.produtoUseCasePort
-					.listarProdutosPorTipoProduto(TipoProduto.ACOMPANHAMENTO);
+		System.out.println(this.produtoUseCasePort
+				.listarProdutosPorTipoProduto(TipoProduto.BEBIDA).get());
 
-		System.out.println(produtos);
+		System.out.println(this.produtoUseCasePort
+				.buscarProdutoPorID(UUID.randomUUID()).isEmpty());
 	}
 }
