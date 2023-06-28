@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public class ClienteUseCaseImpl implements IClienteUseCasePort {
 
     @Override
     public Cliente cadastrar(Cliente cliente) throws CpfExistenteException {
-        Optional<Cliente> clienteDb = buscarPorCpf(cliente.getCpf());
+        Optional<ClienteEntity> clienteDb = buscarPorCpf(cliente.getCpf());
         if (clienteDb.isPresent())
             throw new CpfExistenteException();
         return clienteRepositoryPort.cadastrar(cliente);
@@ -28,16 +29,25 @@ public class ClienteUseCaseImpl implements IClienteUseCasePort {
 
     @Override
     public Cliente identificarPorCpf(Cpf cpf) {
-        return clienteRepositoryPort.identificarPorCpf(cpf);
+        Optional<ClienteEntity> clienteDb = buscarPorCpf(cpf);
+        if (clienteDb.isPresent())
+            return new ClienteEntity().to(clienteDb.get());
+        else
+            return clienteRepositoryPort.identificarPorCpf(cpf);
     }
 
     @Override
-    public Optional<Cliente> buscarPorCpf(Cpf cpf) {
+    public Optional<ClienteEntity> buscarPorCpf(Cpf cpf) {
         return clienteRepositoryPort.buscarPorCpf(cpf);
     }
 
     @Override
     public List<ClienteEntity> bucarTodos() { // TODO - temp remover posteriormente
         return clienteRepositoryPort.bucarTodos();
+    }
+
+    @Override
+    public Optional<ClienteEntity> buscarPorId(UUID uuid) {
+        return clienteRepositoryPort.buscarPorId(uuid);
     }
 }

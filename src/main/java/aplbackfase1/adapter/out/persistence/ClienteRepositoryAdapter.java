@@ -6,12 +6,11 @@ import aplbackfase1.domain.model.Cliente;
 import aplbackfase1.domain.model.valueObject.Cpf;
 import aplbackfase1.domain.ports.out.IClienteRepositoryPort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -32,9 +31,8 @@ public class ClienteRepositoryAdapter implements IClienteRepositoryPort {
     }
 
     @Override
-    public Optional<Cliente> buscarPorCpf(Cpf cpf) {
-        Optional<ClienteEntity> clienteEntity = clienteRepository.findAllByCpf(cpf);
-        return clienteEntity.map(e -> e.to(e));
+    public Optional<ClienteEntity> buscarPorCpf(Cpf cpf) {
+        return clienteRepository.findAllByCpf(cpf);
     }
 
     @Override
@@ -44,5 +42,10 @@ public class ClienteRepositoryAdapter implements IClienteRepositoryPort {
         System.out.println(clientes.size());
         System.out.println(clientes.get(0));*/
         return clienteRepository.findAll();
+    }
+
+    @Override
+    public Optional<ClienteEntity> buscarPorId(UUID uuid) {
+        return clienteRepository.findById(uuid);
     }
 }
