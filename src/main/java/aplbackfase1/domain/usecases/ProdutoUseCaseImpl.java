@@ -5,10 +5,9 @@ import aplbackfase1.domain.enums.TipoProduto;
 import aplbackfase1.domain.ports.in.IProdutoUseCasePort;
 import aplbackfase1.domain.ports.out.IProdutoRepositoryPort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,9 +18,9 @@ public class ProdutoUseCaseImpl implements IProdutoUseCasePort {
     private final IProdutoRepositoryPort produtoRepositoryPort;
 
     @Override
-    public Page<Produto> listarProdutosPorTipoProduto(TipoProduto tipoProduto, Pageable pageable) {
+    public Optional<ArrayList<Produto>> listarProdutosPorTipoProduto(TipoProduto tipoProduto) {
         return produtoRepositoryPort
-                .listarProdutosPorTipo(tipoProduto, pageable);
+                .listarProdutosPorTipo(tipoProduto);
     }
 
     @Override
