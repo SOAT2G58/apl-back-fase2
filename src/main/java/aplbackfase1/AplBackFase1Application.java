@@ -13,6 +13,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -45,7 +46,7 @@ public class AplBackFase1Application {
 		System.out.println("Produto criado:" + produto);
 
 		System.out.println("listando todos os produtos do tipo bebida:" + this.produtoUseCasePort
-				.listarProdutosPorTipoProduto(TipoProduto.BEBIDA));
+				.listarProdutosPorTipoProduto(TipoProduto.BEBIDA, Pageable.unpaged()));
 
 		System.out.println("buscando produto por id:" + this.produtoUseCasePort
 				.buscarProdutoPorID(UUID.randomUUID()));

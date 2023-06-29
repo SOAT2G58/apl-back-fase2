@@ -20,7 +20,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "produtos")
+@Table(name = "tb_produto")
 public class ProdutoEntity {
     @Id
     @GeneratedValue

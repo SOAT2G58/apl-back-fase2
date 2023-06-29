@@ -1,12 +1,16 @@
 package aplbackfase1.adapter.in.web;
 
 import aplbackfase1.adapter.in.web.exceptions.StandardError;
+import aplbackfase1.adapter.in.web.request.ProdutoRequest;
 import aplbackfase1.domain.model.Produto;
 import aplbackfase1.domain.enums.TipoProduto;
 import aplbackfase1.domain.ports.in.IProdutoUseCasePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -29,13 +33,11 @@ public class ProdutoControllerAdapter {
     }
 
     @GetMapping("/produtos")
-    public ResponseEntity<?> buscarProduto(@RequestParam String tipoProduto) {
+    public ResponseEntity<?> buscarProduto(@RequestParam String tipoProduto, Pageable pageable) {
         if(Objects.nonNull(tipoProduto)) {
-            Optional<ArrayList<Produto>> produtoArrayList = this.produtoUseCasePort
-                    .listarProdutosPorTipoProduto(TipoProduto.fromCodigo(tipoProduto));
-            return produtoArrayList.isPresent() ?
-                    new ResponseEntity<>(produtoArrayList.get(), HttpStatus.OK) :
-                    new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
+            Page<Produto> produtoArrayList = this.produtoUseCasePort
+                    .listarProdutosPorTipoProduto(TipoProduto.fromCodigo(tipoProduto), pageable);
+           return new ResponseEntity<>(produtoArrayList, HttpStatus.OK);
         } else {
             return this.buildStandardError(
                     HttpStatus.BAD_REQUEST,
@@ -45,10 +47,10 @@ public class ProdutoControllerAdapter {
     }
 
     @PostMapping("/produtos")
-    public ResponseEntity<?> criarProduto(Produto request) {
+    public ResponseEntity<?> criarProduto(@Validated @RequestBody ProdutoRequest request) {
         if(Objects.nonNull(request)) {
-            Produto produto = this.produtoUseCasePort.criarProduto(request);
-            return new ResponseEntity<>(produto, HttpStatus.CREATED);
+            return new ResponseEntity<>(
+                    this.produtoUseCasePort.criarProduto(request.from(request)), HttpStatus.CREATED);
         } else {
             return this.buildStandardError(
                     HttpStatus.BAD_REQUEST,
