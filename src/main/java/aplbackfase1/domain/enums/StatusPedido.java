@@ -1,4 +1,4 @@
-package aplbackfase1.domain.model;
+package aplbackfase1.domain.enums;
 
 public enum StatusPedido {
     A("Aberto"),

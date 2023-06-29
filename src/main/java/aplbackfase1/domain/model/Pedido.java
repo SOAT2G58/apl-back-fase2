@@ -1,9 +1,8 @@
 package aplbackfase1.domain.model;
 
+import aplbackfase1.domain.enums.StatusPedido;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;

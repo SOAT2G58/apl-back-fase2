@@ -1,5 +1,6 @@
 package aplbackfase1.domain.model;
 
+import aplbackfase1.domain.enums.TipoProduto;
 import aplbackfase1.domain.model.valueObject.DescricaoProduto;
 import aplbackfase1.domain.model.valueObject.NomeProduto;
 import aplbackfase1.domain.model.valueObject.ValorProduto;

@@ -1,10 +1,12 @@
 package aplbackfase1.domain.model.valueObject;
 
-import aplbackfase1.domain.model.exceptions.NomeProdutoInvalidoException;
+import aplbackfase1.domain.exceptions.NomeProdutoInvalidoException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.Objects;
 
 @NoArgsConstructor
 @Getter
@@ -15,7 +17,7 @@ public class NomeProduto {
     private String nome;
 
     public NomeProduto(String nomeProduto) {
-        if (nomeProduto == null || nomeProduto.trim().length() < 4 || nomeProduto.trim().length() > 20) {
+        if (Objects.isNull(nomeProduto) || 4 > nomeProduto.trim().length() || 20 < nomeProduto.trim().length()) {
             throw new NomeProdutoInvalidoException();
         }
         this.nome = nomeProduto.trim();

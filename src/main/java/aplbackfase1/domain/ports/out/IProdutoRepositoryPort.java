@@ -1,7 +1,7 @@
 package aplbackfase1.domain.ports.out;
 
 import aplbackfase1.domain.model.Produto;
-import aplbackfase1.domain.model.TipoProduto;
+import aplbackfase1.domain.enums.TipoProduto;
 
 import java.util.ArrayList;
 import java.util.Optional;

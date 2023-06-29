@@ -1,7 +1,7 @@
 package aplbackfase1.adapter.out.persistence.entity;
 
 import aplbackfase1.domain.model.Produto;
-import aplbackfase1.domain.model.TipoProduto;
+import aplbackfase1.domain.enums.TipoProduto;
 import aplbackfase1.domain.model.valueObject.DescricaoProduto;
 import aplbackfase1.domain.model.valueObject.NomeProduto;
 import aplbackfase1.domain.model.valueObject.ValorProduto;
@@ -11,10 +11,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 import java.util.UUID;
 
 @Entity
@@ -27,6 +25,7 @@ public class ProdutoEntity {
     @Id
     @GeneratedValue
     private UUID idProduto;
+
     @Embedded
     private NomeProduto nomeProduto;
     @Embedded

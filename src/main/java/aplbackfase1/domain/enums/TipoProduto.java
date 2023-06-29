@@ -1,4 +1,8 @@
-package aplbackfase1.domain.model;
+package aplbackfase1.domain.enums;
+
+import aplbackfase1.domain.exceptions.TipoProdutoInexistenteException;
+
+import java.util.Objects;
 
 public enum TipoProduto {
     LANCHE("L"),
@@ -18,10 +22,10 @@ public enum TipoProduto {
 
     public static TipoProduto fromCodigo(String codigo) {
         for (TipoProduto tipo : TipoProduto.values()) {
-            if (codigo != null && codigo.equals(tipo.getCodigo())) {
+            if (Objects.nonNull(codigo) && tipo.getCodigo().equals(codigo)) {
                 return tipo;
             }
         }
-        throw new IllegalArgumentException("Invalid TipoProduto codigo: " + codigo);
+        throw new TipoProdutoInexistenteException(codigo);
     }
 }

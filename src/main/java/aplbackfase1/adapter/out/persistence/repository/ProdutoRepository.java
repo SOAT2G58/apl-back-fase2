@@ -1,7 +1,6 @@
 package aplbackfase1.adapter.out.persistence.repository;
 
 import aplbackfase1.adapter.out.persistence.entity.ProdutoEntity;
-import aplbackfase1.domain.model.TipoProduto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,6 @@
 package aplbackfase1.domain.model.valueObject;
 
-import aplbackfase1.domain.model.exceptions.CpfInvalidoException;
-import aplbackfase1.domain.model.exceptions.EmailInvalidoException;
+import aplbackfase1.domain.exceptions.CpfInvalidoException;
 
 import java.util.InputMismatchException;
 import java.util.Objects;
@@ -11,30 +10,30 @@ import java.util.regex.Pattern;
 public class Cpf {
 
     public static final Pattern REGEX_CPF_NUMERO_REPETIDO = Pattern.compile("/([0-9])\1{10}/g");
-    private String valor;
+    private String cpf;
     Cpf() {}
 
     public Cpf(String cpf) {
-        this.valor = Objects.nonNull(cpf) ? cpf : "";
+        this.cpf = Objects.nonNull(cpf) ? cpf : "";
         if (isValid()) {
             throw new CpfInvalidoException();
         }
     }
 
-    public String getValor() {
-        return this.valor;
+    public String getCpf() {
+        return this.cpf;
     }
 
     @Override
     public String toString() {
-        return getValor();
+        return getCpf();
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((valor == null) ? 0 : valor.hashCode());
+        result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
         return result;
     }
 
@@ -47,10 +46,10 @@ public class Cpf {
         if (getClass() != obj.getClass())
             return false;
         Cpf other = (Cpf) obj;
-        if (valor == null) {
-            if (other.valor != null)
+        if (cpf == null) {
+            if (other.cpf != null)
                 return false;
-        } else if (!valor.equals(other.valor))
+        } else if (!cpf.equals(other.cpf))
             return false;
         return true;
     }
@@ -61,8 +60,8 @@ public class Cpf {
 
     public boolean isValid() {
         // considera-se erro CPF's formados por uma sequencia de numeros iguais
-        Matcher matcher = REGEX_CPF_NUMERO_REPETIDO.matcher(getValor());
-        if (matcher.find() || getValor().length() != 11)
+        Matcher matcher = REGEX_CPF_NUMERO_REPETIDO.matcher(getCpf());
+        if (matcher.find() || getCpf().length() != 11)
             return(false);
 
         char dig10, dig11;
@@ -77,7 +76,7 @@ public class Cpf {
                 // converte o i-esimo caractere do CPF em um numero:
                 // por exemplo, transforma o caractere '0' no inteiro 0
                 // (48 eh a posicao de '0' na tabela ASCII)
-                num = (int)(getValor().charAt(i) - 48);
+                num = (int)(getCpf().charAt(i) - 48);
                 sm = sm + (num * peso);
                 peso = peso - 1;
             }
@@ -91,7 +90,7 @@ public class Cpf {
             sm = 0;
             peso = 11;
             for(i=0; i<10; i++) {
-                num = (int)(getValor().charAt(i) - 48);
+                num = (int)(getCpf().charAt(i) - 48);
                 sm = sm + (num * peso);
                 peso = peso - 1;
             }
@@ -102,7 +101,7 @@ public class Cpf {
             else dig11 = (char)(r + 48);
 
             // Verifica se os digitos calculados conferem com os digitos informados.
-            if ((dig10 == getValor().charAt(9)) && (dig11 == getValor().charAt(10)))
+            if ((dig10 == getCpf().charAt(9)) && (dig11 == getCpf().charAt(10)))
                 return(true);
             else return(false);
         } catch (InputMismatchException erro) {
