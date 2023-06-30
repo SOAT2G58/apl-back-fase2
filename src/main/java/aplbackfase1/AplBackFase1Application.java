@@ -50,17 +50,39 @@ public class AplBackFase1Application {
 		try {
 			Cliente cliente = this.clienteUseCasePort.cadastrar(
 					Cliente.builder()
-							.nome(new Nome("Teste fulano de tal"))
-							.email(new Email("contato@email.com"))
-							.cpf(new Cpf("541.699.355-35"))
+							.nome(new Nome("Murilo Benjamin Gabriel das Neves"))
+							.email(new Email("murilo-dasneves84@ppe.ufrj.br"))
+							.cpf(new Cpf("420.390.450-15"))
 							.build());
 			System.out.println(cliente);
-			List<ClienteEntity> clientes = this.clienteUseCasePort.bucarTodos();
-
-			System.out.println(produtos);
 		} catch (CpfExistenteException e) {
 			System.out.println("CPF já cadastrado");
 		}
 
+		try {
+			Cliente cliente = this.clienteUseCasePort.cadastrar(
+					Cliente.builder()
+							.nome(new Nome("Eliane Catarina Milena Ribeiro"))
+							.email(new Email("eliane_catarina_ribeiro@esctech.com.br"))
+							.cpf(new Cpf("974.971.471-70"))
+							.build());
+			System.out.println(cliente);
+		} catch (CpfExistenteException e) {
+			System.out.println("CPF já cadastrado");
+		}
+
+		try {
+			Cliente cliente = this.clienteUseCasePort.identificarPorCpf(new Cpf("161.807.409-17"));
+			System.out.println(cliente);
+		} catch (CpfExistenteException e) {
+			System.out.println("CPF já cadastrado");
+		}
+
+		try {
+			List<Cliente> clientes = this.clienteUseCasePort.bucarTodos();
+			System.out.println(clientes);
+		} catch (CpfExistenteException e) {
+			System.err.println("Problemas na listagem de todos clientes");
+		}
 	}
 }
