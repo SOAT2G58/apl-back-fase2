@@ -1,6 +1,6 @@
-package aplbackfase1.adapter.in.web;
+package aplbackfase1.application.web;
 
-import aplbackfase1.adapter.in.web.responses.ClienteDTO;
+import aplbackfase1.application.web.responses.ClienteDTO;
 import aplbackfase1.domain.model.Cliente;
 import aplbackfase1.domain.model.valueObject.Cpf;
 import aplbackfase1.domain.ports.in.IClienteUseCasePort;

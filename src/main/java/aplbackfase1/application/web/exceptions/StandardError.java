@@ -1,4 +1,4 @@
-package aplbackfase1.adapter.in.web.exceptions;
+package aplbackfase1.application.web.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package aplbackfase1.adapter.in.web.requests;
+package aplbackfase1.application.web.requests;
 
 import aplbackfase1.domain.enums.TipoProduto;
 import aplbackfase1.domain.model.Produto;

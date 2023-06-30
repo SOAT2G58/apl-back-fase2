@@ -1,6 +1,6 @@
-package aplbackfase1.adapter.in.web.exceptions;
+package aplbackfase1.application.web.exceptions;
 
-import aplbackfase1.adapter.in.web.ClienteControllerAdapter;
+import aplbackfase1.application.web.ClienteControllerAdapter;
 import aplbackfase1.domain.exceptions.CpfExistenteException;
 import aplbackfase1.domain.exceptions.CpfInvalidoException;
 import aplbackfase1.domain.exceptions.EmailInvalidoException;

@@ -1,7 +1,7 @@
-package aplbackfase1.adapter.in.web;
+package aplbackfase1.application.web;
 
-import aplbackfase1.adapter.in.web.requests.ProdutoRequest;
-import aplbackfase1.adapter.in.web.responses.ProdutoDTO;
+import aplbackfase1.application.web.requests.ProdutoRequest;
+import aplbackfase1.application.web.responses.ProdutoDTO;
 import aplbackfase1.domain.enums.TipoProduto;
 import aplbackfase1.domain.model.Produto;
 import aplbackfase1.domain.ports.in.IProdutoUseCasePort;

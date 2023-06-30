@@ -1,6 +1,6 @@
-package aplbackfase1.adapter.in.web.exceptions;
+package aplbackfase1.application.web.exceptions;
 
-import aplbackfase1.adapter.in.web.ProdutoControllerAdapter;
+import aplbackfase1.application.web.ProdutoControllerAdapter;
 import aplbackfase1.domain.exceptions.DescricaoProdutoInvalidoException;
 import aplbackfase1.domain.exceptions.NomeProdutoInvalidoException;
 import aplbackfase1.domain.exceptions.TipoProdutoInexistenteException;

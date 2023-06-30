@@ -1,6 +1,6 @@
-package aplbackfase1.adapter.out.persistence.repository;
+package aplbackfase1.infrastructure.persistence.repository;
 
-import aplbackfase1.adapter.out.persistence.entity.ClienteEntity;
+import aplbackfase1.infrastructure.persistence.entity.ClienteEntity;
 import aplbackfase1.domain.model.valueObject.Cpf;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

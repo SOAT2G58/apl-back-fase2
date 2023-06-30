@@ -1,7 +1,7 @@
-package aplbackfase1.adapter.out.persistence;
+package aplbackfase1.infrastructure.persistence;
 
-import aplbackfase1.adapter.out.persistence.entity.ProdutoEntity;
-import aplbackfase1.adapter.out.persistence.repository.ProdutoRepository;
+import aplbackfase1.infrastructure.persistence.entity.ProdutoEntity;
+import aplbackfase1.infrastructure.persistence.repository.ProdutoRepository;
 import aplbackfase1.domain.model.Produto;
 import aplbackfase1.domain.enums.TipoProduto;
 import aplbackfase1.domain.ports.out.IProdutoRepositoryPort;

@@ -1,4 +1,4 @@
-package aplbackfase1.adapter.out.persistence.entity;
+package aplbackfase1.infrastructure.persistence.entity;
 
 import aplbackfase1.domain.model.Produto;
 import aplbackfase1.domain.enums.TipoProduto;
