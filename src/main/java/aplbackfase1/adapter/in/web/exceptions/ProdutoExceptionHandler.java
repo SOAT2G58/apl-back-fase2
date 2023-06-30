@@ -39,7 +39,7 @@ public class ProdutoExceptionHandler {
         StandardError err = new StandardError(
                 System.currentTimeMillis(),
                 HttpStatus.BAD_REQUEST.value(),
-                "Identificador do produto não pode ser nulo ou vazio",
+                "Tipo do produto está nulo, vazio ou não existe",
                 e.getMessage(),
                 request.getRequestURI()
         );

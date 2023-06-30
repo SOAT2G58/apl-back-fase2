@@ -1,15 +1,13 @@
 package aplbackfase1.domain.ports.in;
 
-import aplbackfase1.domain.model.Produto;
 import aplbackfase1.domain.enums.TipoProduto;
+import aplbackfase1.domain.model.Produto;
 
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 public interface IProdutoUseCasePort {
-    Optional<ArrayList<Produto>> listarProdutosPorTipoProduto(TipoProduto tipoProduto);
-    Optional<Produto> buscarProdutoPorID(UUID idProduto);
+    List<Produto> listarProdutosPorTipoProduto(TipoProduto tipoProduto);
     Produto criarProduto(Produto produto);
     void deletarProduto(UUID idProduto);
 }

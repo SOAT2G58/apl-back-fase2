@@ -5,10 +5,10 @@ import aplbackfase1.domain.exceptions.TipoProdutoInexistenteException;
 import java.util.Objects;
 
 public enum TipoProduto {
-    LANCHE("L"),
-    BEBIDA("B"),
-    SOBREMESA("S"),
-    ACOMPANHAMENTO("A");
+    LANCHE("1"),
+    BEBIDA("2"),
+    SOBREMESA("3"),
+    ACOMPANHAMENTO("4");
 
     private String codigo;
 
@@ -21,9 +21,9 @@ public enum TipoProduto {
     }
 
     public static TipoProduto fromCodigo(String codigo) {
-        for (TipoProduto tipo : TipoProduto.values()) {
-            if (Objects.nonNull(codigo) && tipo.getCodigo().equals(codigo)) {
-                return tipo;
+        if(Objects.nonNull(codigo)) {
+            for (TipoProduto tipo : TipoProduto.values()) {
+                if (codigo.equals(tipo.getCodigo())) return tipo;
             }
         }
         throw new TipoProdutoInexistenteException(codigo);

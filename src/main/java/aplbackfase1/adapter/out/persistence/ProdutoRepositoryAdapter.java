@@ -7,6 +7,7 @@ import aplbackfase1.domain.enums.TipoProduto;
 import aplbackfase1.domain.ports.out.IProdutoRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -17,39 +18,27 @@ public class ProdutoRepositoryAdapter implements IProdutoRepositoryPort {
     private final ProdutoRepository produtoRepository;
 
     @Override
-    public Optional<ArrayList<Produto>> listarProdutosPorTipo(TipoProduto tipoProduto) {
-        final Optional<ArrayList<Produto>> produtoList = Optional.of(new ArrayList<>());
-
+    @Transactional(readOnly = true)
+    public List<Produto> listarProdutosPorTipo(TipoProduto tipoProduto) {
+        final var produtoList = new ArrayList<Produto>();
         final Optional<List<ProdutoEntity>> produtoEntityList = this.produtoRepository
                 .findAllByTipoProduto(tipoProduto.getCodigo());
 
-        if(produtoEntityList.isPresent()) {
-            produtoEntityList.get().forEach(res -> produtoList.get().add(res.to(res)));
-        }
+        if(produtoEntityList.isPresent())
+            produtoEntityList.get().forEach(produtoEntity -> produtoList.add(produtoEntity.to(produtoEntity)));
 
         return produtoList;
     }
 
     @Override
-    public Optional<Produto> buscarProdutoPorId(UUID idProduto) {
-        Optional<Produto> produto = Optional.ofNullable(null);
-
-        final Optional<ProdutoEntity> produtoEntity = this.produtoRepository
-                .findById(idProduto);
-
-        if(produtoEntity.isPresent())
-            produto = Optional.ofNullable(produtoEntity.get().to(produtoEntity.get()));
-
-        return produto;
-    }
-
-    @Override
+    @Transactional()
     public Produto criarProduto(Produto produto) {
         ProdutoEntity produtoEntity = new ProdutoEntity().from(produto, true);
         return this.produtoRepository.save(produtoEntity).to(produtoEntity);
     }
 
     @Override
+    @Transactional()
     public void deletarProduto(UUID idProduto) {
         this.produtoRepository.deleteById(idProduto);
     }

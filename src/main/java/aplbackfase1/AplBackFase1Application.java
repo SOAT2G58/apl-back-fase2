@@ -33,22 +33,50 @@ public class AplBackFase1Application {
 
 	@EventListener(ApplicationReadyEvent.class)
 	public void runAfterStartup() {
-		Produto produto = this.produtoUseCasePort.criarProduto(
-				Produto
-						.builder()
-						.nomeProduto(new NomeProduto("sdfff"))
-						.descricaoProduto(new DescricaoProduto("sdfasfsafaf"))
-						.tipoProduto(TipoProduto.ACOMPANHAMENTO)
-						.valorProduto(new ValorProduto(new BigDecimal(5.0)))
-						.build()
-		);
-		System.out.println("Produto criado:" + produto);
+		this.mockProduto();
+		this.mockCliente();
+	}
 
-		System.out.println("listando todos os produtos do tipo bebida:" + this.produtoUseCasePort
+	private void mockProduto() {
+		for(var i = 0; i<= 5; i++) {
+			var quant = i + 1;
+			this.produtoUseCasePort.criarProduto(
+					Produto.builder().nomeProduto(new NomeProduto(TipoProduto.ACOMPANHAMENTO.name() + quant))
+							.descricaoProduto(new DescricaoProduto("Descricao produto: " + quant))
+							.tipoProduto(TipoProduto.ACOMPANHAMENTO)
+							.valorProduto(new ValorProduto(new BigDecimal(5.0 + quant))).build()
+			);
+			this.produtoUseCasePort.criarProduto(
+					Produto.builder().nomeProduto(new NomeProduto(TipoProduto.BEBIDA.name() + quant))
+							.descricaoProduto(new DescricaoProduto("Descricao produto: " + quant))
+							.tipoProduto(TipoProduto.BEBIDA)
+							.valorProduto(new ValorProduto(new BigDecimal(5.0 + quant))).build()
+			);
+			this.produtoUseCasePort.criarProduto(
+					Produto.builder().nomeProduto(new NomeProduto(TipoProduto.LANCHE.name() + quant))
+							.descricaoProduto(new DescricaoProduto("Descricao produto: " + quant))
+							.tipoProduto(TipoProduto.LANCHE)
+							.valorProduto(new ValorProduto(new BigDecimal(5.0 + quant))).build()
+			);
+			this.produtoUseCasePort.criarProduto(
+					Produto.builder().nomeProduto(new NomeProduto(TipoProduto.SOBREMESA.name() + quant))
+							.descricaoProduto(new DescricaoProduto("Descricao produto: " + quant))
+							.tipoProduto(TipoProduto.SOBREMESA)
+							.valorProduto(new ValorProduto(new BigDecimal(5.0 + quant))).build()
+			);
+		}
+
+		System.out.println("listando todos os produtos do tipo ".concat(TipoProduto.BEBIDA.name()) + this.produtoUseCasePort
 				.listarProdutosPorTipoProduto(TipoProduto.BEBIDA));
+		System.out.println("listando todos os produtos do tipo ".concat(TipoProduto.SOBREMESA.name()) + this.produtoUseCasePort
+				.listarProdutosPorTipoProduto(TipoProduto.SOBREMESA));
+		System.out.println("listando todos os produtos do tipo ".concat(TipoProduto.ACOMPANHAMENTO.name()) + this.produtoUseCasePort
+				.listarProdutosPorTipoProduto(TipoProduto.ACOMPANHAMENTO));
+		System.out.println("listando todos os produtos do tipo ".concat(TipoProduto.LANCHE.name()) + this.produtoUseCasePort
+				.listarProdutosPorTipoProduto(TipoProduto.LANCHE));
+	}
 
-		System.out.println("buscando produto por id:" + this.produtoUseCasePort
-				.buscarProdutoPorID(UUID.randomUUID()));
+	private void mockCliente(){
 		try {
 			Cliente cliente = this.clienteUseCasePort.cadastrar(
 					Cliente.builder()
@@ -63,6 +91,5 @@ public class AplBackFase1Application {
 		} catch (CpfExistenteException e) {
 			System.out.println("CPF já cadastrado");
 		}
-
 	}
 }
