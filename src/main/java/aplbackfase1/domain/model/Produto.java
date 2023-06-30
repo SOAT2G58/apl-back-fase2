@@ -1,5 +1,6 @@
 package aplbackfase1.domain.model;
 
+import aplbackfase1.domain.enums.TipoProduto;
 import aplbackfase1.domain.model.valueObject.DescricaoProduto;
 import aplbackfase1.domain.model.valueObject.NomeProduto;
 import aplbackfase1.domain.model.valueObject.ValorProduto;
@@ -8,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -20,4 +22,6 @@ public class Produto {
     private DescricaoProduto descricaoProduto;
     private TipoProduto tipoProduto;
     private ValorProduto valorProduto;
+    private Date dataAtualizacao;
+    private Date dataCriacao;
 }

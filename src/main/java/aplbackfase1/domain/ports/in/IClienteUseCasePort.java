@@ -1,7 +1,7 @@
 package aplbackfase1.domain.ports.in;
 
 import aplbackfase1.domain.model.Cliente;
-import aplbackfase1.domain.model.exceptions.CpfExistenteException;
+import aplbackfase1.domain.exceptions.CpfExistenteException;
 import aplbackfase1.domain.model.valueObject.Cpf;
 
 import java.util.List;

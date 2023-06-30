@@ -1,9 +1,10 @@
 package aplbackfase1.adapter.in.web.exceptions;
 
-import aplbackfase1.domain.model.exceptions.CpfExistenteException;
-import aplbackfase1.domain.model.exceptions.CpfInvalidoException;
-import aplbackfase1.domain.model.exceptions.EmailInvalidoException;
-import aplbackfase1.domain.model.exceptions.NomeInvalidoException;
+import aplbackfase1.adapter.in.web.ClienteControllerAdapter;
+import aplbackfase1.domain.exceptions.CpfExistenteException;
+import aplbackfase1.domain.exceptions.CpfInvalidoException;
+import aplbackfase1.domain.exceptions.EmailInvalidoException;
+import aplbackfase1.domain.exceptions.NomeInvalidoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 
-@ControllerAdvice
+@ControllerAdvice(assignableTypes = {ClienteControllerAdapter.class})
 public class ClienteExceptionHandler {
     @ExceptionHandler(CpfExistenteException.class)
     public ResponseEntity<StandardError> cpfExistente(CpfExistenteException e, HttpServletRequest request){

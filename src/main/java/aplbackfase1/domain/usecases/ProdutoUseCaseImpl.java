@@ -1,7 +1,7 @@
 package aplbackfase1.domain.usecases;
 
+import aplbackfase1.domain.enums.TipoProduto;
 import aplbackfase1.domain.model.Produto;
-import aplbackfase1.domain.model.TipoProduto;
 import aplbackfase1.domain.ports.in.IProdutoUseCasePort;
 import aplbackfase1.domain.ports.out.IProdutoRepositoryPort;
 import lombok.RequiredArgsConstructor;
@@ -18,22 +18,12 @@ public class ProdutoUseCaseImpl implements IProdutoUseCasePort {
 
     @Override
     public List<Produto> listarProdutosPorTipoProduto(TipoProduto tipoProduto) {
-        //TODO TRATAR CENÁRIO EM QUE NÃO HÁ PRODUTO
         return produtoRepositoryPort.listarProdutosPorTipo(tipoProduto);
     }
 
     @Override
-    public Produto buscarProdutoPorID(UUID idProduto) {
-        //TODO TRATAR CENÁRIO EM QUE NÃO HÁ PRODUTO
-        return produtoRepositoryPort.buscarProdutoPorId(idProduto);
-    }
-
-    @Override
     public Produto criarProduto(Produto produto) {
-        //TODO TRATAR CENÁRIO EM QUE PRODUTO É NULO
-        if(null != produto)
-            return produtoRepositoryPort.criarProduto(produto);
-        return null;
+        return produtoRepositoryPort.criarProduto(produto);
     }
 
     @Override

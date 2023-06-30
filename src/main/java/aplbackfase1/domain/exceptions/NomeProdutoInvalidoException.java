@@ -1,4 +1,4 @@
-package aplbackfase1.domain.model.exceptions;
+package aplbackfase1.domain.exceptions;
 
 public class NomeProdutoInvalidoException extends RuntimeException {
     private static final long serialVersionUID = 1L;

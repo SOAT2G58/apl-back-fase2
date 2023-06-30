@@ -1,6 +1,6 @@
 package aplbackfase1.domain.model.valueObject;
 
-import aplbackfase1.domain.model.exceptions.EmailInvalidoException;
+import aplbackfase1.domain.exceptions.EmailInvalidoException;
 
 import java.util.Objects;
 import java.util.regex.Matcher;

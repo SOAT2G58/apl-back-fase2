@@ -1,6 +1,6 @@
 package aplbackfase1.domain.model.valueObject;
 
-import aplbackfase1.domain.model.exceptions.NomeInvalidoException;
+import aplbackfase1.domain.exceptions.NomeInvalidoException;
 
 import javax.persistence.Transient;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package aplbackfase1.adapter.dto;
+package aplbackfase1.adapter.in.web.responses;
 
 import aplbackfase1.domain.model.Cliente;
 import lombok.AllArgsConstructor;

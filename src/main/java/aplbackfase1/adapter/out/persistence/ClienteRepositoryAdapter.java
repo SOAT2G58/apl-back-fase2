@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ClienteRepositoryAdapter implements IClienteRepositoryPort {
+public class  ClienteRepositoryAdapter implements IClienteRepositoryPort {
 
     private final ClienteRepository clienteRepository;
 
