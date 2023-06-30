@@ -1,7 +1,6 @@
 package aplbackfase1.domain.model.valueObject;
 
 import aplbackfase1.domain.model.exceptions.CpfInvalidoException;
-import aplbackfase1.domain.model.exceptions.EmailInvalidoException;
 
 import java.util.InputMismatchException;
 import java.util.Objects;

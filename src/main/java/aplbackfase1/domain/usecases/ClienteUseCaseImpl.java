@@ -1,6 +1,5 @@
 package aplbackfase1.domain.usecases;
 
-import aplbackfase1.adapter.out.persistence.entity.ClienteEntity;
 import aplbackfase1.domain.model.Cliente;
 import aplbackfase1.domain.model.exceptions.CpfExistenteException;
 import aplbackfase1.domain.model.valueObject.Cpf;
@@ -21,7 +20,7 @@ public class ClienteUseCaseImpl implements IClienteUseCasePort {
 
     @Override
     public Cliente cadastrar(Cliente cliente) throws CpfExistenteException {
-        Optional<ClienteEntity> clienteDb = buscarPorCpf(cliente.getCpf());
+        Optional<Cliente> clienteDb = buscarPorCpf(cliente.getCpf());
         if (clienteDb.isPresent())
             throw new CpfExistenteException();
         return clienteRepositoryPort.cadastrar(cliente);
@@ -29,25 +28,25 @@ public class ClienteUseCaseImpl implements IClienteUseCasePort {
 
     @Override
     public Cliente identificarPorCpf(Cpf cpf) {
-        Optional<ClienteEntity> clienteDb = buscarPorCpf(cpf);
+        Optional<Cliente> clienteDb = buscarPorCpf(cpf);
         if (clienteDb.isPresent())
-            return new ClienteEntity().to(clienteDb.get());
+            return clienteDb.get();
         else
             return clienteRepositoryPort.identificarPorCpf(cpf);
     }
 
     @Override
-    public Optional<ClienteEntity> buscarPorCpf(Cpf cpf) {
+    public Optional<Cliente> buscarPorCpf(Cpf cpf) {
         return clienteRepositoryPort.buscarPorCpf(cpf);
     }
 
     @Override
-    public List<ClienteEntity> bucarTodos() { // TODO - temp remover posteriormente
+    public List<Cliente> bucarTodos() { // TODO - temp remover posteriormente
         return clienteRepositoryPort.bucarTodos();
     }
 
     @Override
-    public Optional<ClienteEntity> buscarPorId(UUID uuid) {
+    public Optional<Cliente> buscarPorId(UUID uuid) {
         return clienteRepositoryPort.buscarPorId(uuid);
     }
 }

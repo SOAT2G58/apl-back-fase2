@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,21 +32,19 @@ public class ClienteRepositoryAdapter implements IClienteRepositoryPort {
     }
 
     @Override
-    public Optional<ClienteEntity> buscarPorCpf(Cpf cpf) {
-        return clienteRepository.findAllByCpf(cpf);
+    public Optional<Cliente> buscarPorCpf(Cpf cpf) {
+        return clienteRepository.findAllByCpf(cpf).map(obj -> obj.to(obj));
     }
 
     @Override
-    public List<ClienteEntity> bucarTodos() { // TODO - temp remover posteriormente
-        /*List<Cliente> clientes = clienteRepository.findAll().stream().map(e -> e.to(e)).collect(Collectors.toList());
-        System.out.println(clientes);
-        System.out.println(clientes.size());
-        System.out.println(clientes.get(0));*/
-        return clienteRepository.findAll();
+    public List<Cliente> bucarTodos() { // TODO - temp remover posteriormente
+        List<ClienteEntity> test = clienteRepository.findAll();
+        List<Cliente> test2 = test.stream().map(e -> e.to(e)).collect(Collectors.toList());
+        return test2;
     }
 
     @Override
-    public Optional<ClienteEntity> buscarPorId(UUID uuid) {
-        return clienteRepository.findById(uuid);
+    public Optional<Cliente> buscarPorId(UUID uuid) {
+        return clienteRepository.findById(uuid).map(obj -> obj.to(obj));
     }
 }
