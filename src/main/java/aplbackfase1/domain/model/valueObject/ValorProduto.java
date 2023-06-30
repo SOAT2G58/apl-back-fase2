@@ -17,6 +17,6 @@ public class ValorProduto {
         if (Objects.isNull(valorProduto)) {
             throw new ValorProdutoInvalidoException();
         }
-        this.valorProduto = valorProduto;
+        this.valorProduto = valorProduto.setScale(2);
     }
 }

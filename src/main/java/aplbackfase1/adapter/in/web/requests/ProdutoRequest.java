@@ -5,7 +5,6 @@ import aplbackfase1.domain.model.Produto;
 import aplbackfase1.domain.model.valueObject.DescricaoProduto;
 import aplbackfase1.domain.model.valueObject.NomeProduto;
 import aplbackfase1.domain.model.valueObject.ValorProduto;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

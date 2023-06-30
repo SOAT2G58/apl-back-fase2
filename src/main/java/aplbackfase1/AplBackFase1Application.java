@@ -1,10 +1,9 @@
 package aplbackfase1;
 
-import aplbackfase1.adapter.out.persistence.entity.ClienteEntity;
-import aplbackfase1.domain.model.Cliente;
-import aplbackfase1.domain.model.Produto;
 import aplbackfase1.domain.enums.TipoProduto;
 import aplbackfase1.domain.exceptions.CpfExistenteException;
+import aplbackfase1.domain.model.Cliente;
+import aplbackfase1.domain.model.Produto;
 import aplbackfase1.domain.model.valueObject.*;
 import aplbackfase1.domain.ports.in.IClienteUseCasePort;
 import aplbackfase1.domain.ports.in.IProdutoUseCasePort;
@@ -16,7 +15,6 @@ import org.springframework.context.event.EventListener;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 @SpringBootApplication
 public class AplBackFase1Application {
@@ -80,16 +78,39 @@ public class AplBackFase1Application {
 		try {
 			Cliente cliente = this.clienteUseCasePort.cadastrar(
 					Cliente.builder()
-							.nome(new Nome("Teste fulano de tal"))
-							.email(new Email("contato@email.com"))
-							.cpf(new Cpf("541.699.355-35"))
+							.nome(new Nome("Murilo Benjamin Gabriel das Neves"))
+							.email(new Email("murilo-dasneves84@ppe.ufrj.br"))
+							.cpf(new Cpf("420.390.450-15"))
 							.build());
 			System.out.println(cliente);
-			List<ClienteEntity> clientes = this.clienteUseCasePort.bucarTodos();
-
-			System.out.println(clientes);
 		} catch (CpfExistenteException e) {
 			System.out.println("CPF já cadastrado");
+		}
+
+		try {
+			Cliente cliente = this.clienteUseCasePort.cadastrar(
+					Cliente.builder()
+							.nome(new Nome("Eliane Catarina Milena Ribeiro"))
+							.email(new Email("eliane_catarina_ribeiro@esctech.com.br"))
+							.cpf(new Cpf("974.971.471-70"))
+							.build());
+			System.out.println(cliente);
+		} catch (CpfExistenteException e) {
+			System.out.println("CPF já cadastrado");
+		}
+
+		try {
+			Cliente cliente = this.clienteUseCasePort.identificarPorCpf(new Cpf("161.807.409-17"));
+			System.out.println(cliente);
+		} catch (CpfExistenteException e) {
+			System.out.println("CPF já cadastrado");
+		}
+
+		try {
+			List<Cliente> clientes = this.clienteUseCasePort.bucarTodos();
+			System.out.println(clientes);
+		} catch (CpfExistenteException e) {
+			System.err.println("Problemas na listagem de todos clientes");
 		}
 	}
 }

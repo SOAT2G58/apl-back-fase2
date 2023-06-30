@@ -1,9 +1,11 @@
 package aplbackfase1.adapter.in.web.exceptions;
 
+import aplbackfase1.adapter.in.web.ProdutoControllerAdapter;
 import aplbackfase1.domain.exceptions.DescricaoProdutoInvalidoException;
 import aplbackfase1.domain.exceptions.NomeProdutoInvalidoException;
 import aplbackfase1.domain.exceptions.TipoProdutoInexistenteException;
 import aplbackfase1.domain.exceptions.ValorProdutoInvalidoException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 
-@ControllerAdvice
+@ControllerAdvice(assignableTypes = {ProdutoControllerAdapter.class})
 public class ProdutoExceptionHandler {
 
     @ExceptionHandler(DescricaoProdutoInvalidoException.class)
@@ -59,6 +61,16 @@ public class ProdutoExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 
-
-
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ResponseEntity<StandardError> emptyResultDataAccessException(
+            EmptyResultDataAccessException e, HttpServletRequest request){
+        StandardError err = new StandardError(
+                System.currentTimeMillis(),
+                HttpStatus.NOT_FOUND.value(),
+                "A busca ao banco retornou status vazio para o elemento informado",
+                e.getMessage(),
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+    }
 }
