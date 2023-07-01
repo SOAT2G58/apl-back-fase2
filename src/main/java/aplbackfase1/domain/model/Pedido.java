@@ -1,55 +1,26 @@
 package aplbackfase1.domain.model;
 
 import aplbackfase1.domain.enums.StatusPedido;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
-import java.util.Date;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
-
+import java.util.Date;
 
 @EqualsAndHashCode
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Pedido {
 
-    private UUID idPedido;
-
-    private UUID idCliente;
-
-    private Date dataCriacao;
-
+    private UUID id;
+    private Cliente cliente;
+    private List<PedidoProduto> produtos;
+    private StatusPedido statusPedido;
+    private BigDecimal valorPedido;
+    private Date dataInclusao;
     private Date dataAtualizacao;
-
-    private Date dataFinalizacao;
-
-    private StatusPedido status;
-
-    // a implementar relacao junto a Produtos
-
-    private List<Produto> itens;
-
-    public void criaPedido(UUID idCliente) {
-        this.idCliente = idCliente;
-        this.dataCriacao = new Date();
-    }
-
-    public Pedido getPedido() {
-        return this;
-    }
-
-    public StatusPedido getStatusPedido() {
-        return this.status;
-    }
-
-    public void atualizaStatusPedido(StatusPedido novoStatus) {
-        this.status = novoStatus;
-        this.dataAtualizacao = new Date();
-    }
-
-    public void finalizaPedido() {
-        this.status = StatusPedido.F;
-        Date dataAtual = new Date();
-        this.dataAtualizacao = dataAtual;
-        this.dataFinalizacao = dataAtual;
-    }
 
 }

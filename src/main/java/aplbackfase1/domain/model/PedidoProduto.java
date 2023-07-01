@@ -2,7 +2,7 @@ package aplbackfase1.domain.model;
 
 import lombok.*;
 
-import java.util.Date;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @EqualsAndHashCode
@@ -10,11 +10,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Fila {
+public class PedidoProduto {
 
-    private UUID idFila;
     private UUID idPedido;
-    private int numeroNaFila;
-    private Date dataInclusaoFila;
+    private UUID idProduto;
+    private BigDecimal valorProduto;
+    private String observacaoProduto;
 
 }
