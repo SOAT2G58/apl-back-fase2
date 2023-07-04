@@ -15,7 +15,7 @@ import java.util.Date;
 @Builder
 public class Pedido {
 
-    private UUID id;
+    private UUID idPedido;
     private Cliente cliente;
     private List<PedidoProduto> produtos;
     private StatusPedido statusPedido;

@@ -12,10 +12,11 @@ public interface IPedidoUseCasePort {
     Pedido cadastrar(Pedido pedido);
     Pedido adicionarProduto(PedidoProduto produto);
     List<Pedido> buscarTodos(int pageNumber, int pageSize);
-    Optional<Pedido> buscarPorId(UUID id);
+    Optional<Pedido> buscarPorId(UUID idPedido);
     List<Pedido> buscarPedidosPorCliente(UUID idCliente);
     List<Pedido> buscarPedidosPorStatus(StatusPedido statusPedido);
+    List<Pedido> buscarPedidosPorClienteEStatus(UUID idCliente, StatusPedido statusPedido);
     Pedido atualizar(Pedido pedido);
-    void remover(UUID id);
+    void remover(UUID idPedido);
     Pedido checkout(UUID idPedido);
 }
