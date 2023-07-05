@@ -12,7 +12,7 @@ import java.util.Objects;
 @Getter
 @EqualsAndHashCode
 @ToString
-public class NomeProduto {
+public final class NomeProduto {
 
     private String nome;
 

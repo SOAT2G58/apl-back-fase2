@@ -9,8 +9,10 @@ import com.sun.istack.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -23,7 +25,7 @@ public class ProdutoControllerAdapter {
     private final IProdutoUseCasePort produtoUseCasePort;
 
     @GetMapping("/produtos")
-    public ResponseEntity<List<ProdutoDTO>> buscarProduto(@RequestParam(value="tipo_produto") String tipoProduto) {
+    public ResponseEntity<List<ProdutoDTO>> buscarProduto(@RequestParam(value="tipo_produto") @Validated    @NotBlank String tipoProduto) {
         List<Produto> produtoArrayList = this.produtoUseCasePort
                 .listarProdutosPorTipoProduto(TipoProduto.fromCodigo(tipoProduto));
         final var produtoDTOList = new ArrayList<ProdutoDTO>();
@@ -32,7 +34,7 @@ public class ProdutoControllerAdapter {
     }
 
     @PostMapping("/produtos")
-    public ResponseEntity<?> criarProduto(@RequestBody @NotNull ProdutoRequest request) {
+    public ResponseEntity<?> criarProduto(@RequestBody @Validated ProdutoRequest request) {
         Produto produto = this.produtoUseCasePort.criarProduto(request.from(request));
         return new ResponseEntity<>(new ProdutoDTO().from(produto), HttpStatus.CREATED);
     }

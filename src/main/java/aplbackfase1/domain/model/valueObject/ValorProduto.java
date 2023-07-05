@@ -10,7 +10,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class ValorProduto {
+public final class ValorProduto {
     private BigDecimal valorProduto;
 
     public ValorProduto(BigDecimal valorProduto) {

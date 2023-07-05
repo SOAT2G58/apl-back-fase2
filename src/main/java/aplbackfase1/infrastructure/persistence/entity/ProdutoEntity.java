@@ -36,9 +36,9 @@ public class ProdutoEntity {
     @Embedded
     private ValorProduto valorProduto;
 
-    //Incluir quando tiver atualização do produto
-    //    @Temporal(TemporalType.TIMESTAMP)
-    //    private Date dataAtualizacao;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataAtualizacao;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataCriacao;
@@ -63,6 +63,9 @@ public class ProdutoEntity {
         if(isCreated) {
             produtoEntityBuilder.dataCriacao(this.obterDataHoraAtual());
         }
+
+            produtoEntityBuilder.dataAtualizacao(this.obterDataHoraAtual());
+
         return produtoEntityBuilder.build();
     }
 
@@ -75,7 +78,6 @@ public class ProdutoEntity {
                 calendar.get(Calendar.HOUR),
                 calendar.get(Calendar.MINUTE),
                 calendar.get(Calendar.SECOND));
-
         return new Date(calendar.getTime().getTime());
     }
 }

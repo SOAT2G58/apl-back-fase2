@@ -5,30 +5,24 @@ import aplbackfase1.domain.model.Produto;
 import aplbackfase1.domain.model.valueObject.DescricaoProduto;
 import aplbackfase1.domain.model.valueObject.NomeProduto;
 import aplbackfase1.domain.model.valueObject.ValorProduto;
-import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class ProdutoRequest {
 
-    @NotNull
+    @NotEmpty(message = "nome não pode estar vazio")
     private String nome;
-
-    @NotNull
+    @NotEmpty(message = "descricao não pode estar vazio")
     private String descricao;
-
-    @NotNull
+    @NotEmpty(message = "tipo não pode estar vazio")
     private String tipo;
-
-    @NotNull
+    @NotNull(message = "valor não pode ser nulo")
     private BigDecimal valor;
 
     public Produto from(ProdutoRequest request) {
