@@ -1,5 +1,6 @@
 package aplbackfase1.domain.model;
 
+import aplbackfase1.domain.enums.StatusPedido;
 import lombok.*;
 
 import java.util.UUID;
@@ -11,8 +12,16 @@ import java.util.UUID;
 @Builder
 public class PedidoFila {
 
-    // Podemos passar o pedido inteiro, mas se tivermos o ID, podemos
-    // recuperar o pedido inteiro, então acho que só o ID é suficiente
-    private UUID idPedido;
+    private Pedido pedido;
     private Long numeroNaFila;
+
+    public PedidoFila (Pedido pedido) {
+        this.pedido = pedido;
+        this.pedido.atualizaStatusPedido(StatusPedido.R);
+    }
+
+    public void atualizaStatusPedido(StatusPedido novoStatus) {
+        this.pedido.atualizaStatusPedido(novoStatus);
+    }
+
 }
