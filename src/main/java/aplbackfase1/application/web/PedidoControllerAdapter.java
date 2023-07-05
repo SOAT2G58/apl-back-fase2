@@ -1,7 +1,9 @@
 package aplbackfase1.application.web;
 
+import aplbackfase1.application.web.requests.PedidoProdutoRequest;
 import aplbackfase1.application.web.requests.PedidoRequest;
 import aplbackfase1.application.web.responses.PedidoDTO;
+import aplbackfase1.application.web.responses.PedidoProdutoDTO;
 import aplbackfase1.domain.enums.StatusPedido;
 import aplbackfase1.domain.model.Pedido;
 import aplbackfase1.domain.model.PedidoProduto;
@@ -23,14 +25,55 @@ public class PedidoControllerAdapter {
     private final IPedidoUseCasePort pedidoUseCasePort;
 
     @PostMapping("/pedido")
-    public ResponseEntity<?> criarPedido(@RequestBody @NotNull PedidoRequest request) {
+    public ResponseEntity<?> cadastrar(@RequestBody @NotNull PedidoRequest request) {
         Pedido pedido = this.pedidoUseCasePort.cadastrar(request.from(request));
         return new ResponseEntity<>(new PedidoDTO().from(pedido), HttpStatus.CREATED);
     }
 
-    @PostMapping("/pedido-incluir-produto")
-    public ResponseEntity<Pedido> adicionarProduto(@RequestBody PedidoProduto produto) {
-        return new ResponseEntity<>(pedidoUseCasePort.adicionarProduto(produto), HttpStatus.OK);
+    @PutMapping("/pedido")
+    public ResponseEntity<PedidoDTO> atualizar(@RequestBody PedidoRequest pedidoRequest) {
+        Pedido pedido = pedidoRequest.from(pedidoRequest);
+        Pedido updatedPedido = pedidoUseCasePort.atualizar(pedido);
+        PedidoDTO pedidoDTO = PedidoDTO.from(updatedPedido);
+        return new ResponseEntity<>(pedidoDTO, HttpStatus.OK);
+    }
+
+    @PutMapping("/pedido/{idPedido}/produto")
+    public ResponseEntity<PedidoProdutoDTO> adicionarPedidoProduto(
+            @PathVariable UUID idPedido, @RequestBody @NotNull PedidoProdutoRequest request) {
+        PedidoProduto pedidoProduto = request.from(request);
+        pedidoProduto.setIdPedido(idPedido);
+        PedidoProduto addedPedidoProduto = pedidoUseCasePort.adicionarPedidoProduto(pedidoProduto);
+        PedidoProdutoDTO pedidoProdutoDTO = PedidoProdutoDTO.from(addedPedidoProduto);
+        return new ResponseEntity<>(pedidoProdutoDTO, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/pedido/{idPedido}/produto/{id}")
+    public ResponseEntity<PedidoProdutoDTO> editarPedidoProduto(
+            @PathVariable UUID idPedido, @PathVariable UUID id, @RequestBody PedidoProdutoRequest pedidoProdutoRequest) {
+        PedidoProduto pedidoProduto = pedidoProdutoRequest.from(pedidoProdutoRequest);
+        pedidoProduto.setIdPedido(idPedido);
+        pedidoProduto.setId(id);
+        PedidoProduto updatedPedidoProduto = pedidoUseCasePort.editarPedidoProduto(pedidoProduto);
+        PedidoProdutoDTO pedidoProdutoDTO = PedidoProdutoDTO.from(updatedPedidoProduto);
+        return new ResponseEntity<>(pedidoProdutoDTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/pedido/{idPedido}/produto/{id}")
+    public ResponseEntity<Void> excluirPedidoProduto(
+            @PathVariable UUID idPedido, @PathVariable UUID id) {
+        PedidoProduto pedidoProduto = PedidoProduto.builder()
+                .idPedido(idPedido)
+                .id(id)
+                .build();
+        pedidoUseCasePort.excluirPedidoProduto(pedidoProduto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/pedido/{id}")
+    public ResponseEntity<Void> remover(@PathVariable UUID idPedido) {
+        pedidoUseCasePort.remover(idPedido);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/pedido")
@@ -62,18 +105,7 @@ public class PedidoControllerAdapter {
         return new ResponseEntity<>(pedidoUseCasePort.buscarPedidosPorClienteEStatus(idCliente, statusPedido), HttpStatus.OK);
     }
 
-    @PutMapping("/pedido")
-    public ResponseEntity<Pedido> atualizar(@RequestBody Pedido pedido) {
-        return new ResponseEntity<>(pedidoUseCasePort.atualizar(pedido), HttpStatus.OK);
-    }
-
-    @DeleteMapping("/pedido/{id}")
-    public ResponseEntity<Void> remover(@PathVariable UUID id) {
-        pedidoUseCasePort.remover(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @PostMapping("/checkout/{id}")
+        @PostMapping("/checkout/{id}")
     public ResponseEntity<Pedido> checkout(@PathVariable UUID id) {
         return new ResponseEntity<>(pedidoUseCasePort.checkout(id), HttpStatus.OK);
     }

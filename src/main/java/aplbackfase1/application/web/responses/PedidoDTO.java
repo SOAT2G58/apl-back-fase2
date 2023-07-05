@@ -1,7 +1,6 @@
 package aplbackfase1.application.web.responses;
 
 import aplbackfase1.domain.enums.StatusPedido;
-import aplbackfase1.domain.model.PedidoProduto;
 import aplbackfase1.domain.model.Pedido;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,17 +19,17 @@ import java.util.stream.Collectors;
 @Builder
 public class PedidoDTO {
     private UUID idPedido;
-    private ClienteDTO cliente;
+    private UUID idCliente;
     private List<PedidoProdutoDTO> produtos;
     private StatusPedido statusPedido;
     private BigDecimal valorPedido;
     private Date dataInclusao;
     private Date dataAtualizacao;
 
-    public PedidoDTO from(Pedido pedido) {
+    public static PedidoDTO from(Pedido pedido) {
         return PedidoDTO.builder()
                 .idPedido(pedido.getIdPedido())
-                .cliente(new ClienteDTO().from(pedido.getCliente()))
+                .idCliente(pedido.getIdCliente())
                 .produtos(pedido.getProdutos().stream().map(PedidoProdutoDTO::from).collect(Collectors.toList()))
                 .statusPedido(pedido.getStatusPedido())
                 .valorPedido(pedido.getValorPedido())

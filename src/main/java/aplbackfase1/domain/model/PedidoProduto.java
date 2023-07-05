@@ -10,8 +10,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PedidoProduto {
+public final class PedidoProduto {
 
+    private UUID id;
     private UUID idPedido;
     private UUID idProduto;
     private BigDecimal valorProduto;

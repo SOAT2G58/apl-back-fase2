@@ -16,7 +16,7 @@ import java.util.Date;
 public class Pedido {
 
     private UUID idPedido;
-    private Cliente cliente;
+    private UUID idCliente;
     private List<PedidoProduto> produtos;
     private StatusPedido statusPedido;
     private BigDecimal valorPedido;

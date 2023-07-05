@@ -3,6 +3,7 @@ package aplbackfase1.domain.ports.in;
 import aplbackfase1.domain.enums.StatusPedido;
 import aplbackfase1.domain.model.Pedido;
 import aplbackfase1.domain.model.PedidoProduto;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,13 +11,18 @@ import java.util.UUID;
 
 public interface IPedidoUseCasePort {
     Pedido cadastrar(Pedido pedido);
-    Pedido adicionarProduto(PedidoProduto produto);
+    Pedido atualizar(Pedido pedido);
+    PedidoProduto adicionarPedidoProduto(PedidoProduto pedidoProduto);
+    PedidoProduto editarPedidoProduto(PedidoProduto pedidoProduto);
+    PedidoProduto excluirPedidoProduto(PedidoProduto pedidoProduto);
+    void remover(UUID idPedido);
     List<Pedido> buscarTodos(int pageNumber, int pageSize);
     Optional<Pedido> buscarPorId(UUID idPedido);
     List<Pedido> buscarPedidosPorCliente(UUID idCliente);
     List<Pedido> buscarPedidosPorStatus(StatusPedido statusPedido);
     List<Pedido> buscarPedidosPorClienteEStatus(UUID idCliente, StatusPedido statusPedido);
-    Pedido atualizar(Pedido pedido);
-    void remover(UUID idPedido);
+
+    Optional<PedidoProduto> buscarPedidoProdutoPorId(UUID id);
+
     Pedido checkout(UUID idPedido);
 }

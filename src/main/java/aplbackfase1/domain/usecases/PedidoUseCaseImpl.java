@@ -23,7 +23,7 @@ public class PedidoUseCaseImpl implements IPedidoUseCasePort {
 
     @Override
     public Pedido cadastrar(Pedido pedido) {
-        UUID idCliente = pedido.getCliente().getId();
+        UUID idCliente = pedido.getIdCliente();
         List<Pedido> pedidosAtivos = buscarPedidosPorClienteEStatus(idCliente, StatusPedido.A);
         if (pedidosAtivos.isEmpty()) {
             return pedidoRepositoryPort.cadastrar(pedido);
@@ -32,25 +32,37 @@ public class PedidoUseCaseImpl implements IPedidoUseCasePort {
             return pedidosAtivos.get(0);
         }
     }
+    @Override
+    public Pedido atualizar(Pedido pedido) {
+        Pedido existingPedido = checkPedidoStatus(pedido.getIdPedido());
+        existingPedido.setProdutos(pedido.getProdutos());
+        existingPedido.setValorPedido(pedido.getValorPedido());
+        existingPedido.setStatusPedido(pedido.getStatusPedido());
+        existingPedido.setDataAtualizacao(new Date());
+        return pedidoRepositoryPort.atualizar(existingPedido);
+    }
 
     @Override
-    public Pedido adicionarProduto(PedidoProduto produto) {
-        Optional<Pedido> optionalPedido = pedidoRepositoryPort.buscarPorId(produto.getIdPedido());
-        if (optionalPedido.isPresent() && optionalPedido.get().getStatusPedido() == StatusPedido.A) {
-            /*
-            // Verifica se produto está disponível
-            Optional<Produto> optionalProduto = produtoRepositoryPort.buscarPorId(produto.getIdProduto());
+    public PedidoProduto adicionarPedidoProduto(PedidoProduto pedidoProduto) {
+        checkPedidoStatus(pedidoProduto.getIdPedido());
+        return pedidoRepositoryPort.adicionarPedidoProduto(pedidoProduto);
+    }
 
-            if (optionalProduto.isPresent() && optionalProduto.get().isAvailable()) {
-                return pedidoRepositoryPort.adicionarProduto(produto);
-            } else {
-               throw new IllegalStateException("Produto não disponível");
-            }
-            */
-            return pedidoRepositoryPort.adicionarProduto(produto);
-        } else {
-            throw new IllegalStateException("Pedido não encontrado ou com status impeditivo.");
-        }
+    @Override
+    public PedidoProduto editarPedidoProduto(PedidoProduto pedidoProduto) {
+        checkPedidoStatus(pedidoProduto.getIdPedido());
+        return pedidoRepositoryPort.editarPedidoProduto(pedidoProduto);
+    }
+
+    @Override
+    public PedidoProduto excluirPedidoProduto(PedidoProduto pedidoProduto) {
+        checkPedidoStatus(pedidoProduto.getIdPedido());
+        return pedidoRepositoryPort.excluirPedidoProduto(pedidoProduto);
+    }
+
+    @Override
+    public void remover(UUID id) {
+        pedidoRepositoryPort.remover(id);
     }
 
     @Override
@@ -79,37 +91,38 @@ public class PedidoUseCaseImpl implements IPedidoUseCasePort {
     }
 
     @Override
-    public Pedido atualizar(Pedido pedido) {
-        Optional<Pedido> optionalPedido = pedidoRepositoryPort.buscarPorId(pedido.getIdPedido());
-        if (optionalPedido.isPresent() && optionalPedido.get().getStatusPedido() == StatusPedido.A) {
-            return pedidoRepositoryPort.atualizar(pedido);
-        } else {
-            throw new IllegalStateException("Pedido não encontrado ou com status impeditivo.");
-        }
-    }
-
-    @Override
-    public void remover(UUID id) {
-        pedidoRepositoryPort.remover(id);
+    public Optional<PedidoProduto> buscarPedidoProdutoPorId(UUID id) {
+        return pedidoRepositoryPort.buscarPedidoProdutoPorId(id);
     }
 
     @Override
     public Pedido checkout(UUID id) {
-        Optional<Pedido> optionalPedido = pedidoRepositoryPort.buscarPorId(id);
-        if (optionalPedido.isEmpty()) {
-            throw new IllegalStateException("Pedido não encontrado.");
-        }
-        Pedido pedido = optionalPedido.get();
-        pedido.setStatusPedido(StatusPedido.C);
+        Pedido pedido = checkPedidoStatus(id);
+        pedido.setStatusPedido(StatusPedido.R);
         BigDecimal valorTotal = pedido.getProdutos().stream()
                 .map(PedidoProduto::getValorProduto)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         pedido.setValorPedido(valorTotal);
         pedido.setDataAtualizacao(new Date());
-        pedidoRepositoryPort.atualizar(pedido);
         // Adiciona a Fila - a implementar
         // filaRepositoryPort.adicionar(id);
+        pedidoRepositoryPort.atualizar(pedido);
+
         return pedido;
+    }
+
+    private Pedido checkPedidoStatus(UUID idPedido) {
+        Optional<Pedido> optionalPedido = pedidoRepositoryPort.buscarPorId(idPedido);
+        if (optionalPedido.isPresent()) {
+            Pedido existingPedido = optionalPedido.get();
+            if (existingPedido.getStatusPedido() == StatusPedido.A) {
+                return existingPedido;
+            } else {
+                throw new IllegalStateException("Pedido não está aberto para edição.");
+            }
+        } else {
+            throw new IllegalStateException("Pedido não encontrado.");
+        }
     }
 
 }
