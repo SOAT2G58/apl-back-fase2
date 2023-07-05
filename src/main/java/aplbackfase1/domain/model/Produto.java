@@ -13,6 +13,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EqualsAndHashCode
+@ToString
+@RequiredArgsConstructor
 public final class Produto {
     private UUID idProduto;
     private NomeProduto nomeProduto;
