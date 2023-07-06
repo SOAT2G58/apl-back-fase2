@@ -23,6 +23,7 @@ public class PagamentoControllerAdapter {
     public ResponseEntity<?> realizaPagamento(@PathVariable(name = "idProduto") UUID idProduto) {
         if (Objects.nonNull(idProduto)) {
             boolean res = pagamentoUseCase.realizarPagamento(idProduto);
+            // TODO - Colocar o pedido na fila com status RECEBIDO
             return res ? ResponseEntity.ok(new PagamentoDTO(true, "Pagamento realizado com sucesso!")) : ResponseEntity.internalServerError().build();
         } else {
             return ResponseEntity.badRequest().build();

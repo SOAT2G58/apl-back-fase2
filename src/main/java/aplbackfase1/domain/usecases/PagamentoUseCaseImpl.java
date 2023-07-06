@@ -16,6 +16,7 @@ public class PagamentoUseCaseImpl implements IPagamentoUseCase {
         if (Objects.isNull(idPedido)) {
             throw new PedidoInvalidoException();
         }
+        // TODO - Colocar o pedido na fila com status RECEBIDO
         return true;
     }
 }
