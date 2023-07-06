@@ -1,12 +1,16 @@
 package aplbackfase1.application.web;
 
+import aplbackfase1.application.web.requests.ClienteRequest;
 import aplbackfase1.application.web.responses.ClienteDTO;
 import aplbackfase1.domain.model.Cliente;
 import aplbackfase1.domain.model.valueObject.Cpf;
 import aplbackfase1.domain.ports.in.IClienteUseCasePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -44,11 +48,11 @@ public class ClienteControllerAdapter {
     }
 
     @PostMapping("/clientes")
-    public ResponseEntity<?>  cadastrar(@RequestBody Cliente cliente) {
-        if (Objects.nonNull(cliente)) {
-            Cliente clienteDb = clienteUseCasePort.cadastrar(cliente);
+    public ResponseEntity<?>  cadastrar(@RequestBody @Validated ClienteRequest clienteRequest) {
+        if (Objects.nonNull(clienteRequest)) {
+            Cliente clienteDb = clienteUseCasePort.cadastrar(clienteRequest.from(clienteRequest));
             URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(clienteDb.getId()).toUri();
-            return ResponseEntity.created(uri).build();
+            return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.LOCATION, uri.toString()).body(new ClienteDTO().from(clienteDb));
         } else {
             return ResponseEntity.badRequest().build();
         }
@@ -59,7 +63,7 @@ public class ClienteControllerAdapter {
         if (Objects.nonNull(cpf)) {
             Cliente clienteDb = clienteUseCasePort.identificarPorCpf(new Cpf(cpf));
             URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/tech-challenge/clientes/{id}").buildAndExpand(clienteDb.getId()).toUri();
-            return ResponseEntity.created(uri).build();
+            return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.LOCATION, uri.toString()).body(new ClienteDTO().from(clienteDb));
         } else {
             return ResponseEntity.badRequest().build();
         }
