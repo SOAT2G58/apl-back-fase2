@@ -7,7 +7,10 @@ import aplbackfase1.domain.model.Pedido;
 import aplbackfase1.domain.model.PedidoFila;
 import aplbackfase1.domain.ports.in.IFilaUseCasePort;
 import aplbackfase1.domain.ports.out.IFilaRepositoryPort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -51,5 +54,10 @@ public class FilaUseCaseImpl implements IFilaUseCasePort {
     @Override
     public Optional<PedidoFila> obterPedidoPorIdPedido(UUID idPedido) {
         return filaRepositoryPort.obterPorIdPedido(idPedido);
+    }
+
+    @Override
+    public Page<PedidoFila> obterPedidosNaFila(Pageable paginacao) {
+        return filaRepositoryPort.obterPedidos(paginacao);
     }
 }

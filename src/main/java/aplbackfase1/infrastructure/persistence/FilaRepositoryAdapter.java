@@ -7,8 +7,11 @@ import aplbackfase1.infrastructure.persistence.entity.PedidoFilaEntity;
 import aplbackfase1.infrastructure.persistence.repository.FilaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,5 +38,10 @@ public class FilaRepositoryAdapter implements IFilaRepositoryPort {
     public Optional<PedidoFila> obterPorIdPedido(UUID idPedido) {
         var pedidoFilaEntity = filaRepository.findByIdPedido(idPedido);
         return pedidoFilaEntity.map(PedidoFilaEntity::toPedidoFila);
+    }
+
+    @Override
+    public Page<PedidoFila> obterPedidos(Pageable paginacao) {
+        return filaRepository.findAll(paginacao).map(obj -> obj.toPedidoFila());
     }
 }
