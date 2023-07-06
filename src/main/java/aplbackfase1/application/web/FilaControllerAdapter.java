@@ -2,6 +2,7 @@ package aplbackfase1.application.web;
 
 import aplbackfase1.application.web.requests.PedidoFilaRequest;
 import aplbackfase1.application.web.responses.PedidoFilaDTO;
+import aplbackfase1.domain.exceptions.PedidoNaoEncontradoNaFilaException;
 import aplbackfase1.domain.model.Pedido;
 import aplbackfase1.domain.ports.in.IFilaUseCasePort;
 import com.sun.istack.NotNull;
@@ -76,6 +77,18 @@ public class FilaControllerAdapter {
         var pedidosFila = filaUseCasePort.obterPedidosNaFila(paginacao);
         var pedidosFilaDTO = pedidosFila.map(obj -> new PedidoFilaDTO().from(obj));
         return pedidosFilaDTO;
+    }
+
+    @DeleteMapping("/fila/{numero}")
+    public ResponseEntity<?> removerPedidoDaFila(@PathVariable Long numero) {
+        try {
+            filaUseCasePort.removerPedidoDaFila(numero);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
+        }
     }
 
 }
