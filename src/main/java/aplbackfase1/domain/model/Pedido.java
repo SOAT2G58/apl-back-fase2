@@ -1,9 +1,7 @@
 package aplbackfase1.domain.model;
 
 import aplbackfase1.domain.enums.StatusPedido;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
@@ -12,6 +10,9 @@ import java.util.UUID;
 
 @EqualsAndHashCode
 @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Pedido {
 

@@ -1,5 +1,6 @@
 package aplbackfase1.infrastructure.persistence.entity;
 
+import aplbackfase1.application.web.responses.PedidoFilaDTO;
 import aplbackfase1.domain.model.PedidoFila;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,14 @@ public class PedidoFilaEntity {
     private UUID idPedido;
 
     public PedidoFilaEntity(PedidoFila pedidoFila) {
-        this.idPedido = pedidoFila.getPedido().getIdPedido();
+        this.idPedido = pedidoFila.getIdPedido();
+        this.numeroNaFila = pedidoFila.getNumeroNaFila();
+    }
+
+    public PedidoFila toPedidoFila() {
+        var pedidoFila = new PedidoFila();
+        pedidoFila.setNumeroNaFila(this.numeroNaFila);
+        pedidoFila.setIdPedido(this.idPedido);
+        return pedidoFila;
     }
 }

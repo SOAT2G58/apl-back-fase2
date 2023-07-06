@@ -21,6 +21,9 @@ import java.util.stream.Collectors;
 public class PedidoFilaRequest {
 
     @NotNull
+
+    // TODO - Quando a feature de Pedido estiver pronta, ajustar para mapear aqui o objeto Pedido/PedidoDTO inteiro (que já contém odo o resto)
+
     private UUID idPedido;
 
     @NotNull

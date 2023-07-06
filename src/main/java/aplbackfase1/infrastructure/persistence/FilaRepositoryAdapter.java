@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class FilaRepositoryAdapter implements IFilaRepositoryPort {
@@ -20,5 +23,17 @@ public class FilaRepositoryAdapter implements IFilaRepositoryPort {
     public Long inserir(PedidoFila pedidoFila) {
         var pedidoFilaEntity = new PedidoFilaEntity(pedidoFila);
         return filaRepository.save(pedidoFilaEntity).getNumeroNaFila();
+    }
+
+    @Override
+    public Optional<PedidoFila> obterPorNumeroNaFila(Long numero) {
+        var pedidoFilaEntity = filaRepository.findByNumeroNaFila(numero);
+        return pedidoFilaEntity.map(PedidoFilaEntity::toPedidoFila);
+    }
+
+    @Override
+    public Optional<PedidoFila> obterPorIdPedido(UUID idPedido) {
+        var pedidoFilaEntity = filaRepository.findByIdPedido(idPedido);
+        return pedidoFilaEntity.map(PedidoFilaEntity::toPedidoFila);
     }
 }

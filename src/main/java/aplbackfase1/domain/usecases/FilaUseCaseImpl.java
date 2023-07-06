@@ -1,10 +1,15 @@
 package aplbackfase1.domain.usecases;
 
 import aplbackfase1.domain.enums.StatusPedido;
+import aplbackfase1.domain.exceptions.PedidoJaNaFilaException;
+import aplbackfase1.domain.exceptions.PedidoNotSavedException;
 import aplbackfase1.domain.model.Pedido;
 import aplbackfase1.domain.model.PedidoFila;
 import aplbackfase1.domain.ports.in.IFilaUseCasePort;
 import aplbackfase1.domain.ports.out.IFilaRepositoryPort;
+
+import java.util.Optional;
+import java.util.UUID;
 
 public class FilaUseCaseImpl implements IFilaUseCasePort {
 
@@ -14,19 +19,37 @@ public class FilaUseCaseImpl implements IFilaUseCasePort {
         this.filaRepositoryPort = filaRepositoryPort;
     }
 
+    //TODO - após mergear a feat de pedido, chamar a IPedidoUseCasePort para buscar o pedido pelo seu ID na table de pedidos e passar junto com as respostas
+    // A fila só salva o id do pedido, para não haver duplicação nas tabelas de pedidos e manter uma única fonte de dados.
+    // o numero na fila é gerado automaticamente
+
+
     @Override
-    public PedidoFila inserirPedidoNaFila(Pedido pedido) {
-        if (pedido.getStatusPedido() == StatusPedido.A) {
-            //TODO Pedido já tem que ter sido salvo no banco e ter seu ID gerado
-            //TODO confirmar se o pedido já existe na fila, se existir, retornar o existente ou exception
-            var pedidoFila = new PedidoFila(pedido);
-            var numeroNaFila = filaRepositoryPort.inserir(pedidoFila);
-            pedidoFila.setNumeroNaFila(numeroNaFila);
-            return pedidoFila;
-        } else {
-            //TODO throw exception pedido com status já processado
-            System.out.println("Exception");
-            return null;
+    public PedidoFila inserirPedidoNaFila(Pedido pedido) throws PedidoNotSavedException, PedidoJaNaFilaException {
+        var idPedido = pedido.getIdPedido();
+
+        if (idPedido == null || idPedido.toString().isBlank()) {
+            throw new PedidoNotSavedException();
         }
+
+        if (obterPedidoPorIdPedido(idPedido).isPresent()) {
+            throw new PedidoJaNaFilaException(idPedido);
+        }
+
+        pedido.atualizaStatusPedido(StatusPedido.R);
+        var pedidoFila = new PedidoFila(pedido);
+        var numeroNaFila = filaRepositoryPort.inserir(pedidoFila);
+        pedidoFila.setNumeroNaFila(numeroNaFila);
+        return pedidoFila;
+    }
+
+    @Override
+    public Optional<PedidoFila> obterPedidoPorNumeroNaFila(Long numero) {
+        return filaRepositoryPort.obterPorNumeroNaFila(numero);
+    }
+
+    @Override
+    public Optional<PedidoFila> obterPedidoPorIdPedido(UUID idPedido) {
+        return filaRepositoryPort.obterPorIdPedido(idPedido);
     }
 }
