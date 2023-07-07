@@ -2,10 +2,7 @@ package aplbackfase1.application.web;
 
 import aplbackfase1.application.web.requests.PedidoFilaRequest;
 import aplbackfase1.application.web.responses.PedidoFilaDTO;
-import aplbackfase1.domain.exceptions.PedidoNaoEncontradoNaFilaException;
-import aplbackfase1.domain.model.Pedido;
 import aplbackfase1.domain.ports.in.IFilaUseCasePort;
-import com.sun.istack.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @RestController

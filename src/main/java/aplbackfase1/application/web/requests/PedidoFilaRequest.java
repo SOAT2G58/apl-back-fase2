@@ -2,13 +2,12 @@ package aplbackfase1.application.web.requests;
 
 import aplbackfase1.domain.enums.StatusPedido;
 import aplbackfase1.domain.model.Pedido;
-import aplbackfase1.domain.model.Produto;
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -20,26 +19,24 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class PedidoFilaRequest {
 
-    @NotNull
-
     // TODO - Quando a feature de Pedido estiver pronta, ajustar para mapear aqui o objeto Pedido/PedidoDTO inteiro (que já contém odo o resto)
-
+    @NotEmpty(message = "id do pedido não pode estar vazio")
     private UUID idPedido;
 
-    @NotNull
+    @NotEmpty(message = "id do pedido não pode estar vazio")
     private UUID idCliente;
 
-    @NotNull
+
     private Date dataCriacao;
 
     private Date dataAtualizacao;
 
     private Date dataFinalizacao;
 
-    @NotNull
+    @NotEmpty(message = "status do pedido não pode estar vazio")
     private StatusPedido status;
 
-    @NotNull
+    @NotEmpty(message = "status do pedido não pode estar vazio")
     private List<ProdutoRequest> itens;
 
     public Pedido toPedido() {
