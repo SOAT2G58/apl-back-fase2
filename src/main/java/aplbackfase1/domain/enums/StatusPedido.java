@@ -2,9 +2,9 @@ package aplbackfase1.domain.enums;
 
 public enum StatusPedido {
     A("Aberto"),
-    C("Concluído"),
+    R("Recebido"),
     E("Em preparação"),
-    R("A retirar"),
+    C("Concluído"),
     F("Finalizado");
 
     private final String descricao;

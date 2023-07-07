@@ -5,7 +5,6 @@ import aplbackfase1.application.web.responses.ProdutoDTO;
 import aplbackfase1.domain.enums.TipoProduto;
 import aplbackfase1.domain.model.Produto;
 import aplbackfase1.domain.ports.in.IProdutoUseCasePort;
-import com.sun.istack.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -25,7 +25,7 @@ public class ProdutoControllerAdapter {
     private final IProdutoUseCasePort produtoUseCasePort;
 
     @GetMapping("/produtos")
-    public ResponseEntity<List<ProdutoDTO>> buscarProduto(@RequestParam(value="tipo_produto") @Validated    @NotBlank String tipoProduto) {
+    public ResponseEntity<List<ProdutoDTO>> buscarProduto(@RequestParam(value="tipo_produto") @Validated @NotBlank String tipoProduto) {
         List<Produto> produtoArrayList = this.produtoUseCasePort
                 .listarProdutosPorTipoProduto(TipoProduto.fromCodigo(tipoProduto));
         final var produtoDTOList = new ArrayList<ProdutoDTO>();
