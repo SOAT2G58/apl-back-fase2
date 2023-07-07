@@ -23,11 +23,13 @@ public class PedidoProdutoEntity {
     @Column(name = "ID_PED_PROD")
     private UUID id;
 
-    @Column(name = "ID_PEDIDO")
-    private UUID idPedido;
+    @ManyToOne
+    @JoinColumn(name = "ID_PEDIDO")
+    private PedidoEntity pedido;
 
-    @Column(name = "ID_PRODUTO")
-    private UUID idProduto;
+    @ManyToOne
+    @JoinColumn(name = "ID_PRODUTO")
+    private ProdutoEntity produto;
 
     @Column(name = "V_PRODUTO")
     private BigDecimal valorProduto;
@@ -38,18 +40,18 @@ public class PedidoProdutoEntity {
     public static PedidoProduto to(PedidoProdutoEntity pedidoProdutoEntity) {
         return PedidoProduto.builder()
                 .id(pedidoProdutoEntity.getId())
-                .pedidoId(pedidoProdutoEntity.getIdPedido())
-                .produtoId(pedidoProdutoEntity.getIdProduto())
+                .pedidoId(pedidoProdutoEntity.getPedido().getIdPedido())
+                .produtoId(pedidoProdutoEntity.getProduto().getIdProduto())
                 .valorProduto(pedidoProdutoEntity.getValorProduto())
                 .observacaoProduto(pedidoProdutoEntity.getObservacaoProduto())
                 .build();
     }
 
-    public static PedidoProdutoEntity from(PedidoProduto pedidoProduto) {
+    public static PedidoProdutoEntity from(PedidoProduto pedidoProduto, PedidoEntity pedidoEntity, ProdutoEntity produtoEntity) {
         return PedidoProdutoEntity.builder()
                 .id(pedidoProduto.getId())
-                .idPedido(pedidoProduto.getPedidoId())
-                .idProduto(pedidoProduto.getProdutoId())
+                .pedido(pedidoEntity)
+                .produto(produtoEntity)
                 .valorProduto(pedidoProduto.getValorProduto())
                 .observacaoProduto(pedidoProduto.getObservacaoProduto())
                 .build();

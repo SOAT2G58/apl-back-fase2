@@ -97,7 +97,8 @@ public class PedidoRepositoryAdapter implements IPedidoRepositoryPort {
             throw new IllegalArgumentException("Pedido precisa estar abertoA");
         }
 
-        List<PedidoProdutoEntity> pedidoProdutos = pedidoProdutoRepository.findByPedidoId(idPedido);
+        Pedido pedido = pedidoEntity.to();
+        List<PedidoProdutoEntity> pedidoProdutos = pedidoProdutoRepository.findByPedido(pedido);
         BigDecimal totalValorPedido = pedidoProdutos.stream()
                 .map(PedidoProdutoEntity::getValorProduto)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);

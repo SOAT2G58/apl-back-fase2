@@ -4,11 +4,9 @@ import aplbackfase1.domain.enums.StatusPedido;
 import aplbackfase1.domain.model.Pedido;
 import aplbackfase1.domain.model.PedidoProduto;
 import aplbackfase1.domain.ports.in.IPedidoProdutoUseCasePort;
-import aplbackfase1.domain.ports.in.IPedidoUseCasePort;
 import aplbackfase1.domain.ports.out.IPedidoProdutoRepositoryPort;
 import aplbackfase1.domain.ports.out.IPedidoRepositoryPort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,8 +24,8 @@ public class PedidoProdutoUseCaseImpl implements IPedidoProdutoUseCasePort {
     }
 
     @Override
-    public Optional<PedidoProduto> buscarIdPedido(UUID idPedido) {
-        return pedidoProdutoRepositoryPort.buscarPorId(idPedido);
+    public List<PedidoProduto> buscarPorPedido(Pedido pedido) {
+        return pedidoProdutoRepositoryPort.buscarPorPedido(pedido);
     }
 
     @Override

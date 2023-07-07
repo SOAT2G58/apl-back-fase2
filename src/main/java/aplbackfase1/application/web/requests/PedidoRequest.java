@@ -21,7 +21,7 @@ public class PedidoRequest {
 
     @NotNull
     private UUID idCliente;
-    private List<PedidoProdutoRequest> produtos;  // Assuming you have a PedidoProdutoRequest class
+    private List<PedidoProdutoRequest> produtos;
 
     public Pedido from(PedidoRequest request) {
         List<PedidoProduto> pedidoProdutos = request.getProdutos().stream()

@@ -96,24 +96,24 @@ public class PedidoControllerAdapter {
         return new ResponseEntity<>(pedidoUseCasePort.buscarTodos(pageNumber, pageSize), HttpStatus.OK);
     }
 
-    @GetMapping("/pedido/id/{id}")
+    @GetMapping("/pedidos/id/{id}")
     public ResponseEntity<Pedido> buscarPorId(@PathVariable UUID id) {
         return pedidoUseCasePort.buscarPorId(id)
                 .map(pedido -> new ResponseEntity<>(pedido, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/pedido/cliente/{idCliente}")
+    @GetMapping("/pedidos/cliente/{idCliente}")
     public ResponseEntity<List<Pedido>> buscarPedidosPorCliente(@PathVariable UUID idCliente) {
         return new ResponseEntity<>(pedidoUseCasePort.buscarPedidosPorCliente(idCliente), HttpStatus.OK);
     }
 
-    @GetMapping("/pedido/status/{statusPedido}")
+    @GetMapping("/pedidos/status/{statusPedido}")
     public ResponseEntity<List<Pedido>> buscarPedidosPorStatus(@PathVariable StatusPedido statusPedido) {
         return new ResponseEntity<>(pedidoUseCasePort.buscarPedidosPorStatus(statusPedido), HttpStatus.OK);
     }
 
-    @GetMapping("/pedido/cliente/{idCliente}/status/{statusPedido}")
+    @GetMapping("/pedidos/cliente/{idCliente}/status/{statusPedido}")
     public ResponseEntity<List<Pedido>> buscarPedidosPorClienteEStatus(@PathVariable UUID idCliente, @PathVariable StatusPedido statusPedido) {
         return new ResponseEntity<>(pedidoUseCasePort.buscarPedidosPorClienteEStatus(idCliente, statusPedido), HttpStatus.OK);
     }
