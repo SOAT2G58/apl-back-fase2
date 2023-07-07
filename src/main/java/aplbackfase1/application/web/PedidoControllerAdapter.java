@@ -52,7 +52,7 @@ public class PedidoControllerAdapter {
     public ResponseEntity<PedidoProdutoDTO> adicionarPedidoProduto(
             @PathVariable UUID idPedido, @RequestBody @NotNull PedidoProdutoRequest request) {
         PedidoProduto pedidoProduto = request.from(request);
-        pedidoProduto.setIdPedido(idPedido);
+        pedidoProduto.setPedidoId(idPedido);
         PedidoProduto addedPedidoProduto = pedidoProdutoUseCasePort.adicionarPedidoProduto(pedidoProduto);
         if (addedPedidoProduto != null) {
             PedidoProdutoDTO pedidoProdutoDTO = PedidoProdutoDTO.from(addedPedidoProduto);
@@ -66,7 +66,7 @@ public class PedidoControllerAdapter {
     public ResponseEntity<PedidoProdutoDTO> editarPedidoProduto(
             @PathVariable UUID idPedido, @PathVariable UUID id, @RequestBody PedidoProdutoRequest pedidoProdutoRequest) {
         PedidoProduto pedidoProduto = pedidoProdutoRequest.from(pedidoProdutoRequest);
-        pedidoProduto.setIdPedido(idPedido);
+        pedidoProduto.setPedidoId(idPedido);
         pedidoProduto.setId(id);
         PedidoProduto updatedPedidoProduto = pedidoProdutoUseCasePort.editarPedidoProduto(pedidoProduto);
         if (updatedPedidoProduto != null) {

@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "pedido_produtos")
+@Table(name = "PEDIDO_PRODUTOS")
 public class PedidoProdutoEntity {
 
     @Id
@@ -23,13 +23,11 @@ public class PedidoProdutoEntity {
     @Column(name = "ID_PED_PROD")
     private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name = "pedido_id")
-    private PedidoEntity pedido;
+    @Column(name = "ID_PEDIDO")
+    private UUID idPedido;
 
-    @ManyToOne
-    @JoinColumn(name = "produto_id")
-    private ProdutoEntity produto;
+    @Column(name = "ID_PRODUTO")
+    private UUID idProduto;
 
     @Column(name = "V_PRODUTO")
     private BigDecimal valorProduto;
@@ -39,19 +37,19 @@ public class PedidoProdutoEntity {
 
     public static PedidoProduto to(PedidoProdutoEntity pedidoProdutoEntity) {
         return PedidoProduto.builder()
-                .idPedido(pedidoProdutoEntity.getPedido().getIdPedido())
-                .idProduto(pedidoProdutoEntity.getProduto().getIdProduto())
+                .id(pedidoProdutoEntity.getId())
+                .pedidoId(pedidoProdutoEntity.getIdPedido())
+                .produtoId(pedidoProdutoEntity.getIdProduto())
                 .valorProduto(pedidoProdutoEntity.getValorProduto())
                 .observacaoProduto(pedidoProdutoEntity.getObservacaoProduto())
                 .build();
     }
 
-    public PedidoProdutoEntity from(PedidoProduto pedidoProduto,
-                                    PedidoEntity pedidoEntity,
-                                    ProdutoEntity produtoEntity) {
+    public static PedidoProdutoEntity from(PedidoProduto pedidoProduto) {
         return PedidoProdutoEntity.builder()
-                .pedido(pedidoEntity)
-                .produto(produtoEntity)
+                .id(pedidoProduto.getId())
+                .idPedido(pedidoProduto.getPedidoId())
+                .idProduto(pedidoProduto.getProdutoId())
                 .valorProduto(pedidoProduto.getValorProduto())
                 .observacaoProduto(pedidoProduto.getObservacaoProduto())
                 .build();

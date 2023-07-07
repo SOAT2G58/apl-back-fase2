@@ -13,8 +13,8 @@ import java.util.UUID;
 public final class PedidoProduto {
 
     private UUID id;
-    private UUID idPedido;
-    private UUID idProduto;
+    private UUID pedidoId;
+    private UUID produtoId;
     private BigDecimal valorProduto;
     private String observacaoProduto;
 

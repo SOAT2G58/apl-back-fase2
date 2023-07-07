@@ -11,11 +11,12 @@ import java.util.Optional;
 
 @Repository
 public interface PedidoRepository extends JpaRepository<PedidoEntity, UUID> {
-    Optional<PedidoEntity> findById(UUID id);
+    Optional<PedidoEntity> findByIdPedido(UUID idPedido);
 
-    List<PedidoEntity> findByClienteId(UUID idCliente);
+    List<PedidoEntity> findByIdCliente(UUID idCliente);
 
-    List<PedidoEntity> findByStatus(StatusPedido statusPedido);
+    List<PedidoEntity> findByStatusPedido(StatusPedido statusPedido);
 
-    List<PedidoEntity> findByClienteIdAndStatus(UUID idCliente, StatusPedido statusPedido);
+    List<PedidoEntity> findByIdClienteAndStatusPedido(UUID idCliente, StatusPedido statusPedido);
+
 }

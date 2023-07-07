@@ -6,6 +6,7 @@ import aplbackfase1.domain.model.Cliente;
 import aplbackfase1.domain.model.Produto;
 import aplbackfase1.domain.model.valueObject.*;
 import aplbackfase1.domain.ports.in.IClienteUseCasePort;
+import aplbackfase1.domain.ports.in.IPedidoProdutoUseCasePort;
 import aplbackfase1.domain.ports.in.IProdutoUseCasePort;
 import aplbackfase1.domain.ports.in.IPedidoUseCasePort;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class AplBackFase1Application {
 
 	@Autowired
 	private IPedidoUseCasePort pedidoUseCasePort;
+
+	@Autowired
+	private IPedidoProdutoUseCasePort pedidoProdutoUseCasePort;
 
 	public static void main(String[] args) {
 		SpringApplication.run(AplBackFase1Application.class, args);

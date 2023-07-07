@@ -33,12 +33,12 @@ public class PedidoProdutoUseCaseImpl implements IPedidoProdutoUseCasePort {
 
     @Override
     public PedidoProduto adicionarPedidoProduto(PedidoProduto pedidoProduto) {
-        checkPedidoStatus(pedidoProduto.getIdPedido());
+        checkPedidoStatus(pedidoProduto.getPedidoId());
         return pedidoProdutoRepositoryPort.adicionarPedidoProduto(pedidoProduto);
     }
     @Override
     public PedidoProduto editarPedidoProduto(PedidoProduto pedidoProduto) {
-        checkPedidoStatus(pedidoProduto.getIdPedido());
+        checkPedidoStatus(pedidoProduto.getPedidoId());
         return pedidoProdutoRepositoryPort.editarPedidoProduto(pedidoProduto);
     }
 

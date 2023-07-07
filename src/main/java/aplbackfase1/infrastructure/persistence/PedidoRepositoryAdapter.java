@@ -59,14 +59,14 @@ public class PedidoRepositoryAdapter implements IPedidoRepositoryPort {
     @Override
     @Transactional(readOnly = true)
     public Optional<Pedido> buscarPorId(UUID idPedido) {
-        return this.pedidoRepository.findById(idPedido)
+        return this.pedidoRepository.findByIdPedido(idPedido)
                 .map(PedidoEntity::to);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Pedido> buscarPedidosPorCliente(UUID idCliente) {
-        return this.pedidoRepository.findByClienteId(idCliente).stream()
+        return this.pedidoRepository.findByIdCliente(idCliente).stream()
                 .map(PedidoEntity::to)
                 .collect(Collectors.toList());
     }
@@ -74,7 +74,7 @@ public class PedidoRepositoryAdapter implements IPedidoRepositoryPort {
     @Override
     @Transactional(readOnly = true)
     public List<Pedido> buscarPedidosPorStatus(StatusPedido statusPedido) {
-        return this.pedidoRepository.findByStatus(statusPedido).stream()
+        return this.pedidoRepository.findByStatusPedido(statusPedido).stream()
                 .map(PedidoEntity::to)
                 .collect(Collectors.toList());
     }
@@ -82,7 +82,7 @@ public class PedidoRepositoryAdapter implements IPedidoRepositoryPort {
     @Override
     @Transactional(readOnly = true)
     public List<Pedido> buscarPedidosPorClienteEStatus(UUID idCliente, StatusPedido statusPedido) {
-        return this.pedidoRepository.findByClienteIdAndStatus(idCliente, statusPedido).stream()
+        return this.pedidoRepository.findByIdClienteAndStatusPedido(idCliente, statusPedido).stream()
                 .map(PedidoEntity::to)
                 .collect(Collectors.toList());
     }
@@ -97,7 +97,7 @@ public class PedidoRepositoryAdapter implements IPedidoRepositoryPort {
             throw new IllegalArgumentException("Pedido precisa estar abertoA");
         }
 
-        List<PedidoProdutoEntity> pedidoProdutos = pedidoProdutoRepository.findbyidPedido(idPedido);
+        List<PedidoProdutoEntity> pedidoProdutos = pedidoProdutoRepository.findByPedidoId(idPedido);
         BigDecimal totalValorPedido = pedidoProdutos.stream()
                 .map(PedidoProdutoEntity::getValorProduto)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);

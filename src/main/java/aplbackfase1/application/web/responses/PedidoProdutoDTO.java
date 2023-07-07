@@ -21,8 +21,8 @@ public class PedidoProdutoDTO {
 
     public static PedidoProdutoDTO from(PedidoProduto pedidoProduto) {
         return PedidoProdutoDTO.builder()
-                .idPedido(pedidoProduto.getIdPedido())
-                .idProduto(pedidoProduto.getIdProduto())
+                .idPedido(pedidoProduto.getPedidoId())
+                .idProduto(pedidoProduto.getProdutoId())
                 .valorProduto(pedidoProduto.getValorProduto())
                 .observacaoProduto(pedidoProduto.getObservacaoProduto())
                 .build();

@@ -24,8 +24,8 @@ public class PedidoProdutoRequest {
     public PedidoProduto from(PedidoProdutoRequest request) {
         return PedidoProduto.builder()
                 .id(request.getId())
-                .idPedido(request.getIdPedido())
-                .idProduto(request.getIdProduto())
+                .pedidoId(request.getIdPedido())
+                .produtoId(request.getIdProduto())
                 .valorProduto(request.getValorProduto())
                 .observacaoProduto(request.getObservacaoProduto())
                 .build();
