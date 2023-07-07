@@ -5,32 +5,16 @@ import aplbackfase1.domain.exceptions.NomeInvalidoException;
 import javax.persistence.Transient;
 import java.util.Objects;
 
-public class Nome implements Comparable<Nome> {
+public final class Nome implements Comparable<Nome> {
     private String nome;
-    @Transient
-    private int tamanhoMinimo;
-    @Transient
-    private int tamanhoMaximo;
-    @Transient
-    private int minimoCaracter;
-    @Transient
-    private int maximoCaracter;
+    private static final int tamanhoMinimo = 5;
+    private static final int tamanhoMaximo = 255;
+    private static final int minimoCaracter = 2;
+    private static final int maximoCaracter = 6;
 
     Nome() {}
 
-    public Nome(String valor) {
-        this(valor, 5, 2);
-    }
-
-    public Nome(String valor, int tamanhoMinimo, int minimoCaracter) {
-        this(valor, tamanhoMinimo, 255, minimoCaracter, 6);
-    }
-
-    public Nome (String valor, int tamanhoMinimo, int tamanhoMaximo, int minimoCaracter, int maximoCaracter) {
-        this.tamanhoMinimo = tamanhoMinimo;
-        this.minimoCaracter = minimoCaracter;
-        this.tamanhoMaximo = tamanhoMaximo;
-        this.maximoCaracter = maximoCaracter;
+    public Nome (String valor) {
         if (Objects.nonNull(valor)) {
             this.nome = valor.trim();
         }

@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Cpf {
+public final class Cpf {
 
     public static final Pattern REGEX_CPF_NUMERO_REPETIDO = Pattern.compile("/([0-9])\1{10}/g");
     private String cpf;
