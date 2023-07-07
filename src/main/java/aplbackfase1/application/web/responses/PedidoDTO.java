@@ -27,14 +27,19 @@ public class PedidoDTO {
     private Date dataAtualizacao;
 
     public static PedidoDTO from(Pedido pedido) {
+        List<PedidoProdutoDTO> produtosDTO = null;
+        if (pedido.getProdutos() != null) {
+            produtosDTO = pedido.getProdutos().stream().map(PedidoProdutoDTO::from).collect(Collectors.toList());
+        }
         return PedidoDTO.builder()
                 .idPedido(pedido.getIdPedido())
                 .idCliente(pedido.getIdCliente())
-                .produtos(pedido.getProdutos().stream().map(PedidoProdutoDTO::from).collect(Collectors.toList()))
+                .produtos(produtosDTO)
                 .statusPedido(pedido.getStatusPedido())
                 .valorPedido(pedido.getValorPedido())
                 .dataInclusao(pedido.getDataInclusao())
                 .dataAtualizacao(pedido.getDataAtualizacao())
                 .build();
     }
+
 }

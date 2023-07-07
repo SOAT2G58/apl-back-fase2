@@ -28,7 +28,7 @@ public class PedidoRepositoryAdapter implements IPedidoRepositoryPort {
     @Override
     @Transactional
     public Pedido cadastrar(Pedido pedido) {
-        PedidoEntity pedidoEntity = new PedidoEntity().from(pedido);
+        PedidoEntity pedidoEntity = new PedidoEntity().from(pedido, true);
         return this.pedidoRepository.save(pedidoEntity).to();
     }
 
@@ -37,7 +37,7 @@ public class PedidoRepositoryAdapter implements IPedidoRepositoryPort {
     public Pedido atualizar(Pedido pedido) {
         PedidoEntity existingPedidoEntity = this.pedidoRepository.findById(pedido.getIdPedido())
                 .orElseThrow(() -> new IllegalArgumentException("Pedido não encontrado, id: " + pedido.getIdPedido()));
-        existingPedidoEntity = existingPedidoEntity.from(pedido);
+        existingPedidoEntity = existingPedidoEntity.from(pedido, false);
         return this.pedidoRepository.save(existingPedidoEntity).to();
     }
 

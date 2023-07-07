@@ -89,7 +89,7 @@ public class PedidoControllerAdapter {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/pedido")
+    @GetMapping("/pedidos")
     public ResponseEntity<List<Pedido>> buscarTodos(
             @RequestParam(defaultValue = "1") int pageNumber,
             @RequestParam(defaultValue = "100") int pageSize) {

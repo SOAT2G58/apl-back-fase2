@@ -11,6 +11,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
+import java.util.Calendar;
 
 @Entity
 @Data
@@ -54,14 +55,30 @@ public class PedidoEntity {
                 .build();
     }
 
-    public PedidoEntity from(Pedido pedido) {
-        return PedidoEntity.builder()
+    public PedidoEntity from(Pedido pedido, boolean isCreated) {
+        PedidoEntityBuilder pedidoEntityBuilder = PedidoEntity.builder()
                 .idPedido(pedido.getIdPedido())
                 .idCliente(pedido.getIdCliente())
-                .statusPedido(pedido.getStatusPedido())
                 .valorPedido(pedido.getValorPedido())
-                .dataInclusao(pedido.getDataInclusao())
-                .dataAtualizacao(pedido.getDataAtualizacao())
-                .build();
+                .dataAtualizacao(pedido.getDataAtualizacao());
+
+        if(isCreated) {
+            pedidoEntityBuilder.dataInclusao(this.obterDataHoraAtual());
+            pedidoEntityBuilder.statusPedido(StatusPedido.A);
+        }
+
+        return pedidoEntityBuilder.build();
+    }
+
+    private Date obterDataHoraAtual(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DATE),
+                calendar.get(Calendar.HOUR),
+                calendar.get(Calendar.MINUTE),
+                calendar.get(Calendar.SECOND));
+        return new Date(calendar.getTime().getTime());
     }
 }
