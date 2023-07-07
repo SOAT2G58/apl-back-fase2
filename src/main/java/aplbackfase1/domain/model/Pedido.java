@@ -9,9 +9,10 @@ import java.util.UUID;
 import java.util.Date;
 
 @EqualsAndHashCode
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Pedido {
 

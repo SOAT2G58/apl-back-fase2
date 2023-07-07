@@ -24,10 +24,10 @@ public class ProdutoDTO {
     public ProdutoDTO from(Produto produto) {
         return ProdutoDTO.builder()
                 .id(produto.getIdProduto())
-                .nome(Objects.isNull(produto.getNomeProduto()) ? null : produto.getNomeProduto().getNome())
-                .descricao(Objects.isNull(produto.getDescricaoProduto()) ? null : produto.getDescricaoProduto().getDescricao())
-                .tipo(Objects.isNull(produto.getTipoProduto()) ? null : produto.getTipoProduto().name())
-                .valor(Objects.isNull(produto.getValorProduto())? null : produto.getValorProduto().getValorProduto())
+                .nome(produto.getNomeProduto().getNome())
+                .descricao(produto.getDescricaoProduto().getDescricao())
+                .tipo(produto.getTipoProduto().name())
+                .valor(produto.getValorProduto().getValorProduto())
                 .build();
     }
 }

@@ -5,12 +5,10 @@ import aplbackfase1.domain.model.Produto;
 import aplbackfase1.domain.ports.in.IProdutoUseCasePort;
 import aplbackfase1.domain.ports.out.IProdutoRepositoryPort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
-@Service
 @RequiredArgsConstructor
 public class ProdutoUseCaseImpl implements IProdutoUseCasePort {
 

@@ -10,7 +10,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor
-public class DescricaoProduto {
+public final class DescricaoProduto {
 
     private String descricao;
 

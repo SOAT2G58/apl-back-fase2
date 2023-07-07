@@ -6,13 +6,11 @@ import aplbackfase1.domain.model.valueObject.Cpf;
 import aplbackfase1.domain.ports.in.IClienteUseCasePort;
 import aplbackfase1.domain.ports.out.IClienteRepositoryPort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Service
 @RequiredArgsConstructor
 public class ClienteUseCaseImpl implements IClienteUseCasePort {
 
