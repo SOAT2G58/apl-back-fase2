@@ -1,8 +1,6 @@
 package aplbackfase1.infrastructure.persistence.entity;
 
 import aplbackfase1.domain.model.PedidoProduto;
-import aplbackfase1.infrastructure.persistence.repository.PedidoRepository;
-import aplbackfase1.infrastructure.persistence.repository.ProdutoRepository;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,7 +37,7 @@ public class PedidoProdutoEntity {
     @Column(name = "TXT_OBS_PRODUTO")
     private String observacaoProduto;
 
-    public PedidoProduto to(PedidoProdutoEntity pedidoProdutoEntity) {
+    public static PedidoProduto to(PedidoProdutoEntity pedidoProdutoEntity) {
         return PedidoProduto.builder()
                 .idPedido(pedidoProdutoEntity.getPedido().getIdPedido())
                 .idProduto(pedidoProdutoEntity.getProduto().getIdProduto())
@@ -49,14 +47,8 @@ public class PedidoProdutoEntity {
     }
 
     public PedidoProdutoEntity from(PedidoProduto pedidoProduto,
-                                    PedidoRepository pedidoRepository,
-                                    ProdutoRepository produtoRepository) {
-        PedidoEntity pedidoEntity = pedidoRepository.findById(pedidoProduto.getIdPedido())
-                .orElseThrow(() -> new IllegalArgumentException(
-                        "Pedido not found with id: " + pedidoProduto.getIdPedido()));
-        ProdutoEntity produtoEntity = produtoRepository.findById(pedidoProduto.getIdProduto())
-                .orElseThrow(() -> new IllegalArgumentException(
-                        "Produto not found with id: " + pedidoProduto.getIdProduto()));
+                                    PedidoEntity pedidoEntity,
+                                    ProdutoEntity produtoEntity) {
         return PedidoProdutoEntity.builder()
                 .pedido(pedidoEntity)
                 .produto(produtoEntity)

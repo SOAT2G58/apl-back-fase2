@@ -4,6 +4,7 @@ import aplbackfase1.domain.enums.StatusPedido;
 import aplbackfase1.domain.model.Pedido;
 import aplbackfase1.domain.model.PedidoProduto;
 import aplbackfase1.domain.ports.in.IPedidoUseCasePort;
+import aplbackfase1.domain.ports.out.IPedidoProdutoRepositoryPort;
 import aplbackfase1.domain.ports.out.IPedidoRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.math.BigDecimal;
 public class PedidoUseCaseImpl implements IPedidoUseCasePort {
 
     private final IPedidoRepositoryPort pedidoRepositoryPort;
+    private final IPedidoProdutoRepositoryPort pedidoProdutoRepositoryPort;
 
     @Override
     public Pedido cadastrar(Pedido pedido) {
@@ -40,24 +42,6 @@ public class PedidoUseCaseImpl implements IPedidoUseCasePort {
         existingPedido.setStatusPedido(pedido.getStatusPedido());
         existingPedido.setDataAtualizacao(new Date());
         return pedidoRepositoryPort.atualizar(existingPedido);
-    }
-
-    @Override
-    public PedidoProduto adicionarPedidoProduto(PedidoProduto pedidoProduto) {
-        checkPedidoStatus(pedidoProduto.getIdPedido());
-        return pedidoRepositoryPort.adicionarPedidoProduto(pedidoProduto);
-    }
-
-    @Override
-    public PedidoProduto editarPedidoProduto(PedidoProduto pedidoProduto) {
-        checkPedidoStatus(pedidoProduto.getIdPedido());
-        return pedidoRepositoryPort.editarPedidoProduto(pedidoProduto);
-    }
-
-    @Override
-    public PedidoProduto excluirPedidoProduto(PedidoProduto pedidoProduto) {
-        checkPedidoStatus(pedidoProduto.getIdPedido());
-        return pedidoRepositoryPort.excluirPedidoProduto(pedidoProduto);
     }
 
     @Override
@@ -92,7 +76,7 @@ public class PedidoUseCaseImpl implements IPedidoUseCasePort {
 
     @Override
     public Optional<PedidoProduto> buscarPedidoProdutoPorId(UUID id) {
-        return pedidoRepositoryPort.buscarPedidoProdutoPorId(id);
+        return pedidoProdutoRepositoryPort.buscarPorId(id);
     }
 
     @Override

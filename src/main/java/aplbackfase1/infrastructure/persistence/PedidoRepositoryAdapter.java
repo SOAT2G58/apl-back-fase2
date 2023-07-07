@@ -1,50 +1,110 @@
 package aplbackfase1.infrastructure.persistence;
 
 import aplbackfase1.infrastructure.persistence.entity.PedidoEntity;
+import aplbackfase1.infrastructure.persistence.entity.PedidoProdutoEntity;
+import aplbackfase1.infrastructure.persistence.repository.PedidoProdutoRepository;
 import aplbackfase1.infrastructure.persistence.repository.PedidoRepository;
 import aplbackfase1.domain.model.Pedido;
-import aplbackfase1.domain.model.PedidoProduto;
 import aplbackfase1.domain.enums.StatusPedido;
 import aplbackfase1.domain.ports.out.IPedidoRepositoryPort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class PedidoRepositoryAdapter implements IPedidoRepositoryPort {
 
     private final PedidoRepository pedidoRepository;
+    private final PedidoProdutoRepository pedidoProdutoRepository;
+
 
     @Override
     @Transactional
     public Pedido cadastrar(Pedido pedido) {
         PedidoEntity pedidoEntity = new PedidoEntity().from(pedido);
-        return this.pedidoRepository.save(pedidoEntity).to(pedidoEntity);
+        return this.pedidoRepository.save(pedidoEntity).to();
     }
 
     @Override
     @Transactional
     public Pedido atualizar(Pedido pedido) {
-        PedidoEntity pedidoEntity = new PedidoEntity().from(pedido);
-        return this.pedidoRepository.save(pedidoEntity).to(pedidoEntity);
+        PedidoEntity existingPedidoEntity = this.pedidoRepository.findById(pedido.getIdPedido())
+                .orElseThrow(() -> new IllegalArgumentException("Pedido não encontrado, id: " + pedido.getIdPedido()));
+        existingPedidoEntity = existingPedidoEntity.from(pedido);
+        return this.pedidoRepository.save(existingPedidoEntity).to();
     }
 
     @Override
     @Transactional
-    public PedidoProduto adicionarPedidoProduto(PedidoProduto pedidoProduto) {
-        // Implementation depends on your PedidoProduto entity and repository
+    public void remover(UUID idPedido) {
+        this.pedidoRepository.deleteById(idPedido);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Pedido> buscarTodos(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        return this.pedidoRepository.findAll(pageable).stream()
+                .map(PedidoEntity::to)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Pedido> buscarPorId(UUID idPedido) {
+        return this.pedidoRepository.findById(idPedido)
+                .map(PedidoEntity::to);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Pedido> buscarPedidosPorCliente(UUID idCliente) {
+        return this.pedidoRepository.findByClienteId(idCliente).stream()
+                .map(PedidoEntity::to)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Pedido> buscarPedidosPorStatus(StatusPedido statusPedido) {
+        return this.pedidoRepository.findByStatus(statusPedido).stream()
+                .map(PedidoEntity::to)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Pedido> buscarPedidosPorClienteEStatus(UUID idCliente, StatusPedido statusPedido) {
+        return this.pedidoRepository.findByClienteIdAndStatus(idCliente, statusPedido).stream()
+                .map(PedidoEntity::to)
+                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public PedidoProduto editarPedidoProduto(PedidoProduto pedidoProduto) {
-        // Implementation depends on your PedidoProduto entity and repository
-    }
+    public Pedido checkout(UUID idPedido) {
+        PedidoEntity pedidoEntity = this.pedidoRepository.findById(idPedido)
+                .orElseThrow(() -> new IllegalArgumentException("Pedido não encontrado, id: " + idPedido));
 
-    @Override
-    @Transactional
-    public PedidoProduto excluirPedidoProduto(PedidoProduto pedidoProduto) {
-        //
+        if (!pedidoEntity.getStatusPedido().equals(StatusPedido.A)) {
+            throw new IllegalArgumentException("Pedido precisa estar abertoA");
+        }
+
+        List<PedidoProdutoEntity> pedidoProdutos = pedidoProdutoRepository.findbyidPedido(idPedido);
+        BigDecimal totalValorPedido = pedidoProdutos.stream()
+                .map(PedidoProdutoEntity::getValorProduto)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        pedidoEntity.setValorPedido(totalValorPedido);
+        pedidoEntity.setStatusPedido(StatusPedido.C);
+
+        return this.pedidoRepository.save(pedidoEntity).to();
+    }
+}

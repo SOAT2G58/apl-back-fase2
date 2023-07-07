@@ -12,9 +12,7 @@ import java.util.UUID;
 public interface IPedidoUseCasePort {
     Pedido cadastrar(Pedido pedido);
     Pedido atualizar(Pedido pedido);
-    PedidoProduto adicionarPedidoProduto(PedidoProduto pedidoProduto);
-    PedidoProduto editarPedidoProduto(PedidoProduto pedidoProduto);
-    PedidoProduto excluirPedidoProduto(PedidoProduto pedidoProduto);
+
     void remover(UUID idPedido);
     List<Pedido> buscarTodos(int pageNumber, int pageSize);
     Optional<Pedido> buscarPorId(UUID idPedido);
