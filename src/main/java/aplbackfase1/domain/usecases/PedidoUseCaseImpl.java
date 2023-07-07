@@ -7,7 +7,6 @@ import aplbackfase1.domain.ports.in.IPedidoUseCasePort;
 import aplbackfase1.domain.ports.out.IPedidoProdutoRepositoryPort;
 import aplbackfase1.domain.ports.out.IPedidoRepositoryPort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,10 +15,11 @@ import java.util.Comparator;
 import java.util.Date;
 import java.math.BigDecimal;
 
-@Service
 @RequiredArgsConstructor
 public class PedidoUseCaseImpl implements IPedidoUseCasePort {
 
+    private final PagamentoUseCaseImpl pagamentoUseCaseImpl;
+    private final FilaUseCaseImpl filaUseCaseImpl;
     private final IPedidoRepositoryPort pedidoRepositoryPort;
     private final IPedidoProdutoRepositoryPort pedidoProdutoRepositoryPort;
 
@@ -82,17 +82,22 @@ public class PedidoUseCaseImpl implements IPedidoUseCasePort {
     @Override
     public Pedido checkout(UUID id) {
         Pedido pedido = checkPedidoStatus(id);
-        pedido.setStatusPedido(StatusPedido.R);
-        BigDecimal valorTotal = pedido.getProdutos().stream()
-                .map(PedidoProduto::getValorProduto)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        pedido.setValorPedido(valorTotal);
-        pedido.setDataAtualizacao(new Date());
-        // Adiciona a Fila - a implementar
-        // filaRepositoryPort.adicionar(id);
-        pedidoRepositoryPort.atualizar(pedido);
+        boolean pagamentOk = pagamentoUseCaseImpl.realizarPagamento(id);
+        if (pagamentOk) {
+            pedido.setStatusPedido(StatusPedido.R);
+            BigDecimal valorTotal = pedido.getProdutos().stream()
+                    .map(PedidoProduto::getValorProduto)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            pedido.setValorPedido(valorTotal);
+            pedido.setDataAtualizacao(new Date());
 
-        return pedido;
+            filaUseCaseImpl.inserirPedidoNaFila(pedido);
+            pedidoRepositoryPort.atualizar(pedido);
+            return pedido;
+        } else {
+            throw new IllegalStateException("Pagamento INvalido");
+        }
+
     }
 
     private Pedido checkPedidoStatus(UUID idPedido) {

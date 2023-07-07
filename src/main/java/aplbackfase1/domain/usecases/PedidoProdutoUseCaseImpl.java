@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Service
 @RequiredArgsConstructor
 public class PedidoProdutoUseCaseImpl implements IPedidoProdutoUseCasePort {
 

@@ -46,11 +46,11 @@ public class PedidoFilaRequest {
         return Pedido.builder()
                 .idPedido(this.getIdPedido())
                 .idCliente(this.getIdCliente())
-                .dataCriacao(this.getDataCriacao())
+                .dataInclusao(this.getDataCriacao())
                 .dataAtualizacao(this.getDataAtualizacao())
-                .dataFinalizacao(this.getDataFinalizacao())
-                .status(this.getStatus())
-                .itens(produtos)
+                // .dataFinalizacao(this.getDataFinalizacao())
+                .statusPedido(this.getStatus())
+                // .itens(produtos)
                 .build();
     }
 }

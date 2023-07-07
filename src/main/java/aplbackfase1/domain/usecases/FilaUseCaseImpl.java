@@ -39,7 +39,7 @@ public class FilaUseCaseImpl implements IFilaUseCasePort {
             throw new PedidoJaNaFilaException(idPedido);
         }
 
-        pedido.atualizaStatusPedido(StatusPedido.R);
+        // pedido.atualizaStatusPedido(StatusPedido.R);
         var pedidoFila = new PedidoFila(pedido);
         var numeroNaFila = filaRepositoryPort.inserir(pedidoFila);
         pedidoFila.setNumeroNaFila(numeroNaFila);

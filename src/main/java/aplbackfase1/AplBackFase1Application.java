@@ -27,12 +27,6 @@ public class AplBackFase1Application {
 	@Autowired
 	private IClienteUseCasePort clienteUseCasePort;
 
-	@Autowired
-	private IPedidoUseCasePort pedidoUseCasePort;
-
-	@Autowired
-	private IPedidoProdutoUseCasePort pedidoProdutoUseCasePort;
-
 	public static void main(String[] args) {
 		SpringApplication.run(AplBackFase1Application.class, args);
 	}
