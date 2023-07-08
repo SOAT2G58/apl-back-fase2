@@ -1,6 +1,7 @@
 package aplbackfase1.domain.usecases;
 
 import aplbackfase1.domain.enums.StatusPedido;
+import aplbackfase1.domain.exceptions.PedidoNaoEncontradoException;
 import aplbackfase1.domain.model.Pedido;
 import aplbackfase1.domain.model.PedidoProduto;
 import aplbackfase1.domain.ports.in.IFilaUseCasePort;
@@ -44,6 +45,17 @@ public class PedidoUseCaseImpl implements IPedidoUseCasePort {
         existingPedido.setStatusPedido(pedido.getStatusPedido());
         existingPedido.setDataAtualizacao(new Date());
         return pedidoRepositoryPort.atualizar(existingPedido);
+    }
+
+    @Override
+    public Pedido atualizarStatus(StatusPedido status, UUID idPedido) throws PedidoNaoEncontradoException {
+        Optional<Pedido> pedido = buscarPorId(idPedido);
+        if (pedido.isEmpty()) {
+            throw new PedidoNaoEncontradoException();
+        }
+        pedido.get().setStatusPedido(status);
+        pedido.get().setDataAtualizacao(new Date());
+        return pedidoRepositoryPort.atualizar(pedido.get());
     }
 
     @Override

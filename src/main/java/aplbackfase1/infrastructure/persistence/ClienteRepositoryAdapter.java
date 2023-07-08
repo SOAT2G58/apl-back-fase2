@@ -32,6 +32,11 @@ public class  ClienteRepositoryAdapter implements IClienteRepositoryPort {
     }
 
     @Override
+    public UUID gerarId() {
+        return clienteRepository.save(new ClienteEntity()).getId();
+    }
+
+    @Override
     public Optional<Cliente> buscarPorCpf(Cpf cpf) {
         return clienteRepository.findAllByCpf(cpf).map(obj -> obj.to(obj));
     }
