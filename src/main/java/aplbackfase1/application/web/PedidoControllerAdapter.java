@@ -106,7 +106,7 @@ public class PedidoControllerAdapter {
 
     @GetMapping("/pedidos")
     public ResponseEntity<List<PedidoDTO>> buscarTodos(
-            @RequestParam(defaultValue = "1") int pageNumber,
+            @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "100") int pageSize) {
         List<Pedido> pedidos = pedidoUseCasePort.buscarTodos(pageNumber, pageSize);
         List<PedidoDTO> pedidoDTOs = pedidos.stream()
