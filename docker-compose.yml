@@ -30,7 +30,7 @@ services:
         "spring.datasource.initialize" : true,
         "spring.datasource.continue-on-error": true,
         "spring.jpa.hibernate.ddl-auto":"update",
-        "server.port" : 9090
+        "server.port" : "$SPRING_LOCAL_PORT"
       }'
     volumes:
       - .m2:/root/.m2
