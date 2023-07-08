@@ -2,6 +2,8 @@ package aplbackfase1.domain.usecases;
 
 import aplbackfase1.domain.enums.StatusPedido;
 import aplbackfase1.domain.exceptions.PedidoNaoEncontradoException;
+import aplbackfase1.domain.exceptions.PedidoOperacaoNaoSuportadaException;
+import aplbackfase1.domain.exceptions.PedidoPagamentoInvalidoException;
 import aplbackfase1.domain.model.Pedido;
 import aplbackfase1.domain.model.PedidoProduto;
 import aplbackfase1.domain.ports.in.IFilaUseCasePort;
@@ -109,7 +111,7 @@ public class PedidoUseCaseImpl implements IPedidoUseCasePort {
             filaUseCasePort.inserirPedidoNaFila(pedido);
             return pedido;
         } else {
-            throw new IllegalStateException("Pagamento Invalido");
+            throw new PedidoPagamentoInvalidoException("Pagamento Invalido");
         }
     }
 
@@ -120,10 +122,10 @@ public class PedidoUseCaseImpl implements IPedidoUseCasePort {
             if (existingPedido.getStatusPedido() == StatusPedido.A) {
                 return existingPedido;
             } else {
-                throw new IllegalStateException("Pedido não está aberto para edição.");
+                throw new PedidoOperacaoNaoSuportadaException("Pedido não está aberto para edição.");
             }
         } else {
-            throw new IllegalStateException("Pedido não encontrado.");
+            throw new PedidoNaoEncontradoException("Pedido não encontrado.");
         }
     }
 

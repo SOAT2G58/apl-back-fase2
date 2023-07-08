@@ -1,6 +1,7 @@
 package aplbackfase1.infrastructure.persistence;
 
 import aplbackfase1.domain.exceptions.PedidoNaoEncontradoException;
+import aplbackfase1.domain.exceptions.PedidoOperacaoNaoSuportadaException;
 import aplbackfase1.infrastructure.persistence.entity.PedidoEntity;
 import aplbackfase1.infrastructure.persistence.entity.PedidoProdutoEntity;
 import aplbackfase1.infrastructure.persistence.repository.PedidoProdutoRepository;
@@ -37,7 +38,7 @@ public class PedidoRepositoryAdapter implements IPedidoRepositoryPort {
     @Transactional
     public Pedido atualizar(Pedido pedido) {
         PedidoEntity existingPedidoEntity = this.pedidoRepository.findById(pedido.getIdPedido())
-                .orElseThrow(() -> new IllegalArgumentException("Pedido não encontrado, id: " + pedido.getIdPedido()));
+                .orElseThrow(() -> new PedidoNaoEncontradoException("Pedido não encontrado, id: " + pedido.getIdPedido()));
         existingPedidoEntity = existingPedidoEntity.from(pedido, false);
         return this.pedidoRepository.save(existingPedidoEntity).to();
     }
@@ -55,7 +56,7 @@ public class PedidoRepositoryAdapter implements IPedidoRepositoryPort {
     @Transactional
     public void remover(UUID idPedido) {
         PedidoEntity pedidoEntity = this.pedidoRepository.findById(idPedido)
-                .orElseThrow(() -> new IllegalArgumentException("Pedido not found, id: " + idPedido));
+                .orElseThrow(() -> new PedidoNaoEncontradoException("Pedido not found, id: " + idPedido));
 
         pedidoEntity.getProdutos().forEach(pedidoProdutoEntity -> {
             this.pedidoProdutoRepository.deleteById(pedidoProdutoEntity.getId());
@@ -108,10 +109,10 @@ public class PedidoRepositoryAdapter implements IPedidoRepositoryPort {
     @Transactional
     public Pedido checkout(UUID idPedido) {
         PedidoEntity pedidoEntity = this.pedidoRepository.findById(idPedido)
-                .orElseThrow(() -> new IllegalArgumentException("Pedido não encontrado, id: " + idPedido));
+                .orElseThrow(() -> new PedidoNaoEncontradoException("Pedido não encontrado, id: " + idPedido));
 
         if (!pedidoEntity.getStatusPedido().equals(StatusPedido.A)) {
-            throw new IllegalArgumentException("Pedido precisa estar abertoA");
+            throw new PedidoOperacaoNaoSuportadaException("Pedido precisa estar abertoA");
         }
 
         Pedido pedido = pedidoEntity.to();
