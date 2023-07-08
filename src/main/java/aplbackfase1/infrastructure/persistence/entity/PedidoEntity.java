@@ -75,7 +75,6 @@ public class PedidoEntity {
         PedidoEntityBuilder pedidoEntityBuilder = PedidoEntity.builder()
                 .idPedido(pedido.getIdPedido())
                 .idCliente(pedido.getIdCliente())
-                .statusPedido(pedido.getStatusPedido())
                 .valorPedido(pedido.getValorPedido())
                 .dataInclusao(pedido.getDataInclusao())
                 .dataAtualizacao(pedido.getDataAtualizacao());
@@ -83,6 +82,8 @@ public class PedidoEntity {
         if(isCreated) {
             pedidoEntityBuilder.dataInclusao(this.obterDataHoraAtual());
             pedidoEntityBuilder.statusPedido(StatusPedido.A);
+        } else {
+            pedidoEntityBuilder.statusPedido(pedido.getStatusPedido());
         }
 
         return pedidoEntityBuilder.build();

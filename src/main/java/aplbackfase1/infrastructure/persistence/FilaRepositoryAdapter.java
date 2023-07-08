@@ -8,12 +8,14 @@ import aplbackfase1.infrastructure.persistence.repository.FilaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +43,7 @@ public class FilaRepositoryAdapter implements IFilaRepositoryPort {
     }
 
     @Override
-    public Page<PedidoFila> obterPedidos(Pageable paginacao) {
-        return filaRepository.findAll(paginacao).map(obj -> obj.toPedidoFila());
+    public List<PedidoFila> obterPedidos(int page, int size) {
+        return filaRepository.findAll(PageRequest.of(page, size)).toList().stream().map(obj -> obj.toPedidoFila()).collect(Collectors.toList());
     }
 }
