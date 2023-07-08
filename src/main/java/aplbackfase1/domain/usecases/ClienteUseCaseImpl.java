@@ -34,6 +34,11 @@ public class ClienteUseCaseImpl implements IClienteUseCasePort {
     }
 
     @Override
+    public UUID gerarId() {
+        return clienteRepositoryPort.gerarId();
+    }
+
+    @Override
     public Optional<Cliente> buscarPorCpf(Cpf cpf) {
         return clienteRepositoryPort.buscarPorCpf(cpf);
     }

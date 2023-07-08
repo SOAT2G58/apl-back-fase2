@@ -10,6 +10,7 @@ import java.util.UUID;
 public interface IClienteRepositoryPort {
     Cliente cadastrar(Cliente cliente);
     Cliente identificarPorCpf(Cpf cpf);
+    UUID gerarId();
     Optional<Cliente> buscarPorCpf(Cpf cpf);
     List<Cliente> bucarTodos();
     Optional<Cliente> buscarPorId(UUID uuid);

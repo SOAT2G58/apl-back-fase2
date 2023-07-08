@@ -69,4 +69,11 @@ public class ClienteControllerAdapter {
         }
     }
 
+    @PostMapping("/clientes/id")
+    public ResponseEntity<?> gerarId() {
+        UUID idCliente = clienteUseCasePort.gerarId();
+        URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/tech-challenge/clientes/{id}").buildAndExpand(idCliente).toUri();
+        return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.LOCATION, uri.toString()).body(idCliente);
+    }
+
 }
