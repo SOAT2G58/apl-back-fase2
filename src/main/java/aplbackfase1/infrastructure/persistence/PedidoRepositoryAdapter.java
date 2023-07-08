@@ -1,5 +1,6 @@
 package aplbackfase1.infrastructure.persistence;
 
+import aplbackfase1.domain.exceptions.PedidoNaoEncontradoException;
 import aplbackfase1.infrastructure.persistence.entity.PedidoEntity;
 import aplbackfase1.infrastructure.persistence.entity.PedidoProdutoEntity;
 import aplbackfase1.infrastructure.persistence.repository.PedidoProdutoRepository;
@@ -39,6 +40,15 @@ public class PedidoRepositoryAdapter implements IPedidoRepositoryPort {
                 .orElseThrow(() -> new IllegalArgumentException("Pedido não encontrado, id: " + pedido.getIdPedido()));
         existingPedidoEntity = existingPedidoEntity.from(pedido, false);
         return this.pedidoRepository.save(existingPedidoEntity).to();
+    }
+
+    @Override
+    @Transactional
+    public Pedido atualizarStatus(StatusPedido status, UUID idPedido) throws PedidoNaoEncontradoException {
+        Pedido pedido = buscarPorId(idPedido)
+                .orElseThrow(() -> new PedidoNaoEncontradoException());
+        pedido.setStatusPedido(status);
+        return atualizar(pedido);
     }
 
     @Override

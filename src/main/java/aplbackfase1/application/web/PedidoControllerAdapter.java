@@ -41,6 +41,13 @@ public class PedidoControllerAdapter {
         }
     }
 
+    @PutMapping("/pedido/{idPedido}/status/{status}")
+    public ResponseEntity<PedidoDTO> atualizarStatus(
+            @PathVariable UUID idPedido, @PathVariable StatusPedido status) {
+        PedidoDTO pedidoDTO = PedidoDTO.from(pedidoUseCasePort.atualizarStatus(status, idPedido));
+        return ResponseEntity.ok().body(pedidoDTO);
+    }
+
     /*
     // Seria para editar o Pedido como um todo
     @PutMapping("/pedido")

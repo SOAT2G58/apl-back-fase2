@@ -1,6 +1,7 @@
 package aplbackfase1.domain.ports.out;
 
 import aplbackfase1.domain.enums.StatusPedido;
+import aplbackfase1.domain.exceptions.PedidoNaoEncontradoException;
 import aplbackfase1.domain.model.Pedido;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.UUID;
 public interface IPedidoRepositoryPort {
     Pedido cadastrar(Pedido pedido);
     Pedido atualizar(Pedido pedido);
+    Pedido atualizarStatus(StatusPedido status, UUID idPedido) throws PedidoNaoEncontradoException;
     void remover(UUID idPedido);
     List<Pedido> buscarTodos(int pageNumber, int pageSize);
     Optional<Pedido> buscarPorId(UUID idPedido);
