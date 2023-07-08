@@ -17,9 +17,9 @@ import java.util.UUID;
 @AllArgsConstructor
 public class PedidoProdutoRequest {
 
-    @NotEmpty(message = "id pedido não pode estar vazio")
+    @NotNull(message = "id pedido não pode estar vazio")
     private UUID idPedido;  // changed from id to idPedido
-    @NotEmpty(message = "id produto não pode estar vazio")
+    @NotNull(message = "id produto não pode estar vazio")
     private UUID idPedidoProduto;
     @NotNull(message = "valor não pode ser nulo")
     private BigDecimal valorProduto;

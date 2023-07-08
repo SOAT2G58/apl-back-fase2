@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 
@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class PedidoRequest {
 
-    @NotEmpty(message = "id cliente não pode estar vazio")
+    @NotNull(message = "id cliente não pode estar vazio")
     private UUID idCliente;
 
     public Pedido from(PedidoRequest request) {
