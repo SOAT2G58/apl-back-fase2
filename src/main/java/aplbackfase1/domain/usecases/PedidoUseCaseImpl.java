@@ -3,6 +3,8 @@ package aplbackfase1.domain.usecases;
 import aplbackfase1.domain.enums.StatusPedido;
 import aplbackfase1.domain.model.Pedido;
 import aplbackfase1.domain.model.PedidoProduto;
+import aplbackfase1.domain.ports.in.IFilaUseCasePort;
+import aplbackfase1.domain.ports.in.IPagamentoUseCase;
 import aplbackfase1.domain.ports.in.IPedidoUseCasePort;
 import aplbackfase1.domain.ports.out.IPedidoProdutoRepositoryPort;
 import aplbackfase1.domain.ports.out.IPedidoRepositoryPort;
@@ -18,8 +20,8 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class PedidoUseCaseImpl implements IPedidoUseCasePort {
 
-    private final PagamentoUseCaseImpl pagamentoUseCaseImpl;
-    private final FilaUseCaseImpl filaUseCaseImpl;
+    private final IPagamentoUseCase pagamentoUseCase;
+    private final IFilaUseCasePort filaUseCasePort;
     private final IPedidoRepositoryPort pedidoRepositoryPort;
     private final IPedidoProdutoRepositoryPort pedidoProdutoRepositoryPort;
 
@@ -82,7 +84,7 @@ public class PedidoUseCaseImpl implements IPedidoUseCasePort {
     @Override
     public Pedido checkout(UUID id) {
         Pedido pedido = checkPedidoStatus(id);
-        boolean pgtoOk = pagamentoUseCaseImpl.realizarPagamento(id);
+        boolean pgtoOk = pagamentoUseCase.realizarPagamento(id);
         if (pgtoOk) {
             pedido.setStatusPedido(StatusPedido.R);
             BigDecimal valorTotal = pedido.getProdutos().stream()
@@ -92,7 +94,7 @@ public class PedidoUseCaseImpl implements IPedidoUseCasePort {
             pedido.setDataAtualizacao(new Date());
 
             pedidoRepositoryPort.atualizar(pedido);
-            filaUseCaseImpl.inserirPedidoNaFila(pedido);
+            filaUseCasePort.inserirPedidoNaFila(pedido);
             return pedido;
         } else {
             throw new IllegalStateException("Pagamento Invalido");

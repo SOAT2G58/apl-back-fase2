@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>apl-back-fase1</groupId>
 	<artifactId>apl-back-fase1</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>apl-back-fase1</name>
 	<description>FIAP SOAT2 G58</description>
 	<properties>
