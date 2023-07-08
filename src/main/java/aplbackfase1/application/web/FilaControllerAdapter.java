@@ -6,6 +6,7 @@ import aplbackfase1.domain.ports.in.IFilaUseCasePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/tech-challenge")
@@ -68,13 +70,14 @@ public class FilaControllerAdapter {
     }
 
     @GetMapping("/fila/pedidos")
-    public Page<PedidoFilaDTO> buscarPedidosNaFila(@PageableDefault(size = 10, page = 0) @SortDefault(sort = "numeroNaFila",
+    public Page<PedidoFilaDTO> buscarPedidosNaFila(
+            @PageableDefault(size = 10, page = 0) @SortDefault(sort = "numeroNaFila",
             direction = Sort.Direction.ASC) Pageable paginacao) {
         // TODO - passar o pedidoDTO (quando tiver) junto com a responsta
 
-        var pedidosFila = filaUseCasePort.obterPedidosNaFila(paginacao);
-        var pedidosFilaDTO = pedidosFila.map(obj -> new PedidoFilaDTO().from(obj));
-        return pedidosFilaDTO;
+        var pedidosFila = filaUseCasePort.obterPedidosNaFila(paginacao.getPageNumber(), paginacao.getPageSize());
+        var pedidosFilaDTO = pedidosFila.stream().map(obj -> new PedidoFilaDTO().from(obj)).collect(Collectors.toList());
+        return new PageImpl<>(pedidosFilaDTO);
     }
 
     @DeleteMapping("/fila/{numero}")
