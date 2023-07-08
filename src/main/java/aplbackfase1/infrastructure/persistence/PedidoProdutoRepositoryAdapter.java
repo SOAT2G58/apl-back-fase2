@@ -1,6 +1,9 @@
 package aplbackfase1.infrastructure.persistence;
 
 import aplbackfase1.domain.enums.StatusPedido;
+import aplbackfase1.domain.exceptions.PedidoNaoEncontradoException;
+import aplbackfase1.domain.exceptions.PedidoOperacaoNaoSuportadaException;
+import aplbackfase1.domain.exceptions.PedidoProdutoNaoEncontradoException;
 import aplbackfase1.domain.model.Pedido;
 import aplbackfase1.infrastructure.persistence.entity.PedidoEntity;
 import aplbackfase1.infrastructure.persistence.entity.PedidoProdutoEntity;
@@ -47,7 +50,7 @@ public class PedidoProdutoRepositoryAdapter implements IPedidoProdutoRepositoryP
     @Transactional(readOnly = true)
     public List<PedidoProduto> buscarPorPedido(Pedido pedido) {
         PedidoEntity pedidoEntity = this.pedidoRepository.findById(pedido.getIdPedido())
-                .orElseThrow(() -> new IllegalArgumentException("Pedido não encontrado, id: " + pedido.getIdPedido()));
+                .orElseThrow(() -> new PedidoNaoEncontradoException("Pedido não encontrado, id: " + pedido.getIdPedido()));
 
         return this.pedidoProdutoRepository.findByPedido(pedido)
                 .stream()
@@ -59,9 +62,9 @@ public class PedidoProdutoRepositoryAdapter implements IPedidoProdutoRepositoryP
     @Transactional
     public PedidoProduto adicionarPedidoProduto(PedidoProduto pedidoProduto) {
         PedidoEntity existPedioEntity = pedidoRepository.findById(pedidoProduto.getPedidoId())
-                .orElseThrow(() -> new IllegalArgumentException("Pedido não encontrado, id: " + pedidoProduto.getPedidoId()));
+                .orElseThrow(() -> new PedidoNaoEncontradoException("Pedido não encontrado, id: " + pedidoProduto.getPedidoId()));
         ProdutoEntity existProdutoEntity = produtoRepository.findById(pedidoProduto.getProdutoId())
-                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado, id: " + pedidoProduto.getProdutoId()));
+                .orElseThrow(() -> new PedidoProdutoNaoEncontradoException("Produto não encontrado, id: " + pedidoProduto.getProdutoId()));
 
         PedidoProdutoEntity pedidoProdutoEntity = PedidoProdutoEntity.builder()
                 .id(pedidoProduto.getId())
@@ -82,11 +85,11 @@ public class PedidoProdutoRepositoryAdapter implements IPedidoProdutoRepositoryP
     @Transactional
     public PedidoProduto editarPedidoProduto(PedidoProduto pedidoProduto) {
         PedidoProdutoEntity existingPedidoProdutoEntity = this.pedidoProdutoRepository.findById(pedidoProduto.getId())
-                .orElseThrow(() -> new IllegalArgumentException("PedidoProduto não encontrado, id: " + pedidoProduto.getId()));
+                .orElseThrow(() -> new PedidoProdutoNaoEncontradoException("PedidoProduto não encontrado, id: " + pedidoProduto.getId()));
         PedidoEntity existPedioEntity = pedidoRepository.findById(pedidoProduto.getPedidoId())
-                .orElseThrow(() -> new IllegalArgumentException("Pedido não encontrado, id: " + pedidoProduto.getPedidoId()));
+                .orElseThrow(() -> new PedidoNaoEncontradoException("Pedido não encontrado, id: " + pedidoProduto.getPedidoId()));
         ProdutoEntity existProdutoEntity = produtoRepository.findById(existingPedidoProdutoEntity.getProduto().getIdProduto())
-                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado, id: " + pedidoProduto.getProdutoId()));
+                .orElseThrow(() -> new PedidoProdutoNaoEncontradoException("Produto não encontrado, id: " + pedidoProduto.getProdutoId()));
 
         existingPedidoProdutoEntity.setPedido(existPedioEntity);
         existingPedidoProdutoEntity.setProduto(existProdutoEntity);
@@ -115,7 +118,7 @@ public class PedidoProdutoRepositoryAdapter implements IPedidoProdutoRepositoryP
                     pedidoEntity.setDataAtualizacao(new Date());
                     pedidoRepository.save(pedidoEntity);
                 } else {
-                    throw new IllegalArgumentException("Pedido status is not A, id: " + pedidoEntity.getIdPedido());
+                    throw new PedidoOperacaoNaoSuportadaException("Pedido status is not A, id: " + pedidoEntity.getIdPedido());
                 }
                 }
             }
