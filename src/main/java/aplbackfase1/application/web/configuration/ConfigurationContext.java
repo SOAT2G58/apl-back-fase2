@@ -28,8 +28,8 @@ public class ConfigurationContext {
     @Bean
     public IPedidoUseCasePort pedidoUseCasePort(IPedidoRepositoryPort pedidoRepositoryPort,
                                                 IPedidoProdutoRepositoryPort pedidoProdutoRepositoryPort,
-                                                FilaUseCaseImpl filaUseCaseImpl, PagamentoUseCaseImpl pagamentoUseCaseImpl) {
-        return new PedidoUseCaseImpl(pagamentoUseCaseImpl, filaUseCaseImpl, pedidoRepositoryPort, pedidoProdutoRepositoryPort);
+                                                IFilaUseCasePort filaUseCasePort, IPagamentoUseCase pagamentoUseCase) {
+        return new PedidoUseCaseImpl(pagamentoUseCase, filaUseCasePort, pedidoRepositoryPort, pedidoProdutoRepositoryPort);
     }
 
     @Bean

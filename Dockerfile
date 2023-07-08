@@ -1,12 +1,11 @@
-# Use the official OpenJDK image as the base image
+FROM maven:3.8.5-jdk-11 AS build
+COPY . /root/app/
+WORKDIR /root/app
+RUN mvn clean package
+
 FROM openjdk:11-jre-slim
-
-# Set the working directory inside the container
-WORKDIR /app
-
-# Copy the JAR file into the container
-COPY target/your-application.jar app.jar
-
-# Set the command to run the application when the container starts
-CMD ["java", "-jar", "app.jar"]
+EXPOSE 9090
+COPY --from=build /root/app/ /home/app/
+WORKDIR /home/app
+ENTRYPOINT ["java", "-jar", "-Xmx1512m", "./target/apl-back-fase1-1.0.0.jar"]
 
