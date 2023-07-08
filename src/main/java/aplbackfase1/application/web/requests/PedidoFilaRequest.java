@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -20,10 +21,10 @@ import java.util.stream.Collectors;
 public class PedidoFilaRequest {
 
     // TODO - Quando a feature de Pedido estiver pronta, ajustar para mapear aqui o objeto Pedido/PedidoDTO inteiro (que já contém odo o resto)
-    @NotEmpty(message = "id do pedido não pode estar vazio")
+    @NotNull(message = "id do pedido não pode estar vazio")
     private UUID idPedido;
 
-    @NotEmpty(message = "id do pedido não pode estar vazio")
+    @NotNull(message = "id do pedido não pode estar vazio")
     private UUID idCliente;
 
 
@@ -46,11 +47,11 @@ public class PedidoFilaRequest {
         return Pedido.builder()
                 .idPedido(this.getIdPedido())
                 .idCliente(this.getIdCliente())
-                .dataCriacao(this.getDataCriacao())
+                .dataInclusao(this.getDataCriacao())
                 .dataAtualizacao(this.getDataAtualizacao())
-                .dataFinalizacao(this.getDataFinalizacao())
-                .status(this.getStatus())
-                .itens(produtos)
+                // .dataFinalizacao(this.getDataFinalizacao())
+                .statusPedido(this.getStatus())
+                // .itens(produtos)
                 .build();
     }
 }

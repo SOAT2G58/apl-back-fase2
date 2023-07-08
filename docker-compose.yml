@@ -10,3 +10,21 @@ services:
       - POSTGRES_PASSWORD=postgres
     ports:
       - "5432:5432"
+    networks:
+      - apl-back-fase1_default
+
+  phppgadmin:
+    image: dpage/pgadmin4
+    container_name: phppgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@domain.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "8080:80"
+    networks:
+      - apl-back-fase1_default
+
+networks:
+  apl-back-fase1_default:
+    external:
+      name: apl-back-fase1_default

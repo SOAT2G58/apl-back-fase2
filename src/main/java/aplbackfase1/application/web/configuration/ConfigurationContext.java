@@ -1,17 +1,9 @@
 package aplbackfase1.application.web.configuration;
 
 
-import aplbackfase1.domain.ports.in.IPagamentoUseCase;
-import aplbackfase1.domain.ports.in.IFilaUseCasePort;
-import aplbackfase1.domain.ports.in.IClienteUseCasePort;
-import aplbackfase1.domain.ports.in.IProdutoUseCasePort;
-import aplbackfase1.domain.ports.out.IClienteRepositoryPort;
-import aplbackfase1.domain.ports.out.IProdutoRepositoryPort;
-import aplbackfase1.domain.usecases.PagamentoUseCaseImpl;
-import aplbackfase1.domain.ports.out.IFilaRepositoryPort;
-import aplbackfase1.domain.usecases.FilaUseCaseImpl;
-import aplbackfase1.domain.usecases.ClienteUseCaseImpl;
-import aplbackfase1.domain.usecases.ProdutoUseCaseImpl;
+import aplbackfase1.domain.ports.in.*;
+import aplbackfase1.domain.ports.out.*;
+import aplbackfase1.domain.usecases.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -34,7 +26,21 @@ public class ConfigurationContext {
     }
 
     @Bean
+    public IPedidoUseCasePort pedidoUseCasePort(IPedidoRepositoryPort pedidoRepositoryPort,
+                                                IPedidoProdutoRepositoryPort pedidoProdutoRepositoryPort,
+                                                FilaUseCaseImpl filaUseCaseImpl, PagamentoUseCaseImpl pagamentoUseCaseImpl) {
+        return new PedidoUseCaseImpl(pagamentoUseCaseImpl, filaUseCaseImpl, pedidoRepositoryPort, pedidoProdutoRepositoryPort);
+    }
+
+    @Bean
+    public IPedidoProdutoUseCasePort pedidoProdutoUseCasePort(IPedidoRepositoryPort pedidoRepositoryPort,
+                                                              IPedidoProdutoRepositoryPort pedidoProdutoRepositoryPort) {
+        return new PedidoProdutoUseCaseImpl(pedidoRepositoryPort, pedidoProdutoRepositoryPort);
+    }
+
+    @Bean
     public IClienteUseCasePort clienteUseCasePort(IClienteRepositoryPort clienteRepositoryPort) {
         return new ClienteUseCaseImpl(clienteRepositoryPort);
     }
+
 }
