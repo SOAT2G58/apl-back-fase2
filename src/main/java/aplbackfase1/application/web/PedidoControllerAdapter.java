@@ -9,12 +9,12 @@ import aplbackfase1.domain.model.Pedido;
 import aplbackfase1.domain.model.PedidoProduto;
 import aplbackfase1.domain.ports.in.IPedidoProdutoUseCasePort;
 import aplbackfase1.domain.ports.in.IPedidoUseCasePort;
-import com.sun.istack.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

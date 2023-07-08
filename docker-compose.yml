@@ -29,12 +29,25 @@ services:
         "spring.datasource.initialization-mode" : "always",
         "spring.datasource.initialize" : true,
         "spring.datasource.continue-on-error": true,
-        "spring.jpa.hibernate.ddl-auto":"update"
+        "spring.jpa.hibernate.ddl-auto":"update",
+        "server.port" : 9090
       }'
     volumes:
       - .m2:/root/.m2
     stdin_open: true
     tty: true
+    networks:
+      - apl-back-fase1_default
+
+  phppgadmin:
+    image: dpage/pgadmin4
+    container_name: phppgadmin
+    env_file: ./.env
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=$PGADMIN_ROOT_EMAIL
+      - PGADMIN_DEFAULT_PASSWORD=$PGADMIN_ROOT_PASSWORD
+    ports:
+      - "8080:80"
     networks:
       - apl-back-fase1_default
 
