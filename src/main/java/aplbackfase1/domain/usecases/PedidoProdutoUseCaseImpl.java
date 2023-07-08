@@ -8,6 +8,7 @@ import aplbackfase1.domain.ports.out.IPedidoProdutoRepositoryPort;
 import aplbackfase1.domain.ports.out.IPedidoRepositoryPort;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -41,7 +42,20 @@ public class PedidoProdutoUseCaseImpl implements IPedidoProdutoUseCasePort {
 
     @Override
     public void deletarPedidoProduto(UUID id) {
-        pedidoProdutoRepositoryPort.deletar(id);
+        Optional<PedidoProduto> pedidoProdutoOptional = pedidoProdutoRepositoryPort.buscarPorId(id);
+        if (pedidoProdutoOptional.isPresent()) {
+            PedidoProduto pedidoProduto = pedidoProdutoOptional.get();
+            UUID pedidoId = pedidoProduto.getProdutoId();
+            pedidoProdutoRepositoryPort.excluirPedidoProduto(pedidoProduto.getId());
+
+            Optional<Pedido> pedidoOptional = pedidoRepositoryPort.buscarPorId(pedidoProduto.getPedidoId());
+            if (pedidoOptional.isPresent()) {
+                Pedido pedido = pedidoOptional.get();
+                pedido.setDataAtualizacao(new Date());
+                pedidoRepositoryPort.atualizar(pedido);
+                pedidoRepositoryPort.atualizar(pedido);
+            }
+        }
     }
 
     private Pedido checkPedidoStatus(UUID idPedido) {

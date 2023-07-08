@@ -14,11 +14,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.math.BigDecimal;
 
 @Service
 @RequiredArgsConstructor
@@ -67,9 +67,12 @@ public class PedidoProdutoRepositoryAdapter implements IPedidoProdutoRepositoryP
                 .id(pedidoProduto.getId())
                 .pedido(existPedioEntity)
                 .produto(existProdutoEntity)
-                .valorProduto(new BigDecimal(String.valueOf(existProdutoEntity.getValorProduto())))
+                .valorProduto(pedidoProduto.getValorProduto())
                 .observacaoProduto(pedidoProduto.getObservacaoProduto())
                 .build();
+
+        existPedioEntity.setDataAtualizacao(new Date());
+        pedidoRepository.save(existPedioEntity);
 
         return PedidoProdutoEntity.to(this.pedidoProdutoRepository.save(pedidoProdutoEntity));
     }
@@ -82,7 +85,7 @@ public class PedidoProdutoRepositoryAdapter implements IPedidoProdutoRepositoryP
                 .orElseThrow(() -> new IllegalArgumentException("PedidoProduto não encontrado, id: " + pedidoProduto.getId()));
         PedidoEntity existPedioEntity = pedidoRepository.findById(pedidoProduto.getPedidoId())
                 .orElseThrow(() -> new IllegalArgumentException("Pedido não encontrado, id: " + pedidoProduto.getPedidoId()));
-        ProdutoEntity existProdutoEntity = produtoRepository.findById(pedidoProduto.getProdutoId())
+        ProdutoEntity existProdutoEntity = produtoRepository.findById(existingPedidoProdutoEntity.getProduto().getIdProduto())
                 .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado, id: " + pedidoProduto.getProdutoId()));
 
         existingPedidoProdutoEntity.setPedido(existPedioEntity);
@@ -92,12 +95,29 @@ public class PedidoProdutoRepositoryAdapter implements IPedidoProdutoRepositoryP
 
         PedidoProdutoEntity updatedPedidoProdutoEntity = this.pedidoProdutoRepository.save(existingPedidoProdutoEntity);
 
+        existPedioEntity.setDataAtualizacao(new Date());
+        pedidoRepository.save(existPedioEntity);
+
         return PedidoProdutoEntity.to(updatedPedidoProdutoEntity);
     }
 
     @Override
     @Transactional
-    public void deletar(UUID idPedidoProduto) {
-        this.pedidoProdutoRepository.deleteById(idPedidoProduto);
+    public void excluirPedidoProduto(UUID id) {
+        Optional<PedidoProdutoEntity> pedidoProdutoOptional = pedidoProdutoRepository.findById(id);
+        if (pedidoProdutoOptional.isPresent()) {
+            PedidoProdutoEntity pedidoProdutoEntity = pedidoProdutoOptional.get();
+            Optional<PedidoEntity> pedidoOptional = pedidoRepository.findById(pedidoProdutoEntity.getPedido().getIdPedido());
+            if (pedidoOptional.isPresent()) {
+                PedidoEntity pedidoEntity = pedidoOptional.get();
+                if (pedidoEntity.getStatusPedido() == StatusPedido.A) {
+                    pedidoProdutoRepository.deleteById(id);
+                    pedidoEntity.setDataAtualizacao(new Date());
+                    pedidoRepository.save(pedidoEntity);
+                } else {
+                    throw new IllegalArgumentException("Pedido status is not A, id: " + pedidoEntity.getIdPedido());
+                }
+                }
+            }
+        }
     }
-}

@@ -2,6 +2,8 @@ package aplbackfase1.domain.ports.out;
 
 import aplbackfase1.domain.model.Pedido;
 import aplbackfase1.domain.model.PedidoProduto;
+import aplbackfase1.infrastructure.persistence.entity.PedidoEntity;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,5 +16,5 @@ public interface IPedidoProdutoRepositoryPort {
     List<PedidoProduto> buscarPorPedido(Pedido pedido);
     PedidoProduto adicionarPedidoProduto(PedidoProduto pedidoProduto);
     PedidoProduto editarPedidoProduto(PedidoProduto pedidoProduto);
-    void deletar(UUID idPedidoProduto);
+    void excluirPedidoProduto(UUID idProduto);
 }

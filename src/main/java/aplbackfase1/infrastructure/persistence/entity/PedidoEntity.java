@@ -2,6 +2,8 @@ package aplbackfase1.infrastructure.persistence.entity;
 
 import aplbackfase1.domain.enums.StatusPedido;
 import aplbackfase1.domain.model.Pedido;
+import aplbackfase1.domain.model.PedidoProduto;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +12,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.Calendar;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -27,10 +31,12 @@ public class PedidoEntity {
     private UUID idPedido;
 
     @Column(name = "ID_CLIENTE")
+    @NotNull
     private UUID idCliente;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "ID_STATUS")
+    @NotNull
     private StatusPedido statusPedido;
 
     @Column(name = "V_PEDIDO")
@@ -44,12 +50,22 @@ public class PedidoEntity {
     @Column(name = "DT_H_ATC")
     private Date dataAtualizacao;
 
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PedidoProdutoEntity> produtos;
+
     public Pedido to() {
+        List<PedidoProduto> pedidoProdutos = null;
+        if (this.produtos != null) {
+            pedidoProdutos = this.produtos.stream()
+                    .map(PedidoProdutoEntity::to)
+                    .collect(Collectors.toList());
+        }
         return Pedido.builder()
                 .idPedido(this.idPedido)
                 .idCliente(this.idCliente)
                 .statusPedido(this.statusPedido)
                 .valorPedido(this.valorPedido)
+                .produtos(pedidoProdutos)
                 .dataInclusao(this.dataInclusao)
                 .dataAtualizacao(this.dataAtualizacao)
                 .build();
@@ -59,7 +75,9 @@ public class PedidoEntity {
         PedidoEntityBuilder pedidoEntityBuilder = PedidoEntity.builder()
                 .idPedido(pedido.getIdPedido())
                 .idCliente(pedido.getIdCliente())
+                .statusPedido(pedido.getStatusPedido())
                 .valorPedido(pedido.getValorPedido())
+                .dataInclusao(pedido.getDataInclusao())
                 .dataAtualizacao(pedido.getDataAtualizacao());
 
         if(isCreated) {

@@ -20,26 +20,27 @@ import java.util.stream.Collectors;
 public class PedidoDTO {
     private UUID idPedido;
     private UUID idCliente;
-    private List<PedidoProdutoDTO> produtos;
+    private List<PedidoProdutoDTO> pedidoProdutos;
     private StatusPedido statusPedido;
     private BigDecimal valorPedido;
     private Date dataInclusao;
     private Date dataAtualizacao;
 
     public static PedidoDTO from(Pedido pedido) {
-        List<PedidoProdutoDTO> produtosDTO = null;
+        List<PedidoProdutoDTO> pedidoProdutoDTO = null;
         if (pedido.getProdutos() != null) {
-            produtosDTO = pedido.getProdutos().stream().map(PedidoProdutoDTO::from).collect(Collectors.toList());
+            pedidoProdutoDTO = pedido.getProdutos().stream()
+                    .map(PedidoProdutoDTO::from)
+                    .collect(Collectors.toList());
         }
         return PedidoDTO.builder()
                 .idPedido(pedido.getIdPedido())
                 .idCliente(pedido.getIdCliente())
-                .produtos(produtosDTO)
+                .pedidoProdutos(pedidoProdutoDTO)
                 .statusPedido(pedido.getStatusPedido())
                 .valorPedido(pedido.getValorPedido())
                 .dataInclusao(pedido.getDataInclusao())
                 .dataAtualizacao(pedido.getDataAtualizacao())
                 .build();
     }
-
 }

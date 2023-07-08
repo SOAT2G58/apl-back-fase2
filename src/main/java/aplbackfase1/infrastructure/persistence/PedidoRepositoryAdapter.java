@@ -44,7 +44,14 @@ public class PedidoRepositoryAdapter implements IPedidoRepositoryPort {
     @Override
     @Transactional
     public void remover(UUID idPedido) {
-        this.pedidoRepository.deleteById(idPedido);
+        PedidoEntity pedidoEntity = this.pedidoRepository.findById(idPedido)
+                .orElseThrow(() -> new IllegalArgumentException("Pedido not found, id: " + idPedido));
+
+        pedidoEntity.getProdutos().forEach(pedidoProdutoEntity -> {
+            this.pedidoProdutoRepository.deleteById(pedidoProdutoEntity.getId());
+        });
+
+        this.pedidoRepository.delete(pedidoEntity);
     }
 
     @Override
@@ -104,7 +111,7 @@ public class PedidoRepositoryAdapter implements IPedidoRepositoryPort {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         pedidoEntity.setValorPedido(totalValorPedido);
-        pedidoEntity.setStatusPedido(StatusPedido.C);
+        pedidoEntity.setStatusPedido(StatusPedido.R);
 
         return this.pedidoRepository.save(pedidoEntity).to();
     }

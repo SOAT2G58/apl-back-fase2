@@ -15,7 +15,6 @@ import java.util.UUID;
 @Builder
 public class PedidoProdutoDTO {
     private UUID id;
-    private UUID idPedido;
     private UUID idProduto;
     private BigDecimal valorProduto;
     private String observacaoProduto;
@@ -23,7 +22,6 @@ public class PedidoProdutoDTO {
     public static PedidoProdutoDTO from(PedidoProduto pedidoProduto) {
         return PedidoProdutoDTO.builder()
                 .id(pedidoProduto.getId())
-                .idPedido(pedidoProduto.getPedidoId())
                 .idProduto(pedidoProduto.getProdutoId())
                 .valorProduto(pedidoProduto.getValorProduto())
                 .observacaoProduto(pedidoProduto.getObservacaoProduto())

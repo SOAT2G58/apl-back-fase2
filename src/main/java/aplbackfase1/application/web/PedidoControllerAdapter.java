@@ -16,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/tech-challenge")
@@ -28,6 +30,9 @@ public class PedidoControllerAdapter {
 
     @PostMapping("/pedido")
     public ResponseEntity<PedidoDTO> cadastrar(@RequestBody @NotNull PedidoRequest request) {
+        if (request.getIdCliente() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         Pedido pedido = this.pedidoUseCasePort.cadastrar(request.from(request));
         if (pedido != null) {
             return new ResponseEntity<>(PedidoDTO.from(pedido), HttpStatus.OK);
@@ -36,6 +41,8 @@ public class PedidoControllerAdapter {
         }
     }
 
+    /*
+    // Seria para editar o Pedido como um todo
     @PutMapping("/pedido")
     public ResponseEntity<PedidoDTO> atualizar(@RequestBody PedidoRequest pedidoRequest) {
         Pedido pedido = pedidoRequest.from(pedidoRequest);
@@ -47,8 +54,9 @@ public class PedidoControllerAdapter {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+    */
 
-    @PutMapping("/pedido/{idPedido}/produto")
+    @PostMapping("/pedido/{idPedido}/produto")
     public ResponseEntity<PedidoProdutoDTO> adicionarPedidoProduto(
             @PathVariable UUID idPedido, @RequestBody @NotNull PedidoProdutoRequest request) {
         PedidoProduto pedidoProduto = request.from(request);
@@ -62,12 +70,12 @@ public class PedidoControllerAdapter {
         }
     }
 
-    @PutMapping("/pedido/{idPedido}/produto/{id}")
+    @PutMapping("/pedido/{idPedido}/produto/{idPedidoProduto}")
     public ResponseEntity<PedidoProdutoDTO> editarPedidoProduto(
-            @PathVariable UUID idPedido, @PathVariable UUID id, @RequestBody PedidoProdutoRequest pedidoProdutoRequest) {
+            @PathVariable UUID idPedido, @PathVariable UUID idPedidoProduto, @RequestBody PedidoProdutoRequest pedidoProdutoRequest) {
         PedidoProduto pedidoProduto = pedidoProdutoRequest.from(pedidoProdutoRequest);
         pedidoProduto.setPedidoId(idPedido);
-        pedidoProduto.setId(id);
+        pedidoProduto.setId(idPedidoProduto);
         PedidoProduto updatedPedidoProduto = pedidoProdutoUseCasePort.editarPedidoProduto(pedidoProduto);
         if (updatedPedidoProduto != null) {
             PedidoProdutoDTO pedidoProdutoDTO = PedidoProdutoDTO.from(updatedPedidoProduto);
@@ -78,48 +86,72 @@ public class PedidoControllerAdapter {
     }
 
     @DeleteMapping("/pedido/{idPedido}/produto/{id}")
-    public ResponseEntity<Void> excluirPedidoProduto(@PathVariable UUID id) {
+    public ResponseEntity<PedidoDTO> excluirPedidoProduto(@PathVariable UUID idPedido, @PathVariable UUID id) {
         pedidoProdutoUseCasePort.deletarPedidoProduto(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Optional<Pedido> pedidoOptional = pedidoUseCasePort.buscarPorId(idPedido);
+        if (pedidoOptional.isPresent()) {
+            Pedido pedido = pedidoOptional.get();
+            PedidoDTO pedidoDTO = PedidoDTO.from(pedido);
+            return new ResponseEntity<>(pedidoDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
-    @DeleteMapping("/pedido/{id}")
+    @DeleteMapping("/pedido/{idPedido}")
     public ResponseEntity<Void> remover(@PathVariable UUID idPedido) {
         pedidoUseCasePort.remover(idPedido);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/pedidos")
-    public ResponseEntity<List<Pedido>> buscarTodos(
+    public ResponseEntity<List<PedidoDTO>> buscarTodos(
             @RequestParam(defaultValue = "1") int pageNumber,
             @RequestParam(defaultValue = "100") int pageSize) {
-        return new ResponseEntity<>(pedidoUseCasePort.buscarTodos(pageNumber, pageSize), HttpStatus.OK);
+        List<Pedido> pedidos = pedidoUseCasePort.buscarTodos(pageNumber, pageSize);
+        List<PedidoDTO> pedidoDTOs = pedidos.stream()
+                .map(PedidoDTO::from)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(pedidoDTOs, HttpStatus.OK);
     }
 
+
     @GetMapping("/pedidos/id/{id}")
-    public ResponseEntity<Pedido> buscarPorId(@PathVariable UUID id) {
+    public ResponseEntity<PedidoDTO> buscarPorId(@PathVariable UUID id) {
         return pedidoUseCasePort.buscarPorId(id)
-                .map(pedido -> new ResponseEntity<>(pedido, HttpStatus.OK))
+                .map(pedido -> new ResponseEntity<>(PedidoDTO.from(pedido), HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/pedidos/cliente/{idCliente}")
-    public ResponseEntity<List<Pedido>> buscarPedidosPorCliente(@PathVariable UUID idCliente) {
-        return new ResponseEntity<>(pedidoUseCasePort.buscarPedidosPorCliente(idCliente), HttpStatus.OK);
+    public ResponseEntity<List<PedidoDTO>> buscarPedidosPorCliente(@PathVariable UUID idCliente) {
+        List<Pedido> pedidos = pedidoUseCasePort.buscarPedidosPorCliente(idCliente);
+        List<PedidoDTO> pedidoDTOs = pedidos.stream()
+                .map(PedidoDTO::from)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(pedidoDTOs, HttpStatus.OK);
     }
 
     @GetMapping("/pedidos/status/{statusPedido}")
-    public ResponseEntity<List<Pedido>> buscarPedidosPorStatus(@PathVariable StatusPedido statusPedido) {
-        return new ResponseEntity<>(pedidoUseCasePort.buscarPedidosPorStatus(statusPedido), HttpStatus.OK);
+    public ResponseEntity<List<PedidoDTO>> buscarPedidosPorStatus(@PathVariable StatusPedido statusPedido) {
+        List<Pedido> pedidos = pedidoUseCasePort.buscarPedidosPorStatus(statusPedido);
+        List<PedidoDTO> pedidoDTOs = pedidos.stream()
+                .map(PedidoDTO::from)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(pedidoDTOs, HttpStatus.OK);
     }
 
     @GetMapping("/pedidos/cliente/{idCliente}/status/{statusPedido}")
-    public ResponseEntity<List<Pedido>> buscarPedidosPorClienteEStatus(@PathVariable UUID idCliente, @PathVariable StatusPedido statusPedido) {
-        return new ResponseEntity<>(pedidoUseCasePort.buscarPedidosPorClienteEStatus(idCliente, statusPedido), HttpStatus.OK);
+    public ResponseEntity<List<PedidoDTO>> buscarPedidosPorClienteEStatus(@PathVariable UUID idCliente, @PathVariable StatusPedido statusPedido) {
+        List<Pedido> pedidos = pedidoUseCasePort.buscarPedidosPorClienteEStatus(idCliente, statusPedido);
+        List<PedidoDTO> pedidoDTOs = pedidos.stream()
+                .map(PedidoDTO::from)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(pedidoDTOs, HttpStatus.OK);
     }
 
-    @PostMapping("/pedido/checkout/{id}")
-    public ResponseEntity<Pedido> checkout(@PathVariable UUID id) {
-        return new ResponseEntity<>(pedidoUseCasePort.checkout(id), HttpStatus.OK);
+    @PostMapping("/pedido/checkout/{idPedido}")
+    public ResponseEntity<Pedido> checkout(@PathVariable UUID idPedido) {
+        return new ResponseEntity<>(pedidoUseCasePort.checkout(idPedido), HttpStatus.OK);
     }
 }

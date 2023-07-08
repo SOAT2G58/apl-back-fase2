@@ -82,8 +82,8 @@ public class PedidoUseCaseImpl implements IPedidoUseCasePort {
     @Override
     public Pedido checkout(UUID id) {
         Pedido pedido = checkPedidoStatus(id);
-        boolean pagamentOk = pagamentoUseCaseImpl.realizarPagamento(id);
-        if (pagamentOk) {
+        boolean pgtoOk = pagamentoUseCaseImpl.realizarPagamento(id);
+        if (pgtoOk) {
             pedido.setStatusPedido(StatusPedido.R);
             BigDecimal valorTotal = pedido.getProdutos().stream()
                     .map(PedidoProduto::getValorProduto)
@@ -91,13 +91,12 @@ public class PedidoUseCaseImpl implements IPedidoUseCasePort {
             pedido.setValorPedido(valorTotal);
             pedido.setDataAtualizacao(new Date());
 
-            filaUseCaseImpl.inserirPedidoNaFila(pedido);
             pedidoRepositoryPort.atualizar(pedido);
+            filaUseCaseImpl.inserirPedidoNaFila(pedido);
             return pedido;
         } else {
-            throw new IllegalStateException("Pagamento INvalido");
+            throw new IllegalStateException("Pagamento Invalido");
         }
-
     }
 
     private Pedido checkPedidoStatus(UUID idPedido) {

@@ -15,17 +15,15 @@ import java.util.UUID;
 @AllArgsConstructor
 public class PedidoProdutoRequest {
 
-    private UUID id;
-    private UUID idPedido;
-    private UUID idProduto;
+    private UUID idPedido;  // changed from id to idPedido
+    private UUID idPedidoProduto;
     private BigDecimal valorProduto;
     private String observacaoProduto;
 
     public PedidoProduto from(PedidoProdutoRequest request) {
         return PedidoProduto.builder()
-                .id(request.getId())
-                .pedidoId(request.getIdPedido())
-                .produtoId(request.getIdProduto())
+                .id(request.getIdPedido())  // changed from getId() to getIdPedido()
+                .produtoId(request.getIdPedidoProduto())
                 .valorProduto(request.getValorProduto())
                 .observacaoProduto(request.getObservacaoProduto())
                 .build();
