@@ -79,15 +79,6 @@ public class AplBackFase1Application {
 							.valorProduto(new ValorProduto(new BigDecimal(5.0 + quant))).build()
 			);
 		}
-
-		System.out.println("listando todos os produtos do tipo ".concat(TipoProduto.BEBIDA.name()) + this.produtoUseCasePort
-				.listarProdutosPorTipoProduto(TipoProduto.BEBIDA));
-		System.out.println("listando todos os produtos do tipo ".concat(TipoProduto.SOBREMESA.name()) + this.produtoUseCasePort
-				.listarProdutosPorTipoProduto(TipoProduto.SOBREMESA));
-		System.out.println("listando todos os produtos do tipo ".concat(TipoProduto.ACOMPANHAMENTO.name()) + this.produtoUseCasePort
-				.listarProdutosPorTipoProduto(TipoProduto.ACOMPANHAMENTO));
-		System.out.println("listando todos os produtos do tipo ".concat(TipoProduto.LANCHE.name()) + this.produtoUseCasePort
-				.listarProdutosPorTipoProduto(TipoProduto.LANCHE));
 	}
 
 	private void mockCliente(){
