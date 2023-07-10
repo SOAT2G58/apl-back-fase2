@@ -23,6 +23,13 @@
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
+    <li>
+      <a href="#local-execution">Local Execution</a>
+      <ul>
+        <li><a href="#setup">Set up</a></li>
+        <li><a href="#run-locally">Run locally</a></li>
+      </ul>
+    </li>
   </ol>
 </details>
 
@@ -65,6 +72,32 @@ https://miro.com/app/board/uXjVMC27TvQ=/?share_link_id=505879927156
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+### Set up
+
+To run this application locally, follow these steps:
+
+1. Add this information in the archive .env:
+  - POSTGRES_ROOT_USER=postgres
+  - POSTGRES_ROOT_PASSWORD=postgres
+  - POSTGRES_DATABASE=postgres
+  - POSTGRES_LOCAL_PORT=5432
+  - POSTGRES_DOCKER_PORT=5432
+  - SPRING_LOCAL_PORT=9090
+  - SPRING_DOCKER_PORT=9090
+  - PGADMIN_ROOT_EMAIL=admin@domain.com
+  - PGADMIN_ROOT_PASSWORD=admin
+
+
+### Run locally
+
+1. Execute the docker compose
+2. And can use this postman collection to make requests:
+  https://documenter.getpostman.com/view/14258182/2s93zGzyQk
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
