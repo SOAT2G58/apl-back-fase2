@@ -1,0 +1,120 @@
+# Create a configmap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: apl-config
+  labels:
+    app: apl
+data:
+  DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+  DATASOURCE_INITIALIZATION_MODE: always
+  DATASOURCE_INITIALIZE: 'true'
+  DATASOURCE_CONTINUE_ON_ERROR: 'true'
+  HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+  HIBERNATE_SHOW_SQL: 'true'
+  HIBERNATE_DDL_AUTO: update
+---
+# Create a deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apl
+spec:
+  selector:
+    matchLabels:
+      app: apl
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: apl
+    spec:
+      containers:
+        - name: apl
+          image: <aws_account_id>.dkr.ecr.<aws_region>.amazonaws.com/<you-private-repository>:<image>
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: spring.datasource.username
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: spring.datasource.password
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+            - name: spring.datasource.url
+              valueFrom: 
+                configMapKeyRef:
+                  name: apl-config
+                  key: DATASOURCE_URL            
+            - name: spring.jpa.properties.hibernate.dialect
+              valueFrom: 
+                configMapKeyRef:
+                  name: apl-config
+                  key: HIBERNATE_DIALECT
+            - name: spring.jpa.hibernate.show-sql
+              valueFrom: 
+                configMapKeyRef:
+                  name: apl-config
+                  key: HIBERNATE_SHOW_SQL
+            - name: spring.datasource.initialization-mode
+              valueFrom: 
+                configMapKeyRef:
+                  name: apl-config
+                  key: DATASOURCE_INITIALIZATION_MODE
+            - name: spring.datasource.initialize
+              valueFrom: 
+                configMapKeyRef:
+                  name: apl-config
+                  key: DATASOURCE_INITIALIZE
+            - name: spring.datasource.continue-on-error
+              valueFrom: 
+                configMapKeyRef:
+                  name: apl-config
+                  key: DATASOURCE_CONTINUE_ON_ERROR
+            - name: spring.jpa.hibernate.ddl-auto
+              valueFrom: 
+                configMapKeyRef:
+                  name: apl-config
+                  key: HIBERNATE_DDL_AUTO
+            - name: server.port
+              value: '9090'
+          ports:
+            - containerPort: 9090
+---
+# Create a service
+kind: Service
+apiVersion: v1
+metadata:
+  name: apl
+spec:
+  selector:
+    app: apl
+  ports:
+    - name: apl
+      nodePort: 32090
+      port: 9090
+  # type: LoadBalancer
+  type: NodePort
+---
+# Create a hpa
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: apl-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: apl
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 30
