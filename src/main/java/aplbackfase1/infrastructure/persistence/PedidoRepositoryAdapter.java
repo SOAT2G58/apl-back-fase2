@@ -69,10 +69,11 @@ public class PedidoRepositoryAdapter implements IPedidoRepositoryPort {
     @Transactional(readOnly = true)
     public List<Pedido> buscarTodos(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        return this.pedidoRepository.findAll(pageable).stream()
+        return this.pedidoRepository.listagemOrdenadaPorStatusExcluindoFinalizados(pageable).stream()
                 .map(PedidoEntity::to)
                 .collect(Collectors.toList());
     }
+
 
     @Override
     @Transactional(readOnly = true)

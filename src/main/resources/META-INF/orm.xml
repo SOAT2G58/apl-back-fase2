@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" version="2.2">
+
+    <named-query name="PedidoEntity.listagemOrdenadaPorStatusExcluindoFinalizados">
+        <query>
+            <![CDATA[
+                SELECT p
+                FROM PedidoEntity p
+                WHERE id_status NOT LIKE 'F'
+                ORDER BY CASE id_status
+                    WHEN 'C' THEN 1
+                    WHEN 'E' THEN 2
+                    WHEN 'R' THEN 3
+                    WHEN 'A' THEN 4
+                    END ASC, dt_h_inc ASC
+            ]]>
+        </query>
+    </named-query>
+
+</entity-mappings>

@@ -42,6 +42,7 @@ public class PedidoProdutoEntity {
                 .id(pedidoProdutoEntity.getId())
                 .pedidoId(pedidoProdutoEntity.getPedido().getIdPedido())
                 .produtoId(pedidoProdutoEntity.getProduto().getIdProduto())
+                .produtoDescricao(pedidoProdutoEntity.getProduto().getDescricaoProduto())
                 .valorProduto(pedidoProdutoEntity.getValorProduto())
                 .observacaoProduto(pedidoProdutoEntity.getObservacaoProduto())
                 .build();
