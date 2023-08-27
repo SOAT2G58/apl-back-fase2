@@ -1,12 +1,15 @@
 package aplbackfase1.application.web;
 
+import aplbackfase1.application.web.requests.PagamentoNotificacaoRequest;
 import aplbackfase1.application.web.responses.PagamentoDTO;
+import aplbackfase1.domain.enums.StatusPagamento;
 import aplbackfase1.domain.ports.in.IPagamentoUseCase;
 import aplbackfase1.domain.ports.in.IPedidoUseCasePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -36,5 +39,25 @@ public class PagamentoControllerAdapter {
         } else {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @PostMapping("/pagamento/webhook")
+    public ResponseEntity<?> localizarPagamentoDoPedido(@RequestBody @Valid PagamentoNotificacaoRequest pagamentoNotificacaoRequest) {
+        if (Objects.isNull(pagamentoNotificacaoRequest.getPagamentoDados()) || Objects.isNull(pagamentoNotificacaoRequest.getPagamentoDados().getIdPedido())) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (Objects.isNull(pagamentoNotificacaoRequest.getAcao()) || pagamentoNotificacaoRequest.getAcao().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        if (pagamentoNotificacaoRequest.getAcao().toLowerCase().equals("pagamento.aprovado")) {
+            pedidoUseCasePort.atualizarStatusPagamento(StatusPagamento.APROVADO, pagamentoNotificacaoRequest.getPagamentoDados().getIdPedido());
+        }
+
+        if (pagamentoNotificacaoRequest.getAcao().toLowerCase().equals("pagamento.recusado")) {
+            pedidoUseCasePort.atualizarStatusPagamento(StatusPagamento.RECUSADO, pagamentoNotificacaoRequest.getPagamentoDados().getIdPedido());
+        }
+
+        return ResponseEntity.ok().build();
     }
 }
