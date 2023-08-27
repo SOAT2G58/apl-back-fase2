@@ -1,5 +1,6 @@
 package aplbackfase1;
 
+import aplbackfase1.domain.enums.StatusPagamento;
 import aplbackfase1.domain.enums.StatusPedido;
 import aplbackfase1.domain.enums.TipoProduto;
 import aplbackfase1.domain.exceptions.CpfExistenteException;
@@ -187,6 +188,7 @@ public class AplBackFase1Application {
 				Pedido.builder()
 				.idCliente(cliente.getId())
 				.statusPedido(StatusPedido.A)
+				.statusPagamento(StatusPagamento.PENDENTE)
 				.dataInclusao(new Date())
 				.build()
 			);
@@ -300,14 +302,17 @@ public class AplBackFase1Application {
 				Pedido pedido = pedidos.get(i);
 				if (i < 2) {
 					pedidoUseCasePort.checkout(pedido.getIdPedido());
+					pedidoUseCasePort.atualizarStatusPagamento(StatusPagamento.RECUSADO, pedido.getIdPedido());
 				}
 				if (i == 2) {
 					pedidoUseCasePort.checkout(pedido.getIdPedido());
 					pedidoUseCasePort.atualizarStatus(StatusPedido.E, pedido.getIdPedido());
+					pedidoUseCasePort.atualizarStatusPagamento(StatusPagamento.APROVADO, pedido.getIdPedido());
 				}
 				if (i > 2) {
 					pedidoUseCasePort.checkout(pedido.getIdPedido());
 					pedidoUseCasePort.atualizarStatus(StatusPedido.F, pedido.getIdPedido());
+					pedidoUseCasePort.atualizarStatusPagamento(StatusPagamento.APROVADO, pedido.getIdPedido());
 				}
 			} catch (Exception e) {
 				System.out.println("Problemas ao atualizar status de produtos");

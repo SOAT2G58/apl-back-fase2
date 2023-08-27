@@ -1,5 +1,6 @@
 package aplbackfase1.application.web.responses;
 
+import aplbackfase1.domain.enums.StatusPagamento;
 import aplbackfase1.domain.enums.StatusPedido;
 import aplbackfase1.domain.model.Pedido;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ public class PedidoDTO {
     private UUID idCliente;
     private List<PedidoProdutoDTO> pedidoProdutos;
     private StatusPedido statusPedido;
+    private StatusPagamento statusPagamento;
     private BigDecimal valorPedido;
     private Date dataInclusao;
     private Date dataAtualizacao;
@@ -38,6 +40,7 @@ public class PedidoDTO {
                 .idCliente(pedido.getIdCliente())
                 .pedidoProdutos(pedidoProdutoDTO)
                 .statusPedido(pedido.getStatusPedido())
+                .statusPagamento(pedido.getStatusPagamento())
                 .valorPedido(pedido.getValorPedido())
                 .dataInclusao(pedido.getDataInclusao())
                 .dataAtualizacao(pedido.getDataAtualizacao())

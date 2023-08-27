@@ -1,5 +1,6 @@
 package aplbackfase1.domain.ports.in;
 
+import aplbackfase1.domain.enums.StatusPagamento;
 import aplbackfase1.domain.enums.StatusPedido;
 import aplbackfase1.domain.exceptions.PedidoNaoEncontradoException;
 import aplbackfase1.domain.model.Pedido;
@@ -14,6 +15,7 @@ public interface IPedidoUseCasePort {
     Pedido cadastrar(Pedido pedido);
     Pedido atualizar(Pedido pedido);
     Pedido atualizarStatus(StatusPedido status, UUID idPedido) throws PedidoNaoEncontradoException;
+    Pedido atualizarStatusPagamento(StatusPagamento status, UUID idPedido) throws PedidoNaoEncontradoException;
     void remover(UUID idPedido);
     List<Pedido> buscarTodos(int pageNumber, int pageSize);
     Optional<Pedido> buscarPorId(UUID idPedido);

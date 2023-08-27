@@ -1,5 +1,6 @@
 package aplbackfase1.domain.usecases;
 
+import aplbackfase1.domain.enums.StatusPagamento;
 import aplbackfase1.domain.enums.StatusPedido;
 import aplbackfase1.domain.exceptions.PedidoNaoEncontradoException;
 import aplbackfase1.domain.exceptions.PedidoOperacaoNaoSuportadaException;
@@ -13,12 +14,12 @@ import aplbackfase1.domain.ports.out.IPedidoProdutoRepositoryPort;
 import aplbackfase1.domain.ports.out.IPedidoRepositoryPort;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
-import java.util.Optional;
+import java.math.BigDecimal;
 import java.util.UUID;
+import java.util.List;
 import java.util.Comparator;
 import java.util.Date;
-import java.math.BigDecimal;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class PedidoUseCaseImpl implements IPedidoUseCasePort {
@@ -56,6 +57,17 @@ public class PedidoUseCaseImpl implements IPedidoUseCasePort {
             throw new PedidoNaoEncontradoException();
         }
         pedido.get().setStatusPedido(status);
+        pedido.get().setDataAtualizacao(new Date());
+        return pedidoRepositoryPort.atualizar(pedido.get());
+    }
+
+    @Override
+    public Pedido atualizarStatusPagamento(StatusPagamento status, UUID idPedido) throws PedidoNaoEncontradoException {
+        Optional<Pedido> pedido = buscarPorId(idPedido);
+        if (pedido.isEmpty()) {
+            throw new PedidoNaoEncontradoException();
+        }
+        pedido.get().setStatusPagamento(status);
         pedido.get().setDataAtualizacao(new Date());
         return pedidoRepositoryPort.atualizar(pedido.get());
     }
