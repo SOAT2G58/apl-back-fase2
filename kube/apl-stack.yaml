@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: apl
-          image: <aws_account_id>.dkr.ecr.<aws_region>.amazonaws.com/<you-private-repository>:<image>
+          image: fiapg58/apl-back:v1
           imagePullPolicy: "IfNotPresent"
           env:
             - name: spring.datasource.username
