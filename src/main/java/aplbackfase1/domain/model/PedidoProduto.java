@@ -1,5 +1,6 @@
 package aplbackfase1.domain.model;
 
+import aplbackfase1.domain.model.valueObject.DescricaoProduto;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ public final class PedidoProduto {
     private UUID id;
     private UUID pedidoId;
     private UUID produtoId;
+    private DescricaoProduto produtoDescricao;
     private BigDecimal valorProduto;
     private String observacaoProduto;
 
