@@ -1,5 +1,6 @@
 package aplbackfase1.infrastructure.persistence.entity;
 
+import aplbackfase1.domain.enums.StatusPagamento;
 import aplbackfase1.domain.enums.StatusPedido;
 import aplbackfase1.domain.model.Pedido;
 import aplbackfase1.domain.model.PedidoProduto;
@@ -39,6 +40,11 @@ public class PedidoEntity {
     @NotNull
     private StatusPedido statusPedido;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ID_STATUS_PAGAMENTO")
+    @NotNull
+    private StatusPagamento statusPagamento;
+
     @Column(name = "V_PEDIDO")
     private BigDecimal valorPedido;
 
@@ -64,6 +70,7 @@ public class PedidoEntity {
                 .idPedido(this.idPedido)
                 .idCliente(this.idCliente)
                 .statusPedido(this.statusPedido)
+                .statusPagamento(this.statusPagamento)
                 .valorPedido(this.valorPedido)
                 .produtos(pedidoProdutos)
                 .dataInclusao(this.dataInclusao)
@@ -82,8 +89,10 @@ public class PedidoEntity {
         if(isCreated) {
             pedidoEntityBuilder.dataInclusao(this.obterDataHoraAtual());
             pedidoEntityBuilder.statusPedido(StatusPedido.A);
+            pedidoEntityBuilder.statusPagamento(StatusPagamento.PENDENTE);
         } else {
             pedidoEntityBuilder.statusPedido(pedido.getStatusPedido());
+            pedidoEntityBuilder.statusPagamento(pedido.getStatusPagamento());
         }
 
         return pedidoEntityBuilder.build();
