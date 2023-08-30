@@ -1,42 +1,3 @@
-# Crate a secrets
-apiVersion: v1
-kind: Secret
-metadata:
-  name: postgres-secret
-  labels:
-    app: postgres
-type: Opaque
-stringData:
-  POSTGRES_USER: user-to-postgres
-  POSTGRES_PASSWORD: password-to-postgres-user
-  POSTGRES_DB: postgres
----
-# Create a volume claim
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: postgres-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
----
-# Create a volume
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: local-storage
-spec:
-  capacity:
-    storage: 5Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/data/volume"
-    type: DirectoryOrCreate
----
 # Create a deployment
 apiVersion: apps/v1
 kind: Deployment
@@ -81,18 +42,3 @@ spec:
         - name: postgresdb
           persistentVolumeClaim:
             claimName: postgres-pvc
----
-# Create a service
-kind: Service
-apiVersion: v1
-metadata:
-  name: postgres
-spec:
-  selector:
-    app: postgres
-  ports:
-    - name: postgres
-      # nodePort: 32000
-      port: 5432
-  type: ClusterIP
-  # type: NodePort
