@@ -10,5 +10,4 @@ spec:
     - name: apl
       nodePort: 32090
       port: 9090
-  # type: LoadBalancer
-  type: NodePort
+  type: LoadBalancer
