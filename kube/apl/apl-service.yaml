@@ -8,6 +8,6 @@ spec:
     app: apl
   ports:
     - name: apl
-      nodePort: 32090
+      targetPort: 9090
       port: 9090
   type: LoadBalancer
