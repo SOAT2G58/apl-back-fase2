@@ -1,0 +1,15 @@
+# Create a configmap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: apl-config
+  labels:
+    app: apl
+data:
+  DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+  DATASOURCE_INITIALIZATION_MODE: always
+  DATASOURCE_INITIALIZE: 'true'
+  DATASOURCE_CONTINUE_ON_ERROR: 'true'
+  HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+  HIBERNATE_SHOW_SQL: 'true'
+  HIBERNATE_DDL_AUTO: update
