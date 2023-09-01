@@ -2,9 +2,9 @@ package aplbackfase1.infrastructure.persistence;
 
 import aplbackfase1.infrastructure.persistence.entity.ClienteEntity;
 import aplbackfase1.infrastructure.persistence.repository.ClienteRepository;
-import aplbackfase1.domain.model.Cliente;
-import aplbackfase1.domain.model.valueObject.Cpf;
-import aplbackfase1.domain.ports.out.IClienteRepositoryPort;
+import aplbackfase2.interfaces.gateways.IClienteRepositoryPort;
+import aplbackfase2.entities.Cliente;
+import aplbackfase2.entities.valueObject.Cpf;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

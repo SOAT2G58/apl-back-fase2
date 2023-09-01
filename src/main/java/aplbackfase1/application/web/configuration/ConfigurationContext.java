@@ -1,9 +1,21 @@
 package aplbackfase1.application.web.configuration;
 
 
-import aplbackfase1.domain.ports.in.*;
 import aplbackfase1.domain.ports.out.*;
 import aplbackfase1.domain.usecases.*;
+import aplbackfase2.interfaces.gateways.IClienteRepositoryPort;
+import aplbackfase2.interfaces.gateways.IFilaRepositoryPort;
+import aplbackfase2.interfaces.gateways.IPedidoProdutoRepositoryPort;
+import aplbackfase2.interfaces.gateways.IPedidoRepositoryPort;
+import aplbackfase2.interfaces.gateways.IProdutoRepositoryPort;
+import aplbackfase2.interfaces.usecases.IClienteUseCasePort;
+import aplbackfase2.interfaces.usecases.IFilaUseCasePort;
+import aplbackfase2.interfaces.usecases.IPagamentoUseCase;
+import aplbackfase2.interfaces.usecases.IPedidoProdutoUseCasePort;
+import aplbackfase2.interfaces.usecases.IPedidoUseCasePort;
+import aplbackfase2.interfaces.usecases.IProdutoUseCasePort;
+import aplbackfase2.interfaces.usecases.in.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

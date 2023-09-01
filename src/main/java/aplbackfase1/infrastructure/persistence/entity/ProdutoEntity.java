@@ -1,10 +1,10 @@
 package aplbackfase1.infrastructure.persistence.entity;
 
-import aplbackfase1.domain.model.Produto;
+import aplbackfase2.entities.Produto;
 import aplbackfase1.domain.enums.TipoProduto;
-import aplbackfase1.domain.model.valueObject.DescricaoProduto;
-import aplbackfase1.domain.model.valueObject.NomeProduto;
-import aplbackfase1.domain.model.valueObject.ValorProduto;
+import aplbackfase2.entities.valueObject.DescricaoProduto;
+import aplbackfase2.entities.valueObject.NomeProduto;
+import aplbackfase2.entities.valueObject.ValorProduto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,18 +1,18 @@
 package aplbackfase1.infrastructure.persistence;
 
 import aplbackfase1.domain.enums.StatusPedido;
-import aplbackfase1.domain.exceptions.PedidoNaoEncontradoException;
-import aplbackfase1.domain.exceptions.PedidoOperacaoNaoSuportadaException;
-import aplbackfase1.domain.exceptions.PedidoProdutoNaoEncontradoException;
-import aplbackfase1.domain.model.Pedido;
+import aplbackfase2.exceptions.entities.PedidoNaoEncontradoException;
+import aplbackfase2.exceptions.entities.PedidoOperacaoNaoSuportadaException;
+import aplbackfase2.exceptions.entities.PedidoProdutoNaoEncontradoException;
+import aplbackfase2.entities.Pedido;
 import aplbackfase1.infrastructure.persistence.entity.PedidoEntity;
 import aplbackfase1.infrastructure.persistence.entity.PedidoProdutoEntity;
-import aplbackfase1.domain.model.PedidoProduto;
-import aplbackfase1.domain.ports.out.IPedidoProdutoRepositoryPort;
+import aplbackfase2.entities.PedidoProduto;
 import aplbackfase1.infrastructure.persistence.entity.ProdutoEntity;
 import aplbackfase1.infrastructure.persistence.repository.PedidoProdutoRepository;
 import aplbackfase1.infrastructure.persistence.repository.PedidoRepository;
 import aplbackfase1.infrastructure.persistence.repository.ProdutoRepository;
+import aplbackfase2.interfaces.gateways.IPedidoProdutoRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

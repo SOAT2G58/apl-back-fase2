@@ -2,9 +2,9 @@ package aplbackfase1.infrastructure.persistence;
 
 import aplbackfase1.infrastructure.persistence.entity.ProdutoEntity;
 import aplbackfase1.infrastructure.persistence.repository.ProdutoRepository;
-import aplbackfase1.domain.model.Produto;
+import aplbackfase2.interfaces.gateways.IProdutoRepositoryPort;
+import aplbackfase2.entities.Produto;
 import aplbackfase1.domain.enums.TipoProduto;
-import aplbackfase1.domain.ports.out.IProdutoRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,10 +1,10 @@
 package aplbackfase1.infrastructure.persistence;
 
-import aplbackfase1.domain.model.Fila;
-import aplbackfase1.domain.model.PedidoFila;
-import aplbackfase1.domain.ports.out.IFilaRepositoryPort;
+import aplbackfase2.entities.Fila;
+import aplbackfase2.entities.PedidoFila;
 import aplbackfase1.infrastructure.persistence.entity.PedidoFilaEntity;
 import aplbackfase1.infrastructure.persistence.repository.FilaRepository;
+import aplbackfase2.interfaces.gateways.IFilaRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

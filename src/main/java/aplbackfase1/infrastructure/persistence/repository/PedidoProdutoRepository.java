@@ -1,6 +1,6 @@
 package aplbackfase1.infrastructure.persistence.repository;
 
-import aplbackfase1.domain.model.Pedido;
+import aplbackfase2.entities.Pedido;
 import aplbackfase1.infrastructure.persistence.entity.PedidoProdutoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

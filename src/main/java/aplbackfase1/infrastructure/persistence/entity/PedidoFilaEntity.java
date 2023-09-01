@@ -1,7 +1,7 @@
 package aplbackfase1.infrastructure.persistence.entity;
 
-import aplbackfase1.application.web.responses.PedidoFilaDTO;
-import aplbackfase1.domain.model.PedidoFila;
+import aplbackfase2.adapters.PedidoFilaDTO;
+import aplbackfase2.entities.PedidoFila;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

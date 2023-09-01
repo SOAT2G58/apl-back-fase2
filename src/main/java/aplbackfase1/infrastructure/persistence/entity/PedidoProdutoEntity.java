@@ -1,6 +1,6 @@
 package aplbackfase1.infrastructure.persistence.entity;
 
-import aplbackfase1.domain.model.PedidoProduto;
+import aplbackfase2.entities.PedidoProduto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

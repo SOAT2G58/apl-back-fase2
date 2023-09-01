@@ -2,8 +2,8 @@ package aplbackfase1.infrastructure.persistence.entity;
 
 import aplbackfase1.domain.enums.StatusPagamento;
 import aplbackfase1.domain.enums.StatusPedido;
-import aplbackfase1.domain.model.Pedido;
-import aplbackfase1.domain.model.PedidoProduto;
+import aplbackfase2.entities.Pedido;
+import aplbackfase2.entities.PedidoProduto;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

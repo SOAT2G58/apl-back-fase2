@@ -1,9 +1,9 @@
 package aplbackfase1.infrastructure.persistence.entity;
 
-import aplbackfase1.domain.model.Cliente;
-import aplbackfase1.domain.model.valueObject.Cpf;
-import aplbackfase1.domain.model.valueObject.Email;
-import aplbackfase1.domain.model.valueObject.Nome;
+import aplbackfase2.entities.Cliente;
+import aplbackfase2.entities.valueObject.Cpf;
+import aplbackfase2.entities.valueObject.Nome;
+import aplbackfase2.entities.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
