@@ -2,8 +2,8 @@ package aplbackfase3.adapters.gateways.impl;
 
 import aplbackfase3.domain.entities.enums.TipoProduto;
 import aplbackfase3.adapters.gateways.interfaces.IProdutoGateway;
-import aplbackfase3.db.repository.ProdutoRepository;
-import aplbackfase3.db.repository.entities.ProdutoEntity;
+import aplbackfase3.database.ProdutoRepository;
+import aplbackfase3.database.entities.ProdutoEntity;
 import aplbackfase3.domain.entities.Produto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

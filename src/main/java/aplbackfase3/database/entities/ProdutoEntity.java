@@ -1,4 +1,4 @@
-package aplbackfase3.db.repository.entities;
+package aplbackfase3.database.entities;
 
 import aplbackfase3.domain.entities.enums.TipoProduto;
 import aplbackfase3.domain.entities.Produto;

@@ -1,6 +1,6 @@
-package aplbackfase3.db.repository;
+package aplbackfase3.database;
 
-import aplbackfase3.db.repository.entities.ProdutoEntity;
+import aplbackfase3.database.entities.ProdutoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
