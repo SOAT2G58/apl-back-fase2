@@ -1,8 +1,8 @@
 package aplbackfase3.web.rest.produto;
 
-import aplbackfase2.adapters.ProdutoDTO;
 import aplbackfase3.adapters.controllers.interfaces.IProdutoController;
 import aplbackfase3.web.rest.produto.request.ProdutoRequest;
+import aplbackfase3.web.rest.produto.response.ProdutoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package aplbackfase3.enums;
+package aplbackfase3.domain.entities.enums;
 
 import aplbackfase3.domain.exceptions.TipoProdutoInexistenteException;
 

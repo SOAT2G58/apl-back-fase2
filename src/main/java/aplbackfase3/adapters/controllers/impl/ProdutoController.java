@@ -1,7 +1,7 @@
 package aplbackfase3.adapters.controllers.impl;
 
 import aplbackfase2.adapters.ProdutoDTO;
-import aplbackfase3.enums.TipoProduto;
+import aplbackfase3.domain.entities.enums.TipoProduto;
 import aplbackfase3.adapters.controllers.interfaces.IProdutoController;
 import aplbackfase3.domain.entities.Produto;
 import aplbackfase3.domain.interfaces.IProdutoUseCasePort;

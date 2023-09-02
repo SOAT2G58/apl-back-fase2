@@ -1,6 +1,6 @@
 package aplbackfase3.adapters.gateways.impl;
 
-import aplbackfase3.enums.TipoProduto;
+import aplbackfase3.domain.entities.enums.TipoProduto;
 import aplbackfase3.adapters.gateways.interfaces.IProdutoGateway;
 import aplbackfase3.db.repository.ProdutoRepository;
 import aplbackfase3.db.repository.entities.ProdutoEntity;

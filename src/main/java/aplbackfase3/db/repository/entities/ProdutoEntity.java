@@ -1,6 +1,6 @@
 package aplbackfase3.db.repository.entities;
 
-import aplbackfase3.enums.TipoProduto;
+import aplbackfase3.domain.entities.enums.TipoProduto;
 import aplbackfase3.domain.entities.Produto;
 import aplbackfase3.domain.valueObjects.DescricaoProduto;
 import aplbackfase3.domain.valueObjects.NomeProduto;
