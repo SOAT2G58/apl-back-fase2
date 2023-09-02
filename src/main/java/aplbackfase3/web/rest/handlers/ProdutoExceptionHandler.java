@@ -4,7 +4,7 @@ import aplbackfase3.domain.exceptions.DescricaoProdutoInvalidoException;
 import aplbackfase3.domain.exceptions.NomeProdutoInvalidoException;
 import aplbackfase3.domain.exceptions.TipoProdutoInexistenteException;
 import aplbackfase3.domain.exceptions.ValorProdutoInvalidoException;
-import aplbackfase3.web.rest.ProdutoAPIController;
+import aplbackfase3.web.rest.produto.ProdutoAPIController;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -5,7 +5,7 @@ import aplbackfase3.enums.TipoProduto;
 import aplbackfase3.adapters.controllers.interfaces.IProdutoController;
 import aplbackfase3.domain.entities.Produto;
 import aplbackfase3.domain.interfaces.IProdutoUseCasePort;
-import aplbackfase3.web.rest.requestValidations.ProdutoRequest;
+import aplbackfase3.web.rest.produto.request.ProdutoRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package aplbackfase3.web.rest.requestValidations;
+package aplbackfase3.web.rest.produto.request;
 
 import aplbackfase3.enums.TipoProduto;
 import aplbackfase3.domain.entities.Produto;

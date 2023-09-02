@@ -1,6 +1,6 @@
 package aplbackfase3.enums;
 
-import aplbackfase2.exceptions.entities.TipoProdutoInexistenteException;
+import aplbackfase3.domain.exceptions.TipoProdutoInexistenteException;
 
 import java.util.Objects;
 
