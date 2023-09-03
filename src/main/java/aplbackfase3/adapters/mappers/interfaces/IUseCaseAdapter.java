@@ -8,5 +8,3 @@ public interface IUseCaseAdapter {
     ProdutoDAO from(ProdutoRequest request);
     ProdutoDAO from(ProdutoEntity entity);
 }
-//+ callUseCaseAdapterFromController(Request): EntityDAO
-//        + callUseCaseAdapterFromGTW(EntityDB): EntityDAO

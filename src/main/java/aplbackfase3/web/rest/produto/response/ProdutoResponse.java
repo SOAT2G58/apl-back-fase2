@@ -19,14 +19,4 @@ public class ProdutoResponse {
     private String descricao;
     private String tipo;
     private BigDecimal valor;
-
-    public ProdutoResponse from(Produto produto) {
-        return ProdutoResponse.builder()
-                .id(produto.getIdProduto())
-                .nome(produto.getNomeProduto().getNome())
-                .descricao(produto.getDescricaoProduto().getDescricao())
-                .tipo(produto.getTipoProduto().name())
-                .valor(produto.getValorProduto().getValorProduto())
-                .build();
-    }
 }

@@ -1,6 +1,7 @@
 package aplbackfase3.adapters.controllers.impl;
 
 import aplbackfase3.adapters.controllers.interfaces.IProdutoController;
+import aplbackfase3.adapters.mappers.interfaces.IRestAPIAdapter;
 import aplbackfase3.adapters.mappers.interfaces.IUseCaseAdapter;
 import aplbackfase3.domain.entities.Produto;
 import aplbackfase3.domain.entities.enums.TipoProduto;
@@ -22,11 +23,13 @@ public class ProdutoController implements IProdutoController {
 
     private final IUseCaseAdapter useCaseAdapter;
 
+    private final IRestAPIAdapter restAPIAdapter;
+
     public List<ProdutoResponse> buscarProduto(String tipoProduto) {
         List<Produto> produtoArrayList = this.produtoUseCase
                 .listarProdutosPorTipoProduto(TipoProduto.fromCodigo(tipoProduto));
         final var produtoDTOList = new ArrayList<ProdutoResponse>();
-        produtoArrayList.forEach(produto -> produtoDTOList.add(new ProdutoResponse().from(produto)));
+        produtoArrayList.forEach(produto -> produtoDTOList.add(this.restAPIAdapter.from(produto)));
         return produtoDTOList;
     }
 
