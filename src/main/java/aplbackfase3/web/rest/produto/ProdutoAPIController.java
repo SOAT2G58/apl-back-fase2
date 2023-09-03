@@ -2,7 +2,7 @@ package aplbackfase3.web.rest.produto;
 
 import aplbackfase3.adapters.controllers.interfaces.IProdutoController;
 import aplbackfase3.web.rest.produto.request.ProdutoRequest;
-import aplbackfase3.web.rest.produto.response.ProdutoDTO;
+import aplbackfase3.web.rest.produto.response.ProdutoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,17 +21,18 @@ public class ProdutoAPIController {
     private final IProdutoController produtoController;
 
     @GetMapping("/produtos")
-    public ResponseEntity<List<ProdutoDTO>> buscarProduto(@RequestParam(value="tipo_produto") @Validated @NotBlank String tipoProduto) {
+    public ResponseEntity<List<ProdutoResponse>> buscarProduto(@RequestParam(value="tipo_produto") @Validated @NotBlank String tipoProduto) {
         return new ResponseEntity<>(this.produtoController.buscarProduto(tipoProduto), HttpStatus.OK);
     }
 
     @PostMapping("/produtos")
-    public ResponseEntity<?> criarProduto(@RequestBody @Validated ProdutoRequest request) {
-        return new ResponseEntity<>(this.produtoController.criarProduto(request), HttpStatus.CREATED);
+    public ResponseEntity<Void> criarProduto(@RequestBody @Validated ProdutoRequest request) {
+        this.produtoController.criarProduto(request);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/produtos/{id}")
-    public ResponseEntity<?> deletarProduto(@PathVariable @NotNull UUID id) {
+    public ResponseEntity<Void> deletarProduto(@PathVariable @NotNull UUID id) {
         this.produtoController.deletarProduto(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

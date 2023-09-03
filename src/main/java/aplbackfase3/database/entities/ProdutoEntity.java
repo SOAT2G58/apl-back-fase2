@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
@@ -26,15 +27,13 @@ public class ProdutoEntity {
     @GeneratedValue
     private UUID idProduto;
 
-    @Embedded
-    private NomeProduto nomeProduto;
-    @Embedded
-    private DescricaoProduto descricaoProduto;
+    private String nomeProduto;
+
+    private String descricaoProduto;
 
     private String tipoProduto;
 
-    @Embedded
-    private ValorProduto valorProduto;
+    private BigDecimal valorProduto;
 
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -43,22 +42,22 @@ public class ProdutoEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataCriacao;
 
-    public Produto to(ProdutoEntity produtoEntity) {
-        return Produto.builder()
-                .idProduto(produtoEntity.getIdProduto())
-                .nomeProduto(produtoEntity.getNomeProduto())
-                .descricaoProduto(produtoEntity.getDescricaoProduto())
-                .tipoProduto(TipoProduto.fromCodigo(produtoEntity.getTipoProduto()))
-                .valorProduto(produtoEntity.getValorProduto())
-                .build();
-    }
+//    public Produto to(ProdutoEntity produtoEntity) {
+//        return Produto.builder()
+//                .idProduto(produtoEntity.getIdProduto())
+//                .nomeProduto(produtoEntity.getNomeProduto())
+//                .descricaoProduto(produtoEntity.getDescricaoProduto())
+//                .tipoProduto(TipoProduto.fromCodigo(produtoEntity.getTipoProduto()))
+//                .valorProduto(produtoEntity.getValorProduto())
+//                .build();
+//    }
 
     public ProdutoEntity from(Produto produto, boolean isCreated) {
         ProdutoEntity.ProdutoEntityBuilder produtoEntityBuilder = ProdutoEntity.builder()
-                .nomeProduto(produto.getNomeProduto())
-                .descricaoProduto(produto.getDescricaoProduto())
+                .nomeProduto(produto.getNomeProduto().getNome())
+                .descricaoProduto(produto.getDescricaoProduto().getDescricao())
                 .tipoProduto(produto.getTipoProduto().getCodigo())
-                .valorProduto(produto.getValorProduto());
+                .valorProduto(produto.getValorProduto().getValorProduto());
 
         if(isCreated) {
             produtoEntityBuilder.dataCriacao(this.obterDataHoraAtual());

@@ -13,15 +13,15 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Builder
-public class ProdutoDTO {
+public class ProdutoResponse {
     private UUID id;
     private String nome;
     private String descricao;
     private String tipo;
     private BigDecimal valor;
 
-    public ProdutoDTO from(Produto produto) {
-        return ProdutoDTO.builder()
+    public ProdutoResponse from(Produto produto) {
+        return ProdutoResponse.builder()
                 .id(produto.getIdProduto())
                 .nome(produto.getNomeProduto().getNome())
                 .descricao(produto.getDescricaoProduto().getDescricao())

@@ -24,13 +24,4 @@ public class ProdutoRequest {
     private String tipo;
     @NotNull(message = "valor não pode ser nulo")
     private BigDecimal valor;
-
-    public Produto from(ProdutoRequest request) {
-        return Produto.builder()
-                .nomeProduto(new NomeProduto(request.getNome()))
-                .tipoProduto(TipoProduto.fromCodigo(request.getTipo()))
-                .descricaoProduto(new DescricaoProduto(request.getDescricao()))
-                .valorProduto(new ValorProduto(request.getValor()))
-                .build();
-    }
 }
