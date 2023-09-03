@@ -1,10 +1,10 @@
-package aplbackfase1.infrastructure.persistence.repository;
+package aplbackfase2.interfaces.repositories;
 
-import aplbackfase1.domain.enums.StatusPedido;
-import aplbackfase1.infrastructure.persistence.entity.PedidoEntity;
+import aplbackfase2.utils.enums.StatusPedido;
+import aplbackfase2.gateways.entities.PedidoEntity;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

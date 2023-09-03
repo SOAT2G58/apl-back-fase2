@@ -1,15 +1,12 @@
-package aplbackfase1.infrastructure.persistence;
+package aplbackfase2.gateways;
 
-import aplbackfase2.entities.Fila;
 import aplbackfase2.entities.PedidoFila;
-import aplbackfase1.infrastructure.persistence.entity.PedidoFilaEntity;
-import aplbackfase1.infrastructure.persistence.repository.FilaRepository;
+import aplbackfase2.gateways.entities.PedidoFilaEntity;
 import aplbackfase2.interfaces.gateways.IFilaRepositoryPort;
+import aplbackfase2.interfaces.repositories.FilaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

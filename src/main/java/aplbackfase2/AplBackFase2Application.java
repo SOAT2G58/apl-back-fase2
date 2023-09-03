@@ -1,14 +1,14 @@
-package aplbackfase1;
+package aplbackfase2;
 
-import aplbackfase1.domain.enums.StatusPagamento;
-import aplbackfase1.domain.enums.StatusPedido;
-import aplbackfase1.domain.enums.TipoProduto;
+import aplbackfase2.utils.enums.StatusPagamento;
+import aplbackfase2.utils.enums.StatusPedido;
+import aplbackfase2.utils.enums.TipoProduto;
 import aplbackfase2.exceptions.entities.CpfExistenteException;
 import aplbackfase2.entities.Cliente;
 import aplbackfase2.entities.Pedido;
 import aplbackfase2.entities.PedidoProduto;
 import aplbackfase2.entities.Produto;
-import aplbackfase2.entities.valueObject.*;
+import aplbackfase2.entities.*;
 import aplbackfase2.entities.Email;
 import aplbackfase2.interfaces.usecases.IClienteUseCasePort;
 import aplbackfase2.interfaces.usecases.IPedidoProdutoUseCasePort;
@@ -24,11 +24,10 @@ import org.springframework.context.event.EventListener;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootApplication
-public class AplBackFase1Application {
+public class AplBackFase2Application {
 
 	@Autowired
 	private IProdutoUseCasePort produtoUseCasePort;
@@ -43,7 +42,7 @@ public class AplBackFase1Application {
 	private IPedidoProdutoUseCasePort pedidoProdutoUseCasePort;
 
 	public static void main(String[] args) {
-		SpringApplication.run(AplBackFase1Application.class, args);
+		SpringApplication.run(AplBackFase2Application.class, args);
 	}
 
 	@EventListener(ApplicationReadyEvent.class)

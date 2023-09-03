@@ -1,4 +1,4 @@
-package aplbackfase1.infrastructure.persistence.entity;
+package aplbackfase2.gateways.entities;
 
 import aplbackfase2.entities.PedidoProduto;
 import lombok.AllArgsConstructor;

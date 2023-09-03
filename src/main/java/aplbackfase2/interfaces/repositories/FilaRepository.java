@@ -1,7 +1,8 @@
-package aplbackfase1.infrastructure.persistence.repository;
+package aplbackfase2.interfaces.repositories;
 
 import aplbackfase2.entities.PedidoFila;
-import aplbackfase1.infrastructure.persistence.entity.PedidoFilaEntity;
+import aplbackfase2.gateways.entities.PedidoFilaEntity;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

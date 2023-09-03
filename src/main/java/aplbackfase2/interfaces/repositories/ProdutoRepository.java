@@ -1,9 +1,9 @@
-package aplbackfase1.infrastructure.persistence.repository;
+package aplbackfase2.interfaces.repositories;
 
-import aplbackfase1.infrastructure.persistence.entity.ProdutoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import aplbackfase2.gateways.entities.ProdutoEntity;
 
 import java.util.List;
 import java.util.Optional;

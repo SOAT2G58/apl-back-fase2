@@ -1,7 +1,7 @@
-package aplbackfase1.infrastructure.persistence.entity;
+package aplbackfase2.gateways.entities;
 
-import aplbackfase1.domain.enums.StatusPagamento;
-import aplbackfase1.domain.enums.StatusPedido;
+import aplbackfase2.utils.enums.StatusPagamento;
+import aplbackfase2.utils.enums.StatusPedido;
 import aplbackfase2.entities.Pedido;
 import aplbackfase2.entities.PedidoProduto;
 import com.sun.istack.NotNull;

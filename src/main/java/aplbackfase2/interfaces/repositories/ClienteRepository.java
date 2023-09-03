@@ -1,7 +1,8 @@
-package aplbackfase1.infrastructure.persistence.repository;
+package aplbackfase2.interfaces.repositories;
 
-import aplbackfase1.infrastructure.persistence.entity.ClienteEntity;
-import aplbackfase2.entities.valueObject.Cpf;
+import aplbackfase2.entities.Cpf;
+import aplbackfase2.gateways.entities.ClienteEntity;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
