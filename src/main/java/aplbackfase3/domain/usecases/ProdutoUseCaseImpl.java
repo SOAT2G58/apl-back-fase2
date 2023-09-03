@@ -39,8 +39,9 @@ public class ProdutoUseCaseImpl implements IProdutoUseCase {
     public Produto from(ProdutoDAO produtoDAO) {
         return Produto.builder()
                 .descricaoProduto(new DescricaoProduto(produtoDAO.getDescricao()))
-                .nomeProduto(new NomeProduto(produtoDAO.getDescricao()))
+                .nomeProduto(new NomeProduto(produtoDAO.getNome()))
                 .valorProduto(new ValorProduto(produtoDAO.getValor()))
+                .idProduto(produtoDAO.getId())
                 .tipoProduto(TipoProduto.fromCodigo(produtoDAO.getTipo()))
                 .build();
     }

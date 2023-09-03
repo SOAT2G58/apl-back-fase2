@@ -32,25 +32,25 @@ public class AplBackFase1Application {
 			this.produtoUseCase.criarProduto(
 					ProdutoDAO.builder().nome(TipoProduto.ACOMPANHAMENTO.name() + quant)
 							.descricao("Descricao produto: " + quant)
-							.tipo(TipoProduto.ACOMPANHAMENTO.toString())
+							.tipo(TipoProduto.ACOMPANHAMENTO.getCodigo())
 							.valor(new BigDecimal(5.0 + quant)).build()
 			);
 			this.produtoUseCase.criarProduto(
 					ProdutoDAO.builder().nome(TipoProduto.BEBIDA.name() + quant)
 							.descricao("Descricao produto: " + quant)
-							.tipo(TipoProduto.BEBIDA.toString())
+							.tipo(TipoProduto.BEBIDA.getCodigo())
 							.valor(new BigDecimal(5.0 + quant)).build()
 			);
 			this.produtoUseCase.criarProduto(
 					ProdutoDAO.builder().nome(TipoProduto.LANCHE.name() + quant)
 							.descricao("Descricao produto: " + quant)
-							.tipo(TipoProduto.LANCHE.toString())
+							.tipo(TipoProduto.LANCHE.getCodigo())
 							.valor(new BigDecimal(5.0 + quant)).build()
 			);
 			this.produtoUseCase.criarProduto(
 					ProdutoDAO.builder().nome(TipoProduto.SOBREMESA.name() + quant)
 							.descricao("Descricao produto: " + quant)
-							.tipo(TipoProduto.SOBREMESA.toString())
+							.tipo(TipoProduto.SOBREMESA.getCodigo())
 							.valor(new BigDecimal(5.0 + quant)).build()
 			);
 		}
