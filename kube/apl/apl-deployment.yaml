@@ -1,0 +1,69 @@
+# Create a deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apl
+spec:
+  selector:
+    matchLabels:
+      app: apl
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: apl
+    spec:
+      containers:
+        - name: apl
+          image: fiapg58/apl-back:v1
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: spring.datasource.username
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: spring.datasource.password
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+            - name: spring.datasource.url
+              valueFrom: 
+                configMapKeyRef:
+                  name: apl-config
+                  key: DATASOURCE_URL            
+            - name: spring.jpa.properties.hibernate.dialect
+              valueFrom: 
+                configMapKeyRef:
+                  name: apl-config
+                  key: HIBERNATE_DIALECT
+            - name: spring.jpa.hibernate.show-sql
+              valueFrom: 
+                configMapKeyRef:
+                  name: apl-config
+                  key: HIBERNATE_SHOW_SQL
+            - name: spring.datasource.initialization-mode
+              valueFrom: 
+                configMapKeyRef:
+                  name: apl-config
+                  key: DATASOURCE_INITIALIZATION_MODE
+            - name: spring.datasource.initialize
+              valueFrom: 
+                configMapKeyRef:
+                  name: apl-config
+                  key: DATASOURCE_INITIALIZE
+            - name: spring.datasource.continue-on-error
+              valueFrom: 
+                configMapKeyRef:
+                  name: apl-config
+                  key: DATASOURCE_CONTINUE_ON_ERROR
+            - name: spring.jpa.hibernate.ddl-auto
+              valueFrom: 
+                configMapKeyRef:
+                  name: apl-config
+                  key: HIBERNATE_DDL_AUTO
+            - name: server.port
+              value: '9090'
+          ports:
+            - containerPort: 9090

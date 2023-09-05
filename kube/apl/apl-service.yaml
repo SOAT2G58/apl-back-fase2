@@ -1,0 +1,13 @@
+# Create a service
+kind: Service
+apiVersion: v1
+metadata:
+  name: apl
+spec:
+  selector:
+    app: apl
+  ports:
+    - name: apl
+      targetPort: 9090
+      port: 9090
+  type: LoadBalancer

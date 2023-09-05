@@ -1,0 +1,14 @@
+# Create a service
+kind: Service
+apiVersion: v1
+metadata:
+  name: postgres
+spec:
+  selector:
+    app: postgres
+  ports:
+    - name: postgres
+      # nodePort: 32000
+      port: 5432
+  type: ClusterIP
+  # type: NodePort
