@@ -1,10 +1,10 @@
 package aplbackfase2.controllers;
 
 import aplbackfase2.adapters.ClienteDTO;
+import aplbackfase2.controllers.requestValidations.ClienteRequest;
 import aplbackfase2.entities.Cliente;
 import aplbackfase2.entities.Cpf;
 import aplbackfase2.interfaces.usecases.IClienteUseCasePort;
-import aplbackfase2.usecases.requestValidations.ClienteRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

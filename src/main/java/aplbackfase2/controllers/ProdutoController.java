@@ -2,9 +2,9 @@ package aplbackfase2.controllers;
 
 import aplbackfase2.utils.enums.TipoProduto;
 import aplbackfase2.adapters.ProdutoDTO;
+import aplbackfase2.controllers.requestValidations.ProdutoRequest;
 import aplbackfase2.entities.Produto;
 import aplbackfase2.interfaces.usecases.IProdutoUseCasePort;
-import aplbackfase2.usecases.requestValidations.ProdutoRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package aplbackfase2.usecases.requestValidations;
+package aplbackfase2.controllers.requestValidations;
 
 import aplbackfase2.entities.PedidoProduto;
 import lombok.AllArgsConstructor;

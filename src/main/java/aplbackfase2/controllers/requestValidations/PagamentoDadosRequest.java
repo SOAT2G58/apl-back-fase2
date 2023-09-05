@@ -1,4 +1,4 @@
-package aplbackfase2.usecases.requestValidations;
+package aplbackfase2.controllers.requestValidations;
 
 import lombok.Getter;
 import lombok.Setter;

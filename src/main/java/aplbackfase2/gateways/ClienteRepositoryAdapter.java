@@ -26,8 +26,8 @@ public class  ClienteRepositoryAdapter implements IClienteRepositoryPort {
     }
 
     @Override
-    public Cliente identificarPorCpf(Cpf cpf) {
-        ClienteEntity clienteEntity = new ClienteEntity().from(Cliente.builder().cpf(cpf).build());
+    public Cliente identificarPorCpf(Cliente cliente) {
+        ClienteEntity clienteEntity = new ClienteEntity().from(cliente);
         return clienteRepository.save(clienteEntity).to(clienteEntity);
     }
 

@@ -1,4 +1,4 @@
-package aplbackfase2.usecases.requestValidations;
+package aplbackfase2.controllers.requestValidations;
 
 import aplbackfase2.entities.Cliente;
 import aplbackfase2.entities.Cpf;

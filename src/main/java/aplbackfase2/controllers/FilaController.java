@@ -1,8 +1,8 @@
 package aplbackfase2.controllers;
 
 import aplbackfase2.adapters.PedidoFilaDTO;
+import aplbackfase2.controllers.requestValidations.PedidoFilaRequest;
 import aplbackfase2.interfaces.usecases.IFilaUseCasePort;
-import aplbackfase2.usecases.requestValidations.PedidoFilaRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

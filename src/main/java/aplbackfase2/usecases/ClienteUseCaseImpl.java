@@ -30,7 +30,7 @@ public class ClienteUseCaseImpl implements IClienteUseCasePort {
         if (clienteDb.isPresent())
             return clienteDb.get();
         else
-            return clienteRepositoryPort.identificarPorCpf(cpf);
+            return clienteRepositoryPort.identificarPorCpf(Cliente.builder().cpf(cpf).build());
     }
 
     @Override
