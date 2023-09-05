@@ -2,6 +2,7 @@ package aplbackfase2.controllers;
 
 import aplbackfase2.utils.enums.TipoProduto;
 import aplbackfase2.adapters.ProdutoDTO;
+import aplbackfase2.entities.Produto;
 import aplbackfase2.interfaces.usecases.IProdutoUseCasePort;
 import aplbackfase2.usecases.requestValidations.ProdutoRequest;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class ProdutoController {
 
     @GetMapping("/produtos")
     public ResponseEntity<List<ProdutoDTO>> buscarProduto(@RequestParam(value="tipo_produto") @Validated @NotBlank String tipoProduto) {
-        List<ProdutoDTO> produtoArrayList = this.produtoUseCasePort
+        List<Produto> produtoArrayList = this.produtoUseCasePort
                 .listarProdutosPorTipoProduto(TipoProduto.fromCodigo(tipoProduto));
         final var produtoDTOList = new ArrayList<ProdutoDTO>();
         produtoArrayList.forEach(produto -> produtoDTOList.add(new ProdutoDTO().from(produto)));
@@ -34,7 +35,7 @@ public class ProdutoController {
 
     @PostMapping("/produtos")
     public ResponseEntity<?> criarProduto(@RequestBody @Validated ProdutoRequest request) {
-        ProdutoDTO produto = this.produtoUseCasePort.criarProduto(request.from(request));
+        Produto produto = this.produtoUseCasePort.criarProduto(request.from(request));
         return new ResponseEntity<>(new ProdutoDTO().from(produto), HttpStatus.CREATED);
     }
 

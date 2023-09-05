@@ -1,6 +1,7 @@
 package aplbackfase2.controllers;
 
 import aplbackfase2.adapters.ClienteDTO;
+import aplbackfase2.entities.Cliente;
 import aplbackfase2.entities.Cpf;
 import aplbackfase2.interfaces.usecases.IClienteUseCasePort;
 import aplbackfase2.usecases.requestValidations.ClienteRequest;
@@ -29,7 +30,7 @@ public class ClienteController {
         if (Objects.isNull(cpf)){
             return ResponseEntity.ok(clienteUseCasePort.bucarTodos().stream().map(obj -> new ClienteDTO().from(obj)).collect(Collectors.toList()));
         } else {
-            Optional<ClienteDTO> cliente = clienteUseCasePort.buscarPorCpf(new Cpf(cpf));
+            Optional<Cliente> cliente = clienteUseCasePort.buscarPorCpf(new Cpf(cpf));
             if (cliente.isPresent())
                 return ResponseEntity.ok(Arrays.asList(new ClienteDTO().from(cliente.get())));
             else
@@ -39,7 +40,7 @@ public class ClienteController {
 
     @GetMapping(value = "/clientes/{id}", produces = "application/json")
     public ResponseEntity<ClienteDTO> buscarPorId(@PathVariable(name = "id") UUID uuid) {
-        Optional<ClienteDTO> cliente = clienteUseCasePort.buscarPorId(uuid);
+        Optional<Cliente> cliente = clienteUseCasePort.buscarPorId(uuid);
         if (cliente.isPresent())
             return ResponseEntity.ok(new ClienteDTO().from(cliente.get()));
         else
@@ -49,7 +50,7 @@ public class ClienteController {
     @PostMapping("/clientes")
     public ResponseEntity<?>  cadastrar(@RequestBody @Validated ClienteRequest clienteRequest) {
         if (Objects.nonNull(clienteRequest)) {
-            ClienteDTO clienteDb = clienteUseCasePort.cadastrar(clienteRequest.from(clienteRequest));
+            Cliente clienteDb = clienteUseCasePort.cadastrar(clienteRequest.from(clienteRequest));
             URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(clienteDb.getId()).toUri();
             return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.LOCATION, uri.toString()).body(new ClienteDTO().from(clienteDb));
         } else {
@@ -60,7 +61,7 @@ public class ClienteController {
     @PostMapping("/clientes/{cpf}")
     public ResponseEntity<?> identificarPorCpf(@PathVariable(name = "cpf") String cpf) {
         if (Objects.nonNull(cpf)) {
-            ClienteDTO clienteDb = clienteUseCasePort.identificarPorCpf(new Cpf(cpf));
+            Cliente clienteDb = clienteUseCasePort.identificarPorCpf(new Cpf(cpf));
             URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/tech-challenge/clientes/{id}").buildAndExpand(clienteDb.getId()).toUri();
             return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.LOCATION, uri.toString()).body(new ClienteDTO().from(clienteDb));
         } else {

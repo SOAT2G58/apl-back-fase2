@@ -1,6 +1,6 @@
 package aplbackfase2.exceptions.handlers;
 
-import aplbackfase2.controllers.PagamentoControllerAdapter;
+import aplbackfase2.controllers.PagamentoController;
 import aplbackfase2.exceptions.entities.PedidoInvalidoException;
 import aplbackfase2.exceptions.entities.PedidoNaoEncontradoException;
 import org.springframework.http.HttpStatus;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 
-@ControllerAdvice(assignableTypes = {PagamentoControllerAdapter.class})
+@ControllerAdvice(assignableTypes = {PagamentoController.class})
 public class PagamentoExceptionHandler {
     @ExceptionHandler(PedidoInvalidoException.class)
     public ResponseEntity<StandardError> pedidoInvalido(PedidoInvalidoException e, HttpServletRequest request){

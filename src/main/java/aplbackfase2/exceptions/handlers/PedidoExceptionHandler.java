@@ -1,6 +1,6 @@
 package aplbackfase2.exceptions.handlers;
 
-import aplbackfase2.controllers.PedidoControllerAdapter;
+import aplbackfase2.controllers.PedidoController;
 import aplbackfase2.exceptions.entities.PedidoNaoEncontradoException;
 import aplbackfase2.exceptions.entities.PedidoOperacaoNaoSuportadaException;
 import aplbackfase2.exceptions.entities.PedidoPagamentoInvalidoException;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 
-@ControllerAdvice(assignableTypes = {PedidoControllerAdapter.class})
+@ControllerAdvice(assignableTypes = {PedidoController.class})
 public class PedidoExceptionHandler {
     @ExceptionHandler(PedidoNaoEncontradoException.class)
     public ResponseEntity<StandardError> pedidoNaoEncontrado(PedidoNaoEncontradoException e, HttpServletRequest request){

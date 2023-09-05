@@ -1,6 +1,6 @@
 package aplbackfase2.exceptions.handlers;
 
-import aplbackfase2.controllers.ClienteControllerAdapter;
+import aplbackfase2.controllers.ClienteController;
 import aplbackfase2.exceptions.entities.CpfExistenteException;
 import aplbackfase2.exceptions.entities.CpfInvalidoException;
 import aplbackfase2.exceptions.entities.EmailInvalidoException;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 
-@ControllerAdvice(assignableTypes = {ClienteControllerAdapter.class})
+@ControllerAdvice(assignableTypes = {ClienteController.class})
 public class ClienteExceptionHandler {
     @ExceptionHandler(CpfExistenteException.class)
     public ResponseEntity<StandardError> cpfExistente(CpfExistenteException e, HttpServletRequest request){

@@ -1,6 +1,6 @@
 package aplbackfase2.exceptions.handlers;
 
-import aplbackfase2.controllers.ProdutoControllerAdapter;
+import aplbackfase2.controllers.ProdutoController;
 import aplbackfase2.exceptions.entities.DescricaoProdutoInvalidoException;
 import aplbackfase2.exceptions.entities.NomeProdutoInvalidoException;
 import aplbackfase2.exceptions.entities.TipoProdutoInexistenteException;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-@ControllerAdvice(assignableTypes = {ProdutoControllerAdapter.class})
+@ControllerAdvice(assignableTypes = {ProdutoController.class})
 public class ProdutoExceptionHandler {
 
     @ExceptionHandler(DescricaoProdutoInvalidoException.class)
