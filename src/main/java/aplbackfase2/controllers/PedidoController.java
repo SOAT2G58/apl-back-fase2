@@ -145,6 +145,6 @@ public class PedidoController {
 
     @PostMapping("/pedido/checkout/{idPedido}")
     public ResponseEntity<PedidoDTO> checkout(@PathVariable UUID idPedido) {
-        return new ResponseEntity<>(pedidoUseCasePort.checkout(idPedido), HttpStatus.OK);
+        return new ResponseEntity<>(PedidoDTO.from(pedidoUseCasePort.checkout(idPedido)), HttpStatus.OK);
     }
 }
